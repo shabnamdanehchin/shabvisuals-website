@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShabVisuals | شب ویژوالز</title>
+    <!-- Tailwind CSS برای استایل‌دهی سریع -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Vazirmatn', sans-serif; }
+        .bg-dark { background-color: #0f172a; } /* رنگ پس زمینه تیره */
+        .text-accent { color: #818cf8; } /* رنگ بنفش برای تاکید */
+        .bg-accent { background-color: #6366f1; }
+        .bg-accent:hover { background-color: #4f46e5; }
+    </style>
+</head>
+<body class="bg-dark text-white antialiased">
+
+    <!-- هدر سایت -->
+    <header class="container mx-auto px-6 py-4 flex justify-between items-center border-b border-gray-800">
+        <div class="text-2xl font-bold tracking-widest uppercase">Shab<span class="text-accent">Visuals</span></div>
+        <nav class="hidden md:flex space-x-6 space-x-reverse">
+            <a href="#services" class="hover:text-accent transition">خدمات</a>
+            <a href="#portfolio" class="hover:text-accent transition">نمونه کارها</a>
+            <a href="#contact" class="hover:text-accent transition">تماس با من</a>
+        </nav>
+    </header>
+
+    <!-- بخش اصلی (Hero) -->
+    <section class="container mx-auto px-6 py-20 text-center">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6">تولید ویدیوی حرفه‌ای با <span class="text-accent">هوش مصنوعی</span></h1>
+        <p class="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto">بهترین و باکیفیت‌ترین ویدیوهای تبلیغاتی، موشن گرافیک و محتوای شبکه‌های اجتماعی برای رشد برند شما.</p>
+        <a href="#contact" class="bg-accent text-white px-8 py-3 rounded-full text-lg font-bold transition shadow-lg shadow-indigo-500/30">شروع همکاری</a>
+    </section>
+
+    <!-- بخش خدمات -->
+    <section id="services" class="bg-gray-900 py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-12">خدمات <span class="text-accent">ما</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- خدمت 1 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-indigo-500 transition">
+                    <i class="fa-solid fa-laptop-code text-4xl text-accent mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3" dir="ltr">SaaS & Product Videos</h3>
+                    <p class="text-gray-400 text-sm">مهم‌ترین بخش برای مشتری‌های آنلاین. شامل: SaaS promo, App demo, Product launch video.</p>
+                </div>
+
+                <!-- خدمت 2 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-indigo-500 transition">
+                    <i class="fa-solid fa-video text-4xl text-accent mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3" dir="ltr">Commercial & Promo Ads</h3>
+                    <p class="text-gray-400 text-sm">تبلیغات کوتاه برای برندها. شامل: luxury brand ad, product promo, teaser video.</p>
+                </div>
+
+                <!-- خدمت 3 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-indigo-500 transition">
+                    <i class="fa-brands fa-instagram text-4xl text-accent mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3" dir="ltr">Social Media Content</h3>
+                    <p class="text-gray-400 text-sm">مخصوص اینستاگرام و تیک‌تاک. شامل: reels ads, short promo, instagram posts/video ads.</p>
+                </div>
+
+                <!-- خدمت 4 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-indigo-500 transition">
+                    <i class="fa-solid fa-wand-magic-sparkles text-4xl text-accent mb-4"></i>
+                    <h3 class="text-xl font-bold mb-3" dir="ltr">Motion Graphics & Animation</h3>
+                    <p class="text-gray-400 text-sm">جان بخشیدن به ایده‌ها. شامل: motion graphics, 2D/3D animation, video wall / visual loops.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش نمونه کارها (به زودی) -->
+    <section id="portfolio" class="container mx-auto px-6 py-20 text-center">
+        <h2 class="text-3xl font-bold mb-6">نمونه <span class="text-accent">کارها</span></h2>
+        <div class="bg-gray-800 rounded-2xl p-12 border border-gray-700 border-dashed">
+            <i class="fa-solid fa-hourglass-half text-5xl text-gray-500 mb-4"></i>
+            <h3 class="text-2xl font-bold text-gray-300">به زودی...</h3>
+            <p class="text-gray-500 mt-2">نمونه کارهای ما در این بخش قرار خواهند گرفت.</p>
+        </div>
+    </section>
+
+    <!-- بخش تماس و فوتر -->
+    <footer id="contact" class="bg-gray-900 border-t border-gray-800 py-12 mt-10">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold mb-8">راه‌های <span class="text-accent">ارتباطی</span></h2>
+            <div class="flex justify-center space-x-6 space-x-reverse mb-8">
+                <!-- لینک اینستاگرام خودت رو جای # بذار -->
+                <a href="#" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-2xl hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <!-- لینک واتس‌اپ خودت رو جای # بذار (مثلا: https://wa.me/989120000000) -->
+                <a href="#" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-2xl hover:bg-green-500 transition">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <!-- ایمیل خودت رو جای # بذار (مثلا: mailto:info@shabvisuals.digital) -->
+                <a href="#" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-2xl hover:bg-blue-500 transition">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+            <p class="text-gray-500 text-sm">© 2024 ShabVisuals. تمامی حقوق محفوظ است.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
