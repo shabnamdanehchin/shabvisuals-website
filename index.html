@@ -3,137 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shab Visuals | 3D Animation & VFX</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Shab Visuals</title>
     <style>
-        /* فراخوانی فونت‌ها */
         @font-face {
             font-family: 'LOT';
-            src: url('Lot-Regular.otf') format('opentype'); /* نام فایل فونت را در پوشه خود دقیقاً همین بگذارید */
-            font-display: swap;
+            src: url('./fonts/Lot-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
         }
 
         @font-face {
             font-family: 'Agrandir';
-            src: url('Agrandir-Thin-Italic.otf') format('opentype'); /* نام فایل فونت را در پوشه خود دقیقاً همین بگذارید */
-            font-display: swap;
-            font-style: italic;
+            src: url('./fonts/Agrandir-Thin-Italic.otf') format('opentype');
             font-weight: 100;
+            font-style: italic;
         }
 
-        /* استایل‌های گرادیان متن */
-        .text-gradient-shab {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 4rem;
+            z-index: 1000;
+            background: transparent;
+        }
+
+        .navbar-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            line-height: 0.9;
+        }
+
+        .navbar-logo .logo-shab {
+            font-size: 2rem;
+        }
+
+        .navbar-logo .logo-visuals {
+            font-size: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hero-video.visible {
+            opacity: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            mix-blend-mode: difference;
+        }
+
+        .hero-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            line-height: 0.9;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-logo.medium .logo-shab {
+            font-size: 8rem;
+        }
+
+        .hero-logo.medium .logo-visuals {
+            font-size: 8rem;
+        }
+
+        .hero-logo.large .logo-shab {
+            font-size: 14rem;
+        }
+
+        .hero-logo.large .logo-visuals {
+            font-size: 14rem;
+        }
+
+        /* Logo Styles */
+        .logo-shab {
             background: linear-gradient(90deg, #555555, #ffffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-family: 'LOT', sans-serif;
+            font-weight: normal;
+            letter-spacing: -0.02em;
         }
 
-        .text-gradient-visuals {
+        .logo-visuals {
             background: linear-gradient(90deg, #5170ff, #ff66c4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-family: 'Agrandir', sans-serif;
             font-style: italic;
+            font-weight: 100;
+            letter-spacing: -0.02em;
         }
 
-        /* تنظیمات انیمیشن و ترانزیشن‌ها */
-        #hero-logo {
-            transition: opacity 1s ease-in, transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+        /* Services Section */
+        .services-section {
+            padding: 8rem 4rem;
+            background: #000;
         }
 
-        #hero-video {
-            transition: opacity 1.5s ease-in;
-            filter: brightness(0.4); /* تیره‌تر کردن ویدیو برای خوانایی بهتر متن و لوگو */
+        .services-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 4rem;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #5170ff, #ff66c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .service-list li:last-child {
+            border-bottom: none;
+        }
+
+        .service-list li::before {
+            content: '→';
+            margin-right: 0.75rem;
+            color: #5170ff;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 1.5rem 2rem;
+            }
+
+            .navbar-logo .logo-shab,
+            .navbar-logo .logo-visuals {
+                font-size: 1.75rem;
+            }
+
+            .hero-logo.medium .logo-shab,
+            .hero-logo.medium .logo-visuals {
+                font-size: 6rem;
+            }
+
+            .hero-logo.large .logo-shab,
+            .hero-logo.large .logo-visuals {
+                font-size: 10rem;
+            }
+
+            .services-section {
+                padding: 6rem 2rem;
+            }
+
+            .services-title {
+                font-size: 3rem;
+            }
+
+            .services-grid {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+
+            .navbar-logo .logo-shab,
+            .navbar-logo .logo-visuals {
+                font-size: 1.5rem;
+            }
+
+            .hero-logo.medium .logo-shab,
+            .hero-logo.medium .logo-visuals {
+                font-size: 4rem;
+            }
+
+            .hero-logo.large .logo-shab,
+            .hero-logo.large .logo-visuals {
+                font-size: 7rem;
+            }
+
+            .services-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .services-title {
+                font-size: 2.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .service-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .navbar-logo .logo-shab,
+            .navbar-logo .logo-visuals {
+                font-size: 1.25rem;
+            }
+
+            .hero-logo.medium .logo-shab,
+            .hero-logo.medium .logo-visuals {
+                font-size: 3rem;
+            }
+
+            .hero-logo.large .logo-shab,
+            .hero-logo.large .logo-visuals {
+                font-size: 5rem;
+            }
+
+            .services-section {
+                padding: 3rem 1rem;
+            }
+
+            .services-title {
+                font-size: 2rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
-<body class="bg-black text-white antialiased selection:bg-[#ff66c4] selection:text-white overflow-x-hidden">
-
-    <!-- هدر سایت -->
-    <header class="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
-        <div class="flex items-baseline gap-1 text-2xl md:text-3xl cursor-pointer">
-            <span class="text-gradient-shab uppercase tracking-tighter">Shab</span>
-            <span class="text-gradient-visuals lowercase tracking-widest">visuals</span>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <span class="logo-shab">shab</span>
+            <span class="logo-visuals">visuals</span>
         </div>
-        <button class="text-white hover:text-[#ff66c4] transition-colors">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-        </button>
-    </header>
+    </nav>
 
-    <!-- بخش Hero و انیمیشن ورود -->
-    <section class="relative w-full h-screen flex items-center justify-center overflow-hidden bg-black">
-        
-        <!-- ویدیوی پس‌زمینه -->
-        <video id="hero-video" class="absolute inset-0 w-full h-full object-cover opacity-0 z-0" loop muted playsinline>
-            <source src="showreel.mp4" type="video/mp4">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <video class="hero-video" id="heroVideo" muted loop playsinline>
+            <source src="./video/hero-video.mp4" type="video/mp4">
         </video>
         
-        <!-- لوگوی مرکزی -->
-        <div id="hero-logo" class="relative z-10 opacity-0 transform scale-100 flex items-baseline gap-2 text-4xl md:text-6xl">
-            <span class="text-gradient-shab uppercase tracking-tighter">Shab</span>
-            <span class="text-gradient-visuals lowercase tracking-widest">visuals</span>
-        </div>
-        
-    </section>
-
-    <!-- بخش خدمات -->
-    <section class="py-24 px-6 md:px-12 bg-black relative z-10">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl md:text-5xl mb-16 text-center" style="font-family: 'LOT', sans-serif;">Our Expertise</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="group border-t border-gray-800 pt-6 hover:border-[#5170ff] transition-colors duration-300">
-                    <h3 class="text-xl mb-3 font-bold text-gradient-shab">3D Animation</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed" style="font-family: 'Agrandir', sans-serif;">High-end CGI and 3D motion design that brings imaginative concepts to reality with stunning detail.</p>
-                </div>
-                <div class="group border-t border-gray-800 pt-6 hover:border-[#ff66c4] transition-colors duration-300">
-                    <h3 class="text-xl mb-3 font-bold text-gradient-shab">VFX & Compositing</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed" style="font-family: 'Agrandir', sans-serif;">Seamless visual effects integration and compositing to elevate live-action footage.</p>
-                </div>
-                <div class="group border-t border-gray-800 pt-6 hover:border-[#5170ff] transition-colors duration-300">
-                    <h3 class="text-xl mb-3 font-bold text-gradient-shab">Motion Graphics</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed" style="font-family: 'Agrandir', sans-serif;">Dynamic and engaging 2D/3D motion graphics designed to communicate complex ideas beautifully.</p>
-                </div>
-                <div class="group border-t border-gray-800 pt-6 hover:border-[#ff66c4] transition-colors duration-300">
-                    <h3 class="text-xl mb-3 font-bold text-gradient-shab">Video Editing</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed" style="font-family: 'Agrandir', sans-serif;">Rhythmic, story-driven editing that keeps audiences captivated from the first frame to the last.</p>
-                </div>
+        <div class="hero-content">
+            <div class="hero-logo medium" id="heroLogo">
+                <span class="logo-shab">shab</span>
+                <span class="logo-visuals">visuals</span>
             </div>
         </div>
     </section>
 
-    <!-- اسکریپت کنترل انیمیشن -->
+    <!-- Services Section -->
+    <section class="services-section">
+        <h2 class="services-title">Our Services</h2>
+        
+        <div class="services-grid">
+            <!-- Service 1 -->
+            <div class="service-card">
+                <h3>SaaS & Product Videos</h3>
+                <p>The most important content for online clients. Showcase your product with engaging visuals.</p>
+                <ul class="service-list">
+                    <li>SaaS Promo</li>
+                    <li>App Demo</li>
+                    <li>Product Launch Video</li>
+                </ul>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-card">
+                <h3>Commercial & Promo Ads</h3>
+                <p>Short, impactful ads designed to elevate your brand and drive results.</p>
+                <ul class="service-list">
+                    <li>Luxury Brand Ad</li>
+                    <li>Product Promo</li>
+                    <li>Teaser Video</li>
+                </ul>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-card">
+                <h3>Social Media Content</h3>
+                <p>Optimized content for Instagram, TikTok, and other platforms.</p>
+                <ul class="service-list">
+                    <li>Reels Ads</li>
+                    <li>Short Promo</li>
+                    <li>Instagram Posts/Video Ads</li>
+                </ul>
+            </div>
+
+            <!-- Service 4 -->
+            <div class="service-card">
+                <h3>Motion Graphics & Animation</h3>
+                <p>Bring your ideas to life with stunning motion design and animation.</p>
+                <ul class="service-list">
+                    <li>Motion Graphics</li>
+                    <li>2D Animation</li>
+                    <li>3D Animation</li>
+                    <li>Video Wall / Visual Loops</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const heroLogo = document.getElementById("hero-logo");
-            const heroVideo = document.getElementById("hero-video");
+        // Animation logic
+        const heroLogo = document.getElementById('heroLogo');
+        const heroVideo = document.getElementById('heroVideo');
 
-            // ۱. نمایش لوگو بعد از ۱ ثانیه
-            setTimeout(() => {
-                heroLogo.style.opacity = "1";
-            }, 1000);
+        // Step 1: Show logo at medium size
+        setTimeout(() => {
+            // Step 2: Grow to large size
+            heroLogo.classList.remove('medium');
+            heroLogo.classList.add('large');
+        }, 500);
 
-            // ۲. بزرگ شدن لوگو بعد از ۲.۵ ثانیه
-            setTimeout(() => {
-                heroLogo.style.transform = "scale(3.5)"; 
-            }, 2500);
-
-            // ۳. نمایش و پخش ویدیو بعد از ۴ ثانیه
-            setTimeout(() => {
-                heroVideo.style.opacity = "1";
-                // تلاش برای پخش ویدیو (مرورگرها نیاز به muted دارند که در تگ ویدیو قرار داده شده)
-                let playPromise = heroVideo.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log("Video autoplay prevented by browser:", error);
-                    });
-                }
-            }, 4000);
-        });
+        // Step 3: Show and play video
+        setTimeout(() => {
+            heroVideo.classList.add('visible');
+            heroVideo.play().catch(err => {
+                console.log('Video autoplay failed:', err);
+            });
+        }, 1500);
     </script>
 </body>
 </html>
