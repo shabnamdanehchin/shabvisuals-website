@@ -48,16 +48,21 @@
         .navbar-logo {
             display: flex;
             flex-direction: column;
-            gap: 0;
-            line-height: 0.85;
+            gap: -0.3rem;
+            line-height: 0.75;
         }
 
         .navbar-logo .logo-shab {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
         }
 
         .navbar-logo .logo-visuals {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
+            font-weight: 100;
+            letter-spacing: 0.05em;
+            margin-top: -0.2rem;
         }
 
         /* Hero Section */
@@ -79,11 +84,13 @@
             height: 100%;
             object-fit: cover;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transform: scale(0);
+            transition: all 1s ease-in-out;
         }
 
         .hero-video.visible {
             opacity: 1;
+            transform: scale(1);
         }
 
         .hero-content {
@@ -96,47 +103,51 @@
         .hero-logo {
             display: flex;
             flex-direction: column;
-            gap: 0;
-            line-height: 0.85;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: -0.8rem;
+            line-height: 0.75;
+            opacity: 1;
+            transform: scale(1);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .hero-logo.medium .logo-shab {
-            font-size: 10rem;
+            font-size: 11rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
         }
 
         .hero-logo.medium .logo-visuals {
-            font-size: 7rem;
+            font-size: 5.5rem;
+            font-weight: 100;
+            letter-spacing: 0.05em;
+            margin-top: -0.8rem;
         }
 
         .hero-logo.large .logo-shab {
-            font-size: 16rem;
+            font-size: 18rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
         }
 
         .hero-logo.large .logo-visuals {
-            font-size: 11rem;
+            font-size: 9rem;
+            font-weight: 100;
+            letter-spacing: 0.05em;
+            margin-top: -1.2rem;
         }
 
         /* Logo Styles */
         .logo-shab {
-            background: linear-gradient(90deg, #555555, #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'LOT', sans-serif;
-            font-weight: normal;
-            letter-spacing: -0.02em;
+            color: #ffffff;
+            font-family: 'LOT', 'Arial Black', sans-serif;
+            text-transform: lowercase;
         }
 
         .logo-visuals {
-            background: linear-gradient(90deg, #5170ff, #ff66c4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'Agrandir', sans-serif;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Agrandir', 'Georgia', serif;
             font-style: italic;
-            font-weight: 100;
-            letter-spacing: -0.02em;
+            text-transform: lowercase;
         }
 
         /* Services Section */
@@ -168,6 +179,7 @@
             border-radius: 12px;
             transition: all 0.3s ease;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .service-card:hover {
@@ -230,27 +242,27 @@
             }
 
             .navbar-logo .logo-shab {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .navbar-logo .logo-visuals {
-                font-size: 1.5rem;
+                font-size: 1.1rem;
             }
 
             .hero-logo.medium .logo-shab {
-                font-size: 7rem;
+                font-size: 8rem;
             }
 
             .hero-logo.medium .logo-visuals {
-                font-size: 5rem;
+                font-size: 4rem;
             }
 
             .hero-logo.large .logo-shab {
-                font-size: 12rem;
+                font-size: 14rem;
             }
 
             .hero-logo.large .logo-visuals {
-                font-size: 8.5rem;
+                font-size: 7rem;
             }
 
             .services-section {
@@ -272,27 +284,27 @@
             }
 
             .navbar-logo .logo-shab {
-                font-size: 1.75rem;
+                font-size: 1.9rem;
             }
 
             .navbar-logo .logo-visuals {
-                font-size: 1.3rem;
+                font-size: 0.95rem;
             }
 
             .hero-logo.medium .logo-shab {
-                font-size: 5rem;
+                font-size: 6rem;
             }
 
             .hero-logo.medium .logo-visuals {
-                font-size: 3.5rem;
+                font-size: 3rem;
             }
 
             .hero-logo.large .logo-shab {
-                font-size: 8rem;
+                font-size: 10rem;
             }
 
             .hero-logo.large .logo-visuals {
-                font-size: 5.5rem;
+                font-size: 5rem;
             }
 
             .services-section {
@@ -323,27 +335,27 @@
             }
 
             .navbar-logo .logo-shab {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
 
             .navbar-logo .logo-visuals {
-                font-size: 1.1rem;
+                font-size: 0.8rem;
             }
 
             .hero-logo.medium .logo-shab {
-                font-size: 3.5rem;
+                font-size: 4.5rem;
             }
 
             .hero-logo.medium .logo-visuals {
-                font-size: 2.5rem;
+                font-size: 2.25rem;
             }
 
             .hero-logo.large .logo-shab {
-                font-size: 6rem;
+                font-size: 7rem;
             }
 
             .hero-logo.large .logo-visuals {
-                font-size: 4rem;
+                font-size: 3.5rem;
             }
 
             .services-section {
@@ -393,7 +405,7 @@
         
         <div class="services-grid">
             <!-- Service 1 -->
-            <div class="service-card">
+            <div class="service-card" data-service="saas">
                 <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS & Product Videos" class="service-image">
                 <h3>SaaS & Product Videos</h3>
                 <p>The most important content for online clients. Showcase your product with engaging visuals.</p>
@@ -405,7 +417,7 @@
             </div>
 
             <!-- Service 2 -->
-            <div class="service-card">
+            <div class="service-card" data-service="commercial">
                 <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&h=400&fit=crop" alt="Commercial & Promo Ads" class="service-image">
                 <h3>Commercial & Promo Ads</h3>
                 <p>Short, impactful ads designed to elevate your brand and drive results.</p>
@@ -417,7 +429,7 @@
             </div>
 
             <!-- Service 3 -->
-            <div class="service-card">
+            <div class="service-card" data-service="social">
                 <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Social Media Content" class="service-image">
                 <h3>Social Media Content</h3>
                 <p>Optimized content for Instagram, TikTok, and other platforms.</p>
@@ -429,7 +441,7 @@
             </div>
 
             <!-- Service 4 -->
-            <div class="service-card">
+            <div class="service-card" data-service="motion">
                 <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop" alt="Motion Graphics & Animation" class="service-image">
                 <h3>Motion Graphics & Animation</h3>
                 <p>Bring your ideas to life with stunning motion design and animation.</p>
@@ -444,24 +456,45 @@
     </section>
 
     <script>
-        // Animation logic
+        // Animation logic - logo medium mishavad, baad 1 saniye bozorg mishavad, bad video zohur mikonad
         const heroLogo = document.getElementById('heroLogo');
         const heroVideo = document.getElementById('heroVideo');
 
-        // Step 1: Show logo at medium size
+        // Baad az 1 saniye, logo bozorg mishavad
         setTimeout(() => {
-            // Step 2: Grow to large size
             heroLogo.classList.remove('medium');
             heroLogo.classList.add('large');
-        }, 500);
+        }, 1000);
 
-        // Step 3: Show and play video
+        // Baad az 2 saniye, video zohur mikonad va play mishavad
         setTimeout(() => {
             heroVideo.classList.add('visible');
             heroVideo.play().catch(err => {
                 console.log('Video autoplay failed:', err);
             });
-        }, 1500);
+        }, 2000);
+
+        // Service card click handling
+        const serviceCards = document.querySelectorAll('.service-card');
+        
+        serviceCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const serviceName = this.getAttribute('data-service');
+                
+                // Link haye har service
+                const serviceLinks = {
+                    'saas': '/services/saas-product-videos',
+                    'commercial': '/services/commercial-promo',
+                    'social': '/services/social-media',
+                    'motion': '/services/motion-graphics'
+                };
+                
+                // Agar link baraye in service vojud darad, safhe ra baz kon
+                if (serviceLinks[serviceName]) {
+                    window.location.href = serviceLinks[serviceName];
+                }
+            });
+        });
     </script>
 </body>
 </html>
