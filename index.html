@@ -1,126 +1,132 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShabVisuals | Professional AI Video Production</title>
+    <title>Shab Visuals</title>
+    <!-- استفاده از Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-gray-900 text-gray-100 font-sans antialiased">
+    <style>
+        /* فراخوانی فونت‌های سفارشی (باید فایل فونت‌ها را در پوشه آپلود کنید) */
+        @font-face {
+            font-family: 'LOT';
+            src: url('LOT.ttf') format('truetype'); /* نام فایل فونت خود را جایگزین کنید */
+        }
+        @font-face {
+            font-family: 'Agrandir Grand';
+            src: url('AgrandirGrand.ttf') format('truetype'); /* نام فایل فونت خود را جایگزین کنید */
+        }
 
-    <!-- Header / Navbar -->
-    <header class="fixed w-full bg-gray-900/90 backdrop-blur-sm z-50 border-b border-gray-800">
-        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Logo Section -->
-            <a href="#" class="flex items-center gap-2">
-                <!-- اگر اسم یا فرمت لوگوی شما فرق دارد، نام logo.png را در خط زیر تغییر دهید -->
-                <img src="logo.png" alt="ShabVisuals Logo" class="h-64 w-auto object-contain">
-            </a>
-            
-            <!-- Navigation -->
-            <nav class="hidden md:flex gap-8">
-                <a href="#services" class="hover:text-indigo-400 transition">Services</a>
-                <a href="#portfolio" class="hover:text-indigo-400 transition">Portfolio</a>
-                <a href="#contact" class="hover:text-indigo-400 transition">Contact</a>
-            </nav>
+        /* استایل‌های اختصاصی لوگو */
+        .custom-logo {
+            display: flex;
+            align-items: baseline;
+            gap: 8px; /* فاصله بین دو کلمه */
+        }
+
+        .shab-text {
+            font-family: 'LOT', sans-serif;
+            /* استفاده از سایز ریسپانسیو (کوچک شده برای وب) */
+            font-size: clamp(40px, 8vw, 118px); 
+            background: linear-gradient(90deg, #000000, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+        }
+
+        .visuals-text {
+            font-family: 'Agrandir Grand', sans-serif;
+            font-size: clamp(12px, 2vw, 25px);
+            background: linear-gradient(90deg, #5170ff, #ff66c4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+        }
+
+        /* انیمیشن لود سایت الهام گرفته از Monks */
+        @keyframes growLogo {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .animate-grow {
+            animation: growLogo 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* استایل ویدیو پس زمینه */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4; /* تاریک کردن ویدیو برای خوانایی متن */
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white font-sans antialiased overflow-x-hidden">
+
+    <!-- نوار ناوبری (Header) -->
+    <header class="fixed top-0 w-full p-6 z-50 flex justify-between items-center mix-blend-difference">
+        <!-- لوگوی انیمیشن‌دار -->
+        <div class="custom-logo animate-grow">
+            <span class="shab-text">shab</span>
+            <span class="visuals-text">visuals</span>
         </div>
+        
+        <nav class="hidden md:flex gap-8 text-sm tracking-widest uppercase">
+            <a href="#work" class="hover:text-gray-400 transition-colors">Work</a>
+            <a href="#services" class="hover:text-gray-400 transition-colors">Services</a>
+            <a href="#contact" class="hover:text-gray-400 transition-colors">Contact</a>
+        </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="pt-40 pb-20 px-6 max-w-6xl mx-auto text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Professional <span class="text-indigo-500">AI-Powered</span><br> Video Production
-        </h1>
-        <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
-            Elevate your brand with cutting-edge SaaS promos, commercial ads, and engaging social media content.
-        </p>
-        <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full font-medium transition">
-            Start a Project
-        </a>
+    <!-- بخش اصلی (Hero Section) -->
+    <section class="relative h-screen flex flex-col justify-center items-center text-center px-4">
+        <!-- ویدیو بک‌گراند (لینک ویدیو خود را در src جایگزین کنید) -->
+        <video autoplay loop muted playsinline class="video-background">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+
+        <div class="z-10 animate-grow" style="animation-delay: 0.3s;">
+            <h1 class="text-5xl md:text-8xl font-bold mb-6 tracking-tighter">Digital Experience</h1>
+            <p class="text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto">We craft immersive digital stories and visual identities.</p>
+        </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-20 bg-gray-800/50">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-12 text-center">Our Services</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                
-                <!-- Service 1 -->
-                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-indigo-500 transition">
-                    <i class="fa-solid fa-laptop-code text-3xl text-indigo-400 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3">SaaS & Product Videos</h3>
-                    <ul class="text-gray-400 space-y-2">
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>SaaS Promos</li>
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>App Demos</li>
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Product Launch Videos</li>
-                    </ul>
-                </div>
-
-                <!-- Service 2 -->
-                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-indigo-500 transition">
-                    <i class="fa-solid fa-bullhorn text-3xl text-indigo-400 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3">Commercial & Promo Ads</h3>
-                    <ul class="text-gray-400 space-y-2">
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Luxury Brand Ads</li>
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Product Promos</li>
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Teaser Videos</li>
-                    </ul>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-indigo-500 transition">
-                    <i class="fa-brands fa-instagram text-3xl text-indigo-400 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3">Social Media Content</h3>
-                    <ul class="text-gray-400 space-y-2">
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Reels Ads</li>
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Short Promos</li>
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Instagram Posts & Video Ads</li>
-                    </ul>
-                </div>
-
-                <!-- Service 4 -->
-                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-indigo-500 transition">
-                    <i class="fa-solid fa-cube text-3xl text-indigo-400 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-3">Motion Graphics & Animation</h3>
-                    <ul class="text-gray-400 space-y-2">
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Motion Graphics</li>
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>2D & 3D Animation</li>
-                        <li><i class="fa-solid fa-check text-indigo-500 mr-2"></i>Video Walls / Visual Loops</li>
-                    </ul>
-                </div>
-
+    <!-- بخش خدمات (Services) -->
+    <section id="services" class="py-32 px-6 md:px-20 bg-zinc-900">
+        <h2 class="text-4xl md:text-6xl font-bold mb-16 border-b border-zinc-800 pb-8">Our Capabilities</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div>
+                <h3 class="text-2xl font-semibold mb-4 text-[#5170ff]">Visual Design</h3>
+                <p class="text-gray-400 leading-relaxed">Creating stunning, memorable aesthetics that elevate your brand identity.</p>
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold mb-4 text-[#ff66c4]">Web Development</h3>
+                <p class="text-gray-400 leading-relaxed">Building fluid, high-performance websites with cutting-edge technologies.</p>
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold mb-4 text-white">Motion & 3D</h3>
+                <p class="text-gray-400 leading-relaxed">Bringing ideas to life through engaging animations and immersive 3D experiences.</p>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="py-20 px-6 text-center">
-        <h2 class="text-3xl font-bold mb-6">Portfolio</h2>
-        <div class="py-16 bg-gray-800 rounded-2xl border border-gray-700 max-w-4xl mx-auto">
-            <i class="fa-solid fa-hourglass-half text-4xl text-gray-500 mb-4"></i>
-            <p class="text-gray-400 text-lg">Coming Soon...</p>
-        </div>
-    </section>
-
-    <!-- Footer / Contact -->
-    <footer id="contact" class="bg-gray-950 py-12 border-t border-gray-800">
-        <div class="max-w-6xl mx-auto px-6 text-center">
-            <h2 class="text-2xl font-bold mb-8">Get In Touch</h2>
-            <div class="flex justify-center gap-6 mb-8">
-                <!-- لینک‌های خود را به جای علامت # قرار دهید -->
-                <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition text-xl">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition text-xl">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </a>
-                <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition text-xl">
-                    <i class="fa-regular fa-envelope"></i>
-                </a>
-            </div>
-            <p class="text-gray-600 text-sm">© 2024 ShabVisuals. All rights reserved.</p>
-        </div>
+    <!-- فوتر -->
+    <footer class="py-12 text-center border-t border-zinc-800 bg-zinc-950">
+        <p class="text-zinc-500 text-sm">© 2026 Shab Visuals. All rights reserved.</p>
     </footer>
 
 </body>
