@@ -10,6 +10,7 @@
             src: url('./fonts/Lot-Regular.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
+            font-display: swap;
         }
 
         @font-face {
@@ -17,6 +18,7 @@
             src: url('./fonts/Agrandir-Thin-Italic.otf') format('opentype');
             font-weight: 100;
             font-style: italic;
+            font-display: swap;
         }
 
         * {
@@ -47,15 +49,15 @@
             display: flex;
             flex-direction: column;
             gap: 0;
-            line-height: 0.9;
+            line-height: 0.85;
         }
 
         .navbar-logo .logo-shab {
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
 
         .navbar-logo .logo-visuals {
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
 
         /* Hero Section */
@@ -95,24 +97,24 @@
             display: flex;
             flex-direction: column;
             gap: 0;
-            line-height: 0.9;
+            line-height: 0.85;
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .hero-logo.medium .logo-shab {
-            font-size: 8rem;
+            font-size: 10rem;
         }
 
         .hero-logo.medium .logo-visuals {
-            font-size: 8rem;
+            font-size: 7rem;
         }
 
         .hero-logo.large .logo-shab {
-            font-size: 14rem;
+            font-size: 16rem;
         }
 
         .hero-logo.large .logo-visuals {
-            font-size: 14rem;
+            font-size: 11rem;
         }
 
         /* Logo Styles */
@@ -165,12 +167,22 @@
             padding: 2.5rem;
             border-radius: 12px;
             transition: all 0.3s ease;
+            overflow: hidden;
         }
 
         .service-card:hover {
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-5px);
+        }
+
+        .service-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .service-card h3 {
@@ -217,19 +229,28 @@
                 padding: 1.5rem 2rem;
             }
 
-            .navbar-logo .logo-shab,
+            .navbar-logo .logo-shab {
+                font-size: 2rem;
+            }
+
             .navbar-logo .logo-visuals {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
             }
 
-            .hero-logo.medium .logo-shab,
+            .hero-logo.medium .logo-shab {
+                font-size: 7rem;
+            }
+
             .hero-logo.medium .logo-visuals {
-                font-size: 6rem;
+                font-size: 5rem;
             }
 
-            .hero-logo.large .logo-shab,
+            .hero-logo.large .logo-shab {
+                font-size: 12rem;
+            }
+
             .hero-logo.large .logo-visuals {
-                font-size: 10rem;
+                font-size: 8.5rem;
             }
 
             .services-section {
@@ -250,19 +271,28 @@
                 padding: 1rem 1.5rem;
             }
 
-            .navbar-logo .logo-shab,
+            .navbar-logo .logo-shab {
+                font-size: 1.75rem;
+            }
+
             .navbar-logo .logo-visuals {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
 
-            .hero-logo.medium .logo-shab,
+            .hero-logo.medium .logo-shab {
+                font-size: 5rem;
+            }
+
             .hero-logo.medium .logo-visuals {
-                font-size: 4rem;
+                font-size: 3.5rem;
             }
 
-            .hero-logo.large .logo-shab,
+            .hero-logo.large .logo-shab {
+                font-size: 8rem;
+            }
+
             .hero-logo.large .logo-visuals {
-                font-size: 7rem;
+                font-size: 5.5rem;
             }
 
             .services-section {
@@ -281,6 +311,10 @@
             .service-card {
                 padding: 2rem;
             }
+
+            .service-image {
+                height: 180px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -288,19 +322,28 @@
                 padding: 1rem;
             }
 
-            .navbar-logo .logo-shab,
+            .navbar-logo .logo-shab {
+                font-size: 1.5rem;
+            }
+
             .navbar-logo .logo-visuals {
-                font-size: 1.25rem;
+                font-size: 1.1rem;
             }
 
-            .hero-logo.medium .logo-shab,
+            .hero-logo.medium .logo-shab {
+                font-size: 3.5rem;
+            }
+
             .hero-logo.medium .logo-visuals {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
-            .hero-logo.large .logo-shab,
+            .hero-logo.large .logo-shab {
+                font-size: 6rem;
+            }
+
             .hero-logo.large .logo-visuals {
-                font-size: 5rem;
+                font-size: 4rem;
             }
 
             .services-section {
@@ -313,6 +356,10 @@
 
             .service-card h3 {
                 font-size: 1.5rem;
+            }
+
+            .service-image {
+                height: 150px;
             }
         }
     </style>
@@ -329,7 +376,7 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <video class="hero-video" id="heroVideo" muted loop playsinline>
-            <source src="./video/hero-video.mp4" type="video/mp4">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-blue-waves-1410-large.mp4" type="video/mp4">
         </video>
         
         <div class="hero-content">
@@ -347,6 +394,7 @@
         <div class="services-grid">
             <!-- Service 1 -->
             <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS & Product Videos" class="service-image">
                 <h3>SaaS & Product Videos</h3>
                 <p>The most important content for online clients. Showcase your product with engaging visuals.</p>
                 <ul class="service-list">
@@ -358,6 +406,7 @@
 
             <!-- Service 2 -->
             <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&h=400&fit=crop" alt="Commercial & Promo Ads" class="service-image">
                 <h3>Commercial & Promo Ads</h3>
                 <p>Short, impactful ads designed to elevate your brand and drive results.</p>
                 <ul class="service-list">
@@ -369,6 +418,7 @@
 
             <!-- Service 3 -->
             <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Social Media Content" class="service-image">
                 <h3>Social Media Content</h3>
                 <p>Optimized content for Instagram, TikTok, and other platforms.</p>
                 <ul class="service-list">
@@ -380,6 +430,7 @@
 
             <!-- Service 4 -->
             <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop" alt="Motion Graphics & Animation" class="service-image">
                 <h3>Motion Graphics & Animation</h3>
                 <p>Bring your ideas to life with stunning motion design and animation.</p>
                 <ul class="service-list">
