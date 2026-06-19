@@ -4,29 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shab Visuals</title>
-    <!-- استفاده از Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* فراخوانی فونت‌های سفارشی (باید فایل فونت‌ها را در پوشه آپلود کنید) */
+        /* فراخوانی فونت‌ها */
         @font-face {
             font-family: 'LOT';
-            src: url('LOT.ttf') format('truetype'); /* نام فایل فونت خود را جایگزین کنید */
+            src: url('LOT.ttf') format('truetype'); 
         }
         @font-face {
             font-family: 'Agrandir Grand';
-            src: url('AgrandirGrand.ttf') format('truetype'); /* نام فایل فونت خود را جایگزین کنید */
+            src: url('AgrandirGrand.ttf') format('truetype'); 
         }
 
-        /* استایل‌های اختصاصی لوگو */
+        /* استایل لوگو */
         .custom-logo {
             display: flex;
             align-items: baseline;
-            gap: 8px; /* فاصله بین دو کلمه */
+            gap: 8px;
         }
 
         .shab-text {
             font-family: 'LOT', sans-serif;
-            /* استفاده از سایز ریسپانسیو (کوچک شده برای وب) */
             font-size: clamp(40px, 8vw, 118px); 
             background: linear-gradient(90deg, #000000, #ffffff);
             -webkit-background-clip: text;
@@ -47,22 +45,7 @@
             line-height: 1;
         }
 
-        /* انیمیشن لود سایت الهام گرفته از Monks */
-        @keyframes growLogo {
-            0% {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        .animate-grow {
-            animation: growLogo 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        }
-
-        /* استایل ویدیو پس زمینه */
+        /* ویدیوی پس زمینه */
         .video-background {
             position: absolute;
             top: 0;
@@ -71,22 +54,52 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.4; /* تاریک کردن ویدیو برای خوانایی متن */
+            opacity: 0.5;
+        }
+
+        /* --- انیمیشن زوم برای صفحه ورود --- */
+        #intro-screen {
+            transition: opacity 0.5s ease-out;
+        }
+        
+        @keyframes zoomInAndFade {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            40% {
+                transform: scale(0.9); /* یک عقب‌نشینی کوچک قبل از زوم برای جذابیت */
+                opacity: 1;
+            }
+            100% {
+                transform: scale(50); /* زوم بسیار زیاد */
+                opacity: 0;
+            }
+        }
+
+        .animate-mega-zoom {
+            animation: zoomInAndFade 1.5s cubic-bezier(0.7, 0, 0.3, 1) forwards;
         }
     </style>
 </head>
 <body class="bg-zinc-950 text-white font-sans antialiased overflow-x-hidden">
 
-    <!-- نوار ناوبری (Header) -->
-    <header class="fixed top-0 w-full p-6 z-50 flex justify-between items-center mix-blend-difference">
-        <!-- لوگوی انیمیشن‌دار -->
-        <div class="custom-logo animate-grow">
+    <!-- صفحه ورود (Intro Overlay) -->
+    <div id="intro-screen" class="fixed inset-0 bg-zinc-950 z-[100] flex justify-center items-center">
+        <div class="custom-logo" id="intro-logo">
+            <span class="shab-text" style="background: linear-gradient(90deg, #555, #ffffff); -webkit-background-clip: text;">shab</span>
+            <span class="visuals-text">visuals</span>
+        </div>
+    </div>
+
+    <!-- نوار ناوبری -->
+    <header class="fixed top-0 w-full p-6 z-50 flex justify-between items-center mix-blend-difference opacity-0 transition-opacity duration-1000" id="main-header">
+        <div class="custom-logo" style="transform: scale(0.6); transform-origin: left top;">
             <span class="shab-text">shab</span>
             <span class="visuals-text">visuals</span>
         </div>
         
         <nav class="hidden md:flex gap-8 text-sm tracking-widest uppercase">
-            <a href="#work" class="hover:text-gray-400 transition-colors">Work</a>
             <a href="#services" class="hover:text-gray-400 transition-colors">Services</a>
             <a href="#contact" class="hover:text-gray-400 transition-colors">Contact</a>
         </nav>
@@ -94,40 +107,106 @@
 
     <!-- بخش اصلی (Hero Section) -->
     <section class="relative h-screen flex flex-col justify-center items-center text-center px-4">
-        <!-- ویدیو بک‌گراند (لینک ویدیو خود را در src جایگزین کنید) -->
-        <video autoplay loop muted playsinline class="video-background">
+        <!-- ویدیو بک‌گراند -->
+        <video id="hero-video" loop muted playsinline class="video-background">
+            <!-- لینک ویدیوی خود را اینجا قرار دهید -->
             <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
         </video>
 
-        <div class="z-10 animate-grow" style="animation-delay: 0.3s;">
-            <h1 class="text-5xl md:text-8xl font-bold mb-6 tracking-tighter">Digital Experience</h1>
-            <p class="text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto">We craft immersive digital stories and visual identities.</p>
+        <div class="z-10 opacity-0 transition-opacity duration-1000 translate-y-10" id="hero-content">
+            <h1 class="text-5xl md:text-8xl font-bold mb-6 tracking-tighter">Visual Excellence</h1>
+            <p class="text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto">We bring your imagination to life.</p>
         </div>
     </section>
 
     <!-- بخش خدمات (Services) -->
     <section id="services" class="py-32 px-6 md:px-20 bg-zinc-900">
-        <h2 class="text-4xl md:text-6xl font-bold mb-16 border-b border-zinc-800 pb-8">Our Capabilities</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <h2 class="text-4xl md:text-6xl font-bold mb-16 border-b border-zinc-800 pb-8">Our Services</h2>
+        <!-- تبدیل به گرید 2x2 برای 4 سرویس -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+            
+            <!-- سرویس 1 -->
             <div>
-                <h3 class="text-2xl font-semibold mb-4 text-[#5170ff]">Visual Design</h3>
-                <p class="text-gray-400 leading-relaxed">Creating stunning, memorable aesthetics that elevate your brand identity.</p>
+                <h3 class="text-2xl font-semibold mb-2 text-[#5170ff]">SaaS & Product Videos</h3>
+                <p class="text-sm text-zinc-500 mb-6 uppercase tracking-widest">Crucial for Online Businesses</p>
+                <ul class="text-gray-300 space-y-2 list-disc list-inside">
+                    <li>SaaS promo</li>
+                    <li>App demo</li>
+                    <li>Product launch video</li>
+                </ul>
             </div>
+
+            <!-- سرویس 2 -->
             <div>
-                <h3 class="text-2xl font-semibold mb-4 text-[#ff66c4]">Web Development</h3>
-                <p class="text-gray-400 leading-relaxed">Building fluid, high-performance websites with cutting-edge technologies.</p>
+                <h3 class="text-2xl font-semibold mb-2 text-[#ff66c4]">Commercial & Promo Ads</h3>
+                <p class="text-sm text-zinc-500 mb-6 uppercase tracking-widest">Short ads for Brands</p>
+                <ul class="text-gray-300 space-y-2 list-disc list-inside">
+                    <li>Luxury brand ad</li>
+                    <li>Product promo</li>
+                    <li>Teaser video</li>
+                </ul>
             </div>
+
+            <!-- سرویس 3 -->
             <div>
-                <h3 class="text-2xl font-semibold mb-4 text-white">Motion & 3D</h3>
-                <p class="text-gray-400 leading-relaxed">Bringing ideas to life through engaging animations and immersive 3D experiences.</p>
+                <h3 class="text-2xl font-semibold mb-2 text-white">Social Media Content</h3>
+                <p class="text-sm text-zinc-500 mb-6 uppercase tracking-widest">Tailored for Instagram & TikTok</p>
+                <ul class="text-gray-300 space-y-2 list-disc list-inside">
+                    <li>Reels ads</li>
+                    <li>Short promo</li>
+                    <li>Instagram posts / Video ads</li>
+                </ul>
             </div>
+
+            <!-- سرویس 4 -->
+            <div>
+                <h3 class="text-2xl font-semibold mb-2 text-[#5170ff]">Motion Graphics & Animation</h3>
+                <p class="text-sm text-zinc-500 mb-6 uppercase tracking-widest">Engaging Visual Experiences</p>
+                <ul class="text-gray-300 space-y-2 list-disc list-inside">
+                    <li>Motion graphics</li>
+                    <li>2D animation</li>
+                    <li>3D animation</li>
+                    <li>Video wall / Visual loops</li>
+                </ul>
+            </div>
+
         </div>
     </section>
 
-    <!-- فوتر -->
     <footer class="py-12 text-center border-t border-zinc-800 bg-zinc-950">
         <p class="text-zinc-500 text-sm">© 2026 Shab Visuals. All rights reserved.</p>
     </footer>
 
+    <!-- کدهای جاوا اسکریپت برای کنترل انیمیشن ورود و پخش ویدیو -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const introScreen = document.getElementById('intro-screen');
+            const introLogo = document.getElementById('intro-logo');
+            const heroVideo = document.getElementById('hero-video');
+            const header = document.getElementById('main-header');
+            const heroContent = document.getElementById('hero-content');
+
+            // یک ثانیه مکث برای دیده شدن لوگو
+            setTimeout(() => {
+                // شروع انیمیشن زوم
+                introLogo.classList.add('animate-mega-zoom');
+                
+                // وقتی انیمیشن در حال اتمام است (بعد از 1.2 ثانیه)
+                setTimeout(() => {
+                    introScreen.style.opacity = '0';
+                    introScreen.style.pointerEvents = 'none'; // غیرقابل کلیک شدن لایه ورود
+                    
+                    // پخش ویدیو
+                    heroVideo.play();
+
+                    // نمایش محتوای سایت (هدر و متن روی ویدیو)
+                    header.classList.remove('opacity-0');
+                    heroContent.classList.remove('opacity-0', 'translate-y-10');
+                    
+                }, 1200);
+
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
