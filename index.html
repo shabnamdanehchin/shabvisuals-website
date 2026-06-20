@@ -1,424 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shab Visuals</title>
-    <style>
-        @font-face {
-            font-family: 'LOT';
-            src: url('Lot-Regular.otf') format('opentype');
-            font-display: swap;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shab Visuals</title>
+  <style>
+    @font-face {
+      font-family: 'LOT';
+      src: url('Lot-Regular.otf') format('opentype');
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Agrandir';
+      src: url('Agrandir-Thin-Italic.otf') format('opentype');
+      font-style: italic;
+      font-display: swap;
+    }
 
-        @font-face {
-            font-family: 'Agrandir';
-            src: url('Agrandir-Thin-Italic.otf') format('opentype');
-            font-display: swap;
-            font-style: italic;
-            font-weight: 100;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: sans-serif;
+      overflow-x: hidden;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #000;
-            color: #fff;
-            overflow-x: hidden;
-        }
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+    }
 
-        .text-gradient-shab {
-            background: linear-gradient(90deg, #555555, #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'LOT', sans-serif;
-        }
+    .nav-logo {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1;
+    }
 
-        .text-gradient-visuals {
-            background: linear-gradient(90deg, #5170ff, #ff66c4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'Agrandir', sans-serif;
-            font-style: italic;
-        }
+    .nav-shab {
+      font-family: 'LOT', sans-serif;
+      font-size: 28px;
+      font-style: normal;
+      background: linear-gradient(90deg, #555555, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 2;
+      line-height: 1;
+    }
 
-        /* ─── Navbar ─── */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem 4rem;
-            z-index: 1000;
-        }
+    .nav-visuals {
+      font-family: 'Agrandir', sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      z-index: 3;
+      line-height: 1;
+    }
 
-        .navbar-logo {
-            display: inline-flex;
-            flex-direction: column;
-            position: relative;
-        }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+    nav ul li a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover { color: #fff; }
 
-        .navbar-logo .logo-shab {
-            font-size: 2.8rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            line-height: 1;
-        }
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-        .navbar-logo .logo-visuals {
-            font-size: 1.4rem;
-            font-weight: 100;
-            letter-spacing: 0.05em;
-            margin-top: 0.3rem;
-        }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity 1s ease, transform 1.5s ease;
+      z-index: 0;
+    }
+    .hero-video.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-        /* خطوط navbar */
-        .navbar-logo .line-top,
-        .navbar-logo .line-bottom {
-            position: absolute;
-            height: 1.5px;
-            width: 55%;
-            background: linear-gradient(90deg, #5170ff, #ff66c4);
-            border-radius: 2px;
-        }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .hero-overlay.visible { opacity: 1; }
 
-        /* خط بالای AB — سمت راست، بالای shab */
-        .navbar-logo .line-top {
-            top: 0;
-            right: 0;
-        }
+    /* Hero Logo */
+    .hero-logo {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: transform 1s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease;
+    }
+    .hero-logo.show {
+      opacity: 1;
+      transform: scale(0.85);
+    }
+    .hero-logo.expand {
+      transform: scale(1);
+    }
 
-        /* خط زیر SH — سمت چپ، پایین shab */
-        .navbar-logo .line-bottom {
-            bottom: calc(1.4rem + 0.3rem); /* بالای visuals */
-            left: 0;
-        }
+    /* shab wrapper: خطوط relative به این هستن */
+    .hero-shab-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 1;
+    }
 
-        /* ─── Hero ─── */
-        .hero-section {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+    .hero-shab {
+      font-family: 'LOT', sans-serif;
+      font-size: clamp(80px, 18vw, 180px);
+      font-style: normal;
+      background: linear-gradient(90deg, #555555, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      display: block;
+    }
 
-        .hero-video {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transform: scale(1.1);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-        }
+    /* visuals: وسط عمودی شابه */
+    .hero-visuals {
+      font-family: 'Agrandir', sans-serif;
+      font-size: clamp(16px, 3.5vw, 36px);
+      font-style: italic;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      line-height: 1;
+      z-index: 3;
+    }
 
-        .hero-video.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
+    /* خطوط */
+    .hero-line {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 45%;          /* کوتاه‌تر از قبل */
+      height: 1.5px;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+    }
 
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
+    /* خط بالا: بالای وسط شاب (کمی بالاتر از visuals) */
+    .hero-line-top {
+      top: 38%;
+    }
 
-        /* ─── Hero Logo Wrapper ─── */
-        .hero-logo-wrapper {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: flex-start;
-            position: relative;
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    /* خط پایین: پایین وسط شاب (کمی پایین‌تر از visuals) */
+    .hero-line-bottom {
+      top: 62%;
+    }
 
-        .hero-logo-wrapper .logo-shab {
-            font-size: 10rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            line-height: 1;
-            transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
+    /* ── SERVICES ── */
+    .services {
+      padding: 120px 48px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .services h2 {
+      font-size: 48px;
+      font-weight: 300;
+      margin-bottom: 64px;
+      color: #fff;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+    .service-card {
+      display: block;
+      text-decoration: none;
+      background: #111;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .service-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+    .service-card-body { padding: 24px; }
+    .service-card-body h3 {
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .service-card-body p {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .service-card-body ul {
+      list-style: none;
+      padding: 0;
+    }
+    .service-card-body ul li {
+      font-size: 13px;
+      color: #666;
+      padding: 3px 0;
+    }
+    .service-card-body ul li::before {
+      content: '→ ';
+      color: #5170ff;
+    }
 
-        .hero-logo-wrapper .logo-visuals {
-            font-size: 5rem;
-            font-weight: 100;
-            letter-spacing: 0.05em;
-            margin-top: 0.5rem;
-            transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1), margin-top 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* خطوط hero */
-        .hero-logo-wrapper .line-top,
-        .hero-logo-wrapper .line-bottom {
-            position: absolute;
-            height: 2px;
-            width: 55%;
-            background: linear-gradient(90deg, #5170ff, #ff66c4);
-            border-radius: 2px;
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* خط بالای AB — راست بالا */
-        .hero-logo-wrapper .line-top {
-            top: 0;
-            right: 0;
-        }
-
-        /* خط زیر SH — چپ پایین shab */
-        .hero-logo-wrapper .line-bottom {
-            /* bottom از پایین wrapper = ارتفاع visuals + margin */
-            bottom: calc(5rem + 0.5rem);
-            left: 0;
-        }
-
-        /* Large state */
-        .hero-logo-wrapper.large .logo-shab {
-            font-size: 18rem;
-        }
-
-        .hero-logo-wrapper.large .logo-visuals {
-            font-size: 9rem;
-            margin-top: 0.9rem;
-        }
-
-        .hero-logo-wrapper.large .line-bottom {
-            bottom: calc(9rem + 0.9rem);
-        }
-
-        /* ─── Services ─── */
-        .services-section {
-            padding: 8rem 4rem;
-            background: #000;
-        }
-
-        .services-title {
-            font-size: 4rem;
-            font-weight: 300;
-            margin-bottom: 4rem;
-            text-align: center;
-            letter-spacing: -0.02em;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 2.5rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            overflow: hidden;
-            cursor: pointer;
-            text-decoration: none;
-            display: block;
-            color: inherit;
-        }
-
-        .service-card:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(255,255,255,0.2);
-            transform: translateY(-5px);
-        }
-
-        .service-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-
-        .service-card h3 {
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, #5170ff, #ff66c4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .service-card p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 1.5rem;
-        }
-
-        .service-list {
-            list-style: none;
-        }
-
-        .service-list li {
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.6);
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .service-list li:last-child { border-bottom: none; }
-
-        .service-list li::before {
-            content: '→';
-            margin-right: 0.75rem;
-            color: #5170ff;
-        }
-
-        /* ─── Responsive ─── */
-        @media (max-width: 1024px) {
-            .navbar { padding: 1.5rem 2rem; }
-            .navbar-logo .logo-shab { font-size: 2.2rem; }
-            .navbar-logo .logo-visuals { font-size: 1.1rem; }
-            .hero-logo-wrapper .logo-shab { font-size: 7rem; }
-            .hero-logo-wrapper .logo-visuals { font-size: 3.5rem; }
-            .hero-logo-wrapper .line-bottom { bottom: calc(3.5rem + 0.5rem); }
-            .hero-logo-wrapper.large .logo-shab { font-size: 13rem; }
-            .hero-logo-wrapper.large .logo-visuals { font-size: 6.5rem; }
-            .hero-logo-wrapper.large .line-bottom { bottom: calc(6.5rem + 0.9rem); }
-        }
-
-        @media (max-width: 768px) {
-            .navbar { padding: 1rem 1.5rem; }
-            .navbar-logo .logo-shab { font-size: 1.9rem; }
-            .navbar-logo .logo-visuals { font-size: 0.95rem; }
-            .hero-logo-wrapper .logo-shab { font-size: 5rem; }
-            .hero-logo-wrapper .logo-visuals { font-size: 2.5rem; }
-            .hero-logo-wrapper .line-bottom { bottom: calc(2.5rem + 0.5rem); }
-            .hero-logo-wrapper.large .logo-shab { font-size: 9rem; }
-            .hero-logo-wrapper.large .logo-visuals { font-size: 4.5rem; }
-            .hero-logo-wrapper.large .line-bottom { bottom: calc(4.5rem + 0.9rem); }
-        }
-
-        @media (max-width: 480px) {
-            .navbar { padding: 1rem; }
-            .navbar-logo .logo-shab { font-size: 1.6rem; }
-            .navbar-logo .logo-visuals { font-size: 0.8rem; }
-            .hero-logo-wrapper .logo-shab { font-size: 3.8rem; }
-            .hero-logo-wrapper .logo-visuals { font-size: 1.9rem; }
-            .hero-logo-wrapper .line-bottom { bottom: calc(1.9rem + 0.5rem); }
-            .hero-logo-wrapper.large .logo-shab { font-size: 6.5rem; }
-            .hero-logo-wrapper.large .logo-visuals { font-size: 3.25rem; }
-            .hero-logo-wrapper.large .line-bottom { bottom: calc(3.25rem + 0.9rem); }
-        }
-    </style>
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 48px;
+      color: #444;
+      font-size: 13px;
+      border-top: 1px solid #1a1a1a;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="navbar-logo">
-            <!-- خط بالای AB -->
-            <div class="line-top"></div>
-            <span class="logo-shab text-gradient-shab">shab</span>
-            <!-- خط زیر SH -->
-            <div class="line-bottom"></div>
-            <span class="logo-visuals text-gradient-visuals">visuals</span>
-        </div>
-    </nav>
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-shab">shab</span>
+    <span class="nav-visuals">visuals</span>
+  </div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <video class="hero-video" id="heroVideo" muted loop playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-blue-waves-1410-large.mp4" type="video/mp4">
-        </video>
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline
+    src="https://assets.mixkit.co/videos/preview/mixkit-abstract-blue-waves-1410-large.mp4">
+  </video>
+  <div class="hero-overlay"></div>
 
-        <div class="hero-content">
-            <div class="hero-logo-wrapper" id="heroLogo">
-                <!-- خط بالای AB -->
-                <div class="line-top"></div>
-                <span class="logo-shab text-gradient-shab">shab</span>
-                <!-- خط زیر SH -->
-                <div class="line-bottom"></div>
-                <span class="logo-visuals text-gradient-visuals">visuals</span>
-            </div>
-        </div>
-    </section>
+  <div class="hero-logo" id="heroLogo">
+    <div class="hero-shab-wrap">
+      <span class="hero-shab">shab</span>
+      <span class="hero-visuals">visuals</span>
+      <div class="hero-line hero-line-top"></div>
+      <div class="hero-line hero-line-bottom"></div>
+    </div>
+  </div>
+</section>
 
-    <!-- Services Section -->
-    <section class="services-section">
-        <h2 class="services-title">Our Services</h2>
-        <div class="services-grid">
+<!-- SERVICES -->
+<section class="services" id="services">
+  <h2>What We Do</h2>
+  <div class="services-grid">
 
-            <a class="service-card" href="/services/saas-product-videos">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS & Product Videos" class="service-image">
-                <h3>SaaS & Product Videos</h3>
-                <p>Showcase your product with engaging visuals that convert.</p>
-                <ul class="service-list">
-                    <li>SaaS Promo</li>
-                    <li>App Demo</li>
-                    <li>Product Launch Video</li>
-                </ul>
-            </a>
+    <a class="service-card" href="#">
+      <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e2b6?w=600&q=80" alt="Video Production" />
+      <div class="service-card-body">
+        <h3>Video Production</h3>
+        <p>Cinematic storytelling that moves your audience — from concept to final cut.</p>
+        <ul>
+          <li>Brand Films</li>
+          <li>Music Videos</li>
+          <li>Documentary</li>
+        </ul>
+      </div>
+    </a>
 
-            <a class="service-card" href="/services/commercial-promo">
-                <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&h=400&fit=crop" alt="Commercial & Promo Ads" class="service-image">
-                <h3>Commercial & Promo Ads</h3>
-                <p>Short, impactful ads designed to elevate your brand.</p>
-                <ul class="service-list">
-                    <li>Luxury Brand Ad</li>
-                    <li>Product Promo</li>
-                    <li>Teaser Video</li>
-                </ul>
-            </a>
+    <a class="service-card" href="#">
+      <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Motion Graphics" />
+      <div class="service-card-body">
+        <h3>Motion Graphics</h3>
+        <p>Dynamic animations and visual effects that elevate your brand identity.</p>
+        <ul>
+          <li>Logo Animation</li>
+          <li>UI Motion</li>
+          <li>Visual Effects</li>
+        </ul>
+      </div>
+    </a>
 
-            <a class="service-card" href="/services/social-media">
-                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Social Media Content" class="service-image">
-                <h3>Social Media Content</h3>
-                <p>Optimized content for Instagram, TikTok, and more.</p>
-                <ul class="service-list">
-                    <li>Reels Ads</li>
-                    <li>Short Promo</li>
-                    <li>Instagram Video Ads</li>
-                </ul>
-            </a>
+    <a class="service-card" href="#">
+      <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=600&q=80" alt="Photography" />
+      <div class="service-card-body">
+        <h3>Photography</h3>
+        <p>High-end photography that captures the essence of your brand and vision.</p>
+        <ul>
+          <li>Commercial</li>
+          <li>Portrait</li>
+          <li>Product</li>
+        </ul>
+      </div>
+    </a>
 
-            <a class="service-card" href="/services/motion-graphics">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop" alt="Motion Graphics" class="service-image">
-                <h3>Motion Graphics & Animation</h3>
-                <p>Bring your ideas to life with stunning motion design.</p>
-                <ul class="service-list">
-                    <li>Motion Graphics</li>
-                    <li>2D Animation</li>
-                    <li>3D Animation</li>
-                    <li>Video Wall / Visual Loops</li>
-                </ul>
-            </a>
+    <a class="service-card" href="#">
+      <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80" alt="Creative Direction" />
+      <div class="service-card-body">
+        <h3>Creative Direction</h3>
+        <p>Strategic creative vision to align your visuals with your brand's story.</p>
+        <ul>
+          <li>Art Direction</li>
+          <li>Brand Identity</li>
+          <li>Campaign Strategy</li>
+        </ul>
+      </div>
+    </a>
 
-        </div>
-    </section>
+  </div>
+</section>
 
-    <script>
-        const heroLogo = document.getElementById('heroLogo');
-        const heroVideo = document.getElementById('heroVideo');
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2026 Shab Visuals. All rights reserved.</p>
+</footer>
 
-        setTimeout(() => {
-            heroLogo.classList.add('large');
-        }, 1000);
+<script>
+  const logo = document.getElementById('heroLogo');
+  const video = document.querySelector('.hero-video');
+  const overlay = document.querySelector('.hero-overlay');
 
-        setTimeout(() => {
-            heroVideo.classList.add('visible');
-            heroVideo.play().catch(err => console.log('Autoplay blocked:', err));
-        }, 2000);
-    </script>
+  // مرحله ۱: لوگو ظاهر می‌شه
+  setTimeout(() => {
+    logo.classList.add('show');
+  }, 300);
+
+  // مرحله ۲: لوگو بزرگ می‌شه
+  setTimeout(() => {
+    logo.classList.add('expand');
+  }, 1200);
+
+  // مرحله ۳: ویدیو fade-in
+  setTimeout(() => {
+    video.classList.add('visible');
+    overlay.classList.add('visible');
+  }, 2000);
+</script>
 
 </body>
 </html>
