@@ -8,13 +8,15 @@
     @font-face {
       font-family: 'LOT';
       src: url('Lot-Regular.otf') format('opentype');
-      font-display: swap;
+      font-style: normal;
+      font-weight: normal;
     }
+    /* فقط یک variant از Agrandir — بدون italic */
     @font-face {
       font-family: 'Agrandir';
-      src: url('Agrandir-Thin-Italic.otf') format('opentype');
-      font-style: italic;
-      font-display: swap;
+      src: url('Agrandir-Regular.otf') format('opentype');
+      font-style: normal;
+      font-weight: normal;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,54 +43,64 @@
       flex-direction: column;
       align-items: center;
       line-height: 1;
-      gap: 2px;
     }
 
+    /* wrapper دقیقاً به اندازه متن — بدون فضای اضافه */
     .nav-shab-wrap {
       position: relative;
       display: inline-block;
       line-height: 1;
+      /* این مهمه: overflow مخفی نشه چون خط بیرون میزنه */
     }
 
     .nav-shab {
       font-family: 'LOT', sans-serif;
       font-size: 28px;
       font-style: normal;
+      line-height: 1;
+      display: block;
       background: linear-gradient(90deg, #555555, #ffffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      display: block;
-      line-height: 1;
+      /* حذف padding تا متن دقیق باشه */
+      padding: 0;
     }
 
     .nav-line {
       position: absolute;
       height: 1px;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
+      pointer-events: none;
     }
+    /* خط زیر sh — 2px پایین‌تر از متن */
     .nav-line-sh {
-      bottom: 0;
-      left: 6%;
-      width: 49%;
+      bottom: -2px;
+      left: 5%;
+      width: 47%;
     }
+    /* خط بالای ab — 2px بالاتر از متن */
     .nav-line-ab {
-      top: 0;
-      left: 62%;
+      top: -2px;
+      left: 60%;
       width: 38%;
     }
 
     .nav-visuals {
-      font-family: 'Agrandir', sans-serif;
-      font-size: 12px;
+      font-family: 'Agrandir', 'Arial Narrow', sans-serif;
+      font-size: 11px;
       font-style: normal;
+      font-weight: normal;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-align: center;
-      margin-top: 1px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.18em;
+      margin-top: 3px;
+      display: block;
+      /* جلوگیری از italic خودکار مرورگر */
+      unicode-bidi: normal;
     }
 
     nav ul {
@@ -121,14 +133,10 @@
       width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0;
-      transform: scale(1.1);
-      transition: opacity 1s ease, transform 1.5s ease;
+      transition: opacity 1.2s ease;
       z-index: 0;
     }
-    .hero-video.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
+    .hero-video.visible { opacity: 1; }
 
     .hero-overlay {
       position: absolute;
@@ -136,7 +144,7 @@
       background: rgba(0,0,0,0.45);
       z-index: 1;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 1.2s ease;
     }
     .hero-overlay.visible { opacity: 1; }
 
@@ -147,22 +155,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      /* فقط opacity — بدون scale تغییر */
       opacity: 0;
-      transform: scale(0.6);
-      transition: transform 1s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease;
+      transform: scale(1);
+      transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1);
     }
     .hero-logo.show {
       opacity: 1;
-      transform: scale(0.85);
-    }
-    .hero-logo.expand {
+      /* scale(1) = اندازه واقعی، زوم کم نمیشه */
       transform: scale(1);
     }
 
     .hero-shab-wrap {
       position: relative;
       display: inline-block;
+      /* line-height دقیقاً 1 تا فضای اضافه نباشه */
       line-height: 1;
     }
 
@@ -170,49 +177,63 @@
       font-family: 'LOT', sans-serif;
       font-size: clamp(80px, 18vw, 180px);
       font-style: normal;
+      line-height: 1;
+      display: block;
+      padding: 0;
+      /* گرادیان خاکستری-سفید */
       background: linear-gradient(90deg, #555555, #ffffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      display: block;
-      line-height: 1;
     }
 
-    /* خطوط — دقیقاً چسبیده به بالا و پایین متن */
     .hero-line {
       position: absolute;
-      height: 2px;
+      /* ضخامت خط نسبت به فونت */
+      height: 3px;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
-      left: 0;
-      right: 0;
+      pointer-events: none;
     }
 
-    /* خط پایین "sh": bottom:0 = دقیقاً زیر baseline متن */
+    /*
+      چون line-height:1 هست، top:0 = بالای cap-height و bottom:0 = پایین baseline
+      اما فونت‌ها معمولاً descent دارن — باید تست بشه
+      برای چسبیدن واقعی از transform استفاده می‌کنیم
+    */
     .hero-line-sh {
+      /* دقیقاً زیر "sh" */
       bottom: 0;
-      left: 6%;
-      width: 49%;
+      left: 5%;
+      width: 46%;
+      /* اگه descent فونت فضا داشت، این رو تنظیم کن */
+      transform: translateY(0px);
     }
 
-    /* خط بالای "ab": top:0 = دقیقاً روی cap-height متن */
     .hero-line-ab {
+      /* دقیقاً بالای "ab" */
       top: 0;
-      left: 62%;
-      width: 38%;
+      left: 61%;
+      width: 37%;
+      transform: translateY(0px);
     }
 
     /* visuals */
     .hero-visuals {
-      font-family: 'Agrandir', sans-serif;
-      font-size: clamp(20px, 4vw, 44px);
-      font-style: normal;
+      font-family: 'Agrandir', 'Arial Narrow', sans-serif;
+      font-size: clamp(22px, 4.5vw, 48px);
+      /* مهم‌ترین: جلوگیری از italic */
+      font-style: normal !important;
+      font-weight: normal;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-align: center;
       line-height: 1;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
+      /* فاصله بین shab و visuals */
+      margin-top: 12px;
+      display: block;
     }
 
     /* ── SERVICES ── */
@@ -244,39 +265,29 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
     .service-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
+      width: 100%; height: 220px;
+      object-fit: cover; display: block;
     }
     .service-card-body { padding: 24px; }
     .service-card-body h3 {
-      font-size: 20px;
-      font-weight: 500;
-      margin-bottom: 10px;
-      color: #fff;
+      font-size: 20px; font-weight: 500;
+      margin-bottom: 10px; color: #fff;
     }
     .service-card-body p {
-      font-size: 14px;
-      color: #888;
-      line-height: 1.6;
-      margin-bottom: 14px;
+      font-size: 14px; color: #888;
+      line-height: 1.6; margin-bottom: 14px;
     }
     .service-card-body ul { list-style: none; }
     .service-card-body ul li {
-      font-size: 13px;
-      color: #666;
-      padding: 3px 0;
+      font-size: 13px; color: #666; padding: 3px 0;
     }
     .service-card-body ul li::before {
-      content: '→ ';
-      color: #5170ff;
+      content: '→ '; color: #5170ff;
     }
 
     footer {
       text-align: center;
-      padding: 48px;
-      color: #444;
+      padding: 48px; color: #444;
       font-size: 13px;
       border-top: 1px solid #1a1a1a;
     }
@@ -309,10 +320,10 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-logo" id="heroLogo">
-    <div class="hero-shab-wrap">
-      <span class="hero-shab">shab</span>
-      <div class="hero-line hero-line-sh"></div>
-      <div class="hero-line hero-line-ab"></div>
+    <div class="hero-shab-wrap" id="shabWrap">
+      <span class="hero-shab" id="heroShab">shab</span>
+      <div class="hero-line hero-line-sh" id="lineSh"></div>
+      <div class="hero-line hero-line-ab" id="lineAb"></div>
     </div>
     <span class="hero-visuals">visuals</span>
   </div>
@@ -324,53 +335,45 @@
   <div class="services-grid">
 
     <a class="service-card" href="/services/saas-product-videos">
-      <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e2b6?w=600&q=80" alt="SaaS Videos" />
+      <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e2b6?w=600&q=80" alt="SaaS" />
       <div class="service-card-body">
         <h3>SaaS & Product Videos</h3>
         <p>The most important content for online clients.</p>
         <ul>
-          <li>Product Demos</li>
-          <li>Explainer Videos</li>
-          <li>Onboarding Clips</li>
+          <li>Product Demos</li><li>Explainer Videos</li><li>Onboarding Clips</li>
         </ul>
       </div>
     </a>
 
     <a class="service-card" href="/services/commercial-promo">
-      <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Commercial Ads" />
+      <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Commercial" />
       <div class="service-card-body">
         <h3>Commercial & Promo Ads</h3>
         <p>Short, impactful ads designed to elevate your brand.</p>
         <ul>
-          <li>TV Commercials</li>
-          <li>Digital Ads</li>
-          <li>Brand Promos</li>
+          <li>TV Commercials</li><li>Digital Ads</li><li>Brand Promos</li>
         </ul>
       </div>
     </a>
 
     <a class="service-card" href="/services/social-media">
-      <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=600&q=80" alt="Social Media" />
+      <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=600&q=80" alt="Social" />
       <div class="service-card-body">
         <h3>Social Media Content</h3>
-        <p>Optimized content for Instagram, TikTok, and more.</p>
+        <p>Optimized for Instagram, TikTok, and more.</p>
         <ul>
-          <li>Reels & Shorts</li>
-          <li>Story Templates</li>
-          <li>Feed Visuals</li>
+          <li>Reels & Shorts</li><li>Story Templates</li><li>Feed Visuals</li>
         </ul>
       </div>
     </a>
 
     <a class="service-card" href="/services/motion-graphics">
-      <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80" alt="Motion Graphics" />
+      <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80" alt="Motion" />
       <div class="service-card-body">
         <h3>Motion Graphics & Animation</h3>
         <p>Bring your ideas to life with stunning motion design.</p>
         <ul>
-          <li>Logo Animation</li>
-          <li>UI Motion</li>
-          <li>2D/3D Animation</li>
+          <li>Logo Animation</li><li>UI Motion</li><li>2D/3D Animation</li>
         </ul>
       </div>
     </a>
@@ -386,13 +389,65 @@
   const logo    = document.getElementById('heroLogo');
   const video   = document.querySelector('.hero-video');
   const overlay = document.querySelector('.hero-overlay');
+  const shabEl  = document.getElementById('heroShab');
+  const lineSh  = document.getElementById('lineSh');
+  const lineAb  = document.getElementById('lineAb');
 
-  setTimeout(() => logo.classList.add('show'),   300);
-  setTimeout(() => logo.classList.add('expand'), 1200);
+  /**
+   * تنظیم دقیق موقعیت خطوط بر اساس اندازه واقعی متن
+   * با استفاده از Canvas برای اندازه‌گیری حروف
+   */
+  function adjustLines() {
+    const fontSize = parseFloat(getComputedStyle(shabEl).fontSize);
+    const fontFamily = getComputedStyle(shabEl).fontFamily;
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.font = `${fontSize}px ${fontFamily}`;
+
+    const totalWidth = ctx.measureText('shab').width;
+    const shWidth    = ctx.measureText('sh').width;
+    const sWidth     = ctx.measureText('s').width / 4; // یک‌چهارم s
+    const aOffset    = ctx.measureText('sha').width;   // شروع "a"
+    const aWidth     = ctx.measureText('a').width;
+
+    const wrapWidth  = shabEl.offsetWidth;
+    const scale      = wrapWidth / totalWidth;
+
+    // خط sh: از quarter of s تا بعد از h
+    lineSh.style.left  = (sWidth * scale) + 'px';
+    lineSh.style.width = ((shWidth - sWidth * 0.5) * scale) + 'px';
+
+    // خط ab: از وسط a تا انتهای b
+    const abStart = (aOffset + aWidth * 0.5) * scale;
+    lineAb.style.left  = abStart + 'px';
+    lineAb.style.width = (wrapWidth - abStart) + 'px';
+
+    // تنظیم عمودی بر اساس metrics واقعی
+    const metrics = ctx.measureText('shab');
+    const wrapH   = shabEl.offsetHeight;
+
+    // ascent و descent واقعی
+    const ascent  = metrics.actualBoundingBoxAscent  || fontSize * 0.78;
+    const descent = metrics.actualBoundingBoxDescent || fontSize * 0.22;
+    const topSpace = wrapH - ascent - descent;
+
+    lineSh.style.bottom = descent + 'px';
+    lineAb.style.top    = (topSpace) + 'px';
+  }
+
+  // اجرا بعد از لود فونت
+  document.fonts.ready.then(() => {
+    adjustLines();
+    window.addEventListener('resize', adjustLines);
+  });
+
+  // انیمیشن لوگو
+  setTimeout(() => logo.classList.add('show'),  400);
   setTimeout(() => {
     video.classList.add('visible');
     overlay.classList.add('visible');
-  }, 2000);
+  }, 1800);
 </script>
 </body>
 </html>
