@@ -18,7 +18,6 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       background: #000;
       color: #fff;
@@ -38,9 +37,17 @@
     }
 
     .nav-logo {
-      position: relative;
       display: inline-flex;
+      flex-direction: column;
       align-items: center;
+      line-height: 1;
+      gap: 2px;
+    }
+
+    /* shab wrapper در navbar */
+    .nav-shab-wrap {
+      position: relative;
+      display: inline-block;
       line-height: 1;
     }
 
@@ -52,26 +59,39 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      position: relative;
-      z-index: 2;
+      display: block;
       line-height: 1;
+    }
+
+    /* خطوط navbar - نازک و کوچک */
+    .nav-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+    }
+    /* زیر "sh": از 5% تا 55% عرض */
+    .nav-line-sh {
+      bottom: -1px;
+      left: 5%;
+      width: 50%;
+    }
+    /* بالای "ab": از 52% تا 100% عرض */
+    .nav-line-ab {
+      top: -1px;
+      left: 52%;
+      width: 48%;
     }
 
     .nav-visuals {
       font-family: 'Agrandir', sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-style: italic;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      z-index: 3;
-      line-height: 1;
+      text-align: center;
+      margin-top: 1px;
     }
 
     nav ul {
@@ -116,7 +136,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.45);
       z-index: 1;
       opacity: 0;
       transition: opacity 1s ease;
@@ -130,6 +150,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 10px;
       opacity: 0;
       transform: scale(0.6);
       transition: transform 1s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease;
@@ -142,7 +163,7 @@
       transform: scale(1);
     }
 
-    /* shab wrapper: خطوط relative به این هستن */
+    /* shab wrapper */
     .hero-shab-wrap {
       position: relative;
       display: inline-block;
@@ -157,11 +178,42 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      line-height: 1;
       display: block;
+      line-height: 1;
     }
 
-    /* visuals: وسط عمودی شابه */
+    /* خطوط hero */
+    .hero-line {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+    }
+
+    /*
+      "shab" = 4 حرف مساوی
+      s = 0–25%
+      h = 25–50%
+      a = 50–75%
+      b = 75–100%
+
+      خط زیر "sh": از 6% (یک‌چهارم s) تا 55% (کمی بعد h)
+    */
+    .hero-line-sh {
+      bottom: 0px;
+      left: 6%;
+      width: 49%;
+    }
+
+    /*
+      خط بالای "ab": از 62% (وسط a) تا 100% (انتهای b)
+    */
+    .hero-line-ab {
+      top: 0px;
+      left: 62%;
+      width: 38%;
+    }
+
+    /* visuals زیر shab */
     .hero-visuals {
       font-family: 'Agrandir', sans-serif;
       font-size: clamp(16px, 3.5vw, 36px);
@@ -170,33 +222,8 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
+      text-align: center;
       line-height: 1;
-      z-index: 3;
-    }
-
-    /* خطوط */
-    .hero-line {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 45%;          /* کوتاه‌تر از قبل */
-      height: 1.5px;
-      background: linear-gradient(90deg, #5170ff, #ff66c4);
-    }
-
-    /* خط بالا: بالای وسط شاب (کمی بالاتر از visuals) */
-    .hero-line-top {
-      top: 38%;
-    }
-
-    /* خط پایین: پایین وسط شاب (کمی پایین‌تر از visuals) */
-    .hero-line-bottom {
-      top: 62%;
     }
 
     /* ── SERVICES ── */
@@ -209,7 +236,6 @@
       font-size: 48px;
       font-weight: 300;
       margin-bottom: 64px;
-      color: #fff;
     }
     .services-grid {
       display: grid;
@@ -223,7 +249,6 @@
       border-radius: 12px;
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
     }
     .service-card:hover {
       transform: translateY(-6px);
@@ -237,7 +262,7 @@
     }
     .service-card-body { padding: 24px; }
     .service-card-body h3 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 500;
       margin-bottom: 10px;
       color: #fff;
@@ -248,10 +273,7 @@
       line-height: 1.6;
       margin-bottom: 14px;
     }
-    .service-card-body ul {
-      list-style: none;
-      padding: 0;
-    }
+    .service-card-body ul { list-style: none; }
     .service-card-body ul li {
       font-size: 13px;
       color: #666;
@@ -262,7 +284,6 @@
       color: #5170ff;
     }
 
-    /* ── FOOTER ── */
     footer {
       text-align: center;
       padding: 48px;
@@ -277,7 +298,11 @@
 <!-- NAVBAR -->
 <nav>
   <div class="nav-logo">
-    <span class="nav-shab">shab</span>
+    <div class="nav-shab-wrap">
+      <span class="nav-shab">shab</span>
+      <div class="nav-line nav-line-sh"></div>
+      <div class="nav-line nav-line-ab"></div>
+    </div>
     <span class="nav-visuals">visuals</span>
   </div>
   <ul>
@@ -297,10 +322,10 @@
   <div class="hero-logo" id="heroLogo">
     <div class="hero-shab-wrap">
       <span class="hero-shab">shab</span>
-      <span class="hero-visuals">visuals</span>
-      <div class="hero-line hero-line-top"></div>
-      <div class="hero-line hero-line-bottom"></div>
+      <div class="hero-line hero-line-sh"></div>
+      <div class="hero-line hero-line-ab"></div>
     </div>
+    <span class="hero-visuals">visuals</span>
   </div>
 </section>
 
@@ -309,54 +334,54 @@
   <h2>What We Do</h2>
   <div class="services-grid">
 
-    <a class="service-card" href="#">
-      <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e2b6?w=600&q=80" alt="Video Production" />
+    <a class="service-card" href="/services/saas-product-videos">
+      <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e2b6?w=600&q=80" alt="SaaS Videos" />
       <div class="service-card-body">
-        <h3>Video Production</h3>
-        <p>Cinematic storytelling that moves your audience — from concept to final cut.</p>
+        <h3>SaaS & Product Videos</h3>
+        <p>The most important content for online clients.</p>
         <ul>
-          <li>Brand Films</li>
-          <li>Music Videos</li>
-          <li>Documentary</li>
+          <li>Product Demos</li>
+          <li>Explainer Videos</li>
+          <li>Onboarding Clips</li>
         </ul>
       </div>
     </a>
 
-    <a class="service-card" href="#">
-      <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Motion Graphics" />
+    <a class="service-card" href="/services/commercial-promo">
+      <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Commercial Ads" />
       <div class="service-card-body">
-        <h3>Motion Graphics</h3>
-        <p>Dynamic animations and visual effects that elevate your brand identity.</p>
+        <h3>Commercial & Promo Ads</h3>
+        <p>Short, impactful ads designed to elevate your brand and drive results.</p>
+        <ul>
+          <li>TV Commercials</li>
+          <li>Digital Ads</li>
+          <li>Brand Promos</li>
+        </ul>
+      </div>
+    </a>
+
+    <a class="service-card" href="/services/social-media">
+      <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=600&q=80" alt="Social Media" />
+      <div class="service-card-body">
+        <h3>Social Media Content</h3>
+        <p>Optimized content for Instagram, TikTok, and other platforms.</p>
+        <ul>
+          <li>Reels & Shorts</li>
+          <li>Story Templates</li>
+          <li>Feed Visuals</li>
+        </ul>
+      </div>
+    </a>
+
+    <a class="service-card" href="/services/motion-graphics">
+      <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80" alt="Motion Graphics" />
+      <div class="service-card-body">
+        <h3>Motion Graphics & Animation</h3>
+        <p>Bring your ideas to life with stunning motion design and animation.</p>
         <ul>
           <li>Logo Animation</li>
           <li>UI Motion</li>
-          <li>Visual Effects</li>
-        </ul>
-      </div>
-    </a>
-
-    <a class="service-card" href="#">
-      <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=600&q=80" alt="Photography" />
-      <div class="service-card-body">
-        <h3>Photography</h3>
-        <p>High-end photography that captures the essence of your brand and vision.</p>
-        <ul>
-          <li>Commercial</li>
-          <li>Portrait</li>
-          <li>Product</li>
-        </ul>
-      </div>
-    </a>
-
-    <a class="service-card" href="#">
-      <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80" alt="Creative Direction" />
-      <div class="service-card-body">
-        <h3>Creative Direction</h3>
-        <p>Strategic creative vision to align your visuals with your brand's story.</p>
-        <ul>
-          <li>Art Direction</li>
-          <li>Brand Identity</li>
-          <li>Campaign Strategy</li>
+          <li>2D/3D Animation</li>
         </ul>
       </div>
     </a>
@@ -364,32 +389,21 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p>&copy; 2026 Shab Visuals. All rights reserved.</p>
 </footer>
 
 <script>
-  const logo = document.getElementById('heroLogo');
+  const logo  = document.getElementById('heroLogo');
   const video = document.querySelector('.hero-video');
   const overlay = document.querySelector('.hero-overlay');
 
-  // مرحله ۱: لوگو ظاهر می‌شه
-  setTimeout(() => {
-    logo.classList.add('show');
-  }, 300);
-
-  // مرحله ۲: لوگو بزرگ می‌شه
-  setTimeout(() => {
-    logo.classList.add('expand');
-  }, 1200);
-
-  // مرحله ۳: ویدیو fade-in
+  setTimeout(() => logo.classList.add('show'),   300);
+  setTimeout(() => logo.classList.add('expand'), 1200);
   setTimeout(() => {
     video.classList.add('visible');
     overlay.classList.add('visible');
   }, 2000);
 </script>
-
 </body>
 </html>
