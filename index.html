@@ -44,7 +44,6 @@
       gap: 2px;
     }
 
-    /* shab wrapper در navbar */
     .nav-shab-wrap {
       position: relative;
       display: inline-block;
@@ -63,35 +62,33 @@
       line-height: 1;
     }
 
-    /* خطوط navbar - نازک و کوچک */
     .nav-line {
       position: absolute;
       height: 1px;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
     }
-    /* زیر "sh": از 5% تا 55% عرض */
     .nav-line-sh {
-      bottom: -1px;
-      left: 5%;
-      width: 50%;
+      bottom: 0;
+      left: 6%;
+      width: 49%;
     }
-    /* بالای "ab": از 52% تا 100% عرض */
     .nav-line-ab {
-      top: -1px;
-      left: 52%;
-      width: 48%;
+      top: 0;
+      left: 62%;
+      width: 38%;
     }
 
     .nav-visuals {
       font-family: 'Agrandir', sans-serif;
-      font-size: 10px;
-      font-style: italic;
+      font-size: 12px;
+      font-style: normal;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-align: center;
       margin-top: 1px;
+      letter-spacing: 0.15em;
     }
 
     nav ul {
@@ -150,7 +147,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       opacity: 0;
       transform: scale(0.6);
       transition: transform 1s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease;
@@ -163,7 +160,6 @@
       transform: scale(1);
     }
 
-    /* shab wrapper */
     .hero-shab-wrap {
       position: relative;
       display: inline-block;
@@ -182,48 +178,41 @@
       line-height: 1;
     }
 
-    /* خطوط hero */
+    /* خطوط — دقیقاً چسبیده به بالا و پایین متن */
     .hero-line {
       position: absolute;
       height: 2px;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
+      left: 0;
+      right: 0;
     }
 
-    /*
-      "shab" = 4 حرف مساوی
-      s = 0–25%
-      h = 25–50%
-      a = 50–75%
-      b = 75–100%
-
-      خط زیر "sh": از 6% (یک‌چهارم s) تا 55% (کمی بعد h)
-    */
+    /* خط پایین "sh": bottom:0 = دقیقاً زیر baseline متن */
     .hero-line-sh {
-      bottom: 0px;
+      bottom: 0;
       left: 6%;
       width: 49%;
     }
 
-    /*
-      خط بالای "ab": از 62% (وسط a) تا 100% (انتهای b)
-    */
+    /* خط بالای "ab": top:0 = دقیقاً روی cap-height متن */
     .hero-line-ab {
-      top: 0px;
+      top: 0;
       left: 62%;
       width: 38%;
     }
 
-    /* visuals زیر shab */
+    /* visuals */
     .hero-visuals {
       font-family: 'Agrandir', sans-serif;
-      font-size: clamp(16px, 3.5vw, 36px);
-      font-style: italic;
+      font-size: clamp(20px, 4vw, 44px);
+      font-style: normal;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-align: center;
       line-height: 1;
+      letter-spacing: 0.2em;
     }
 
     /* ── SERVICES ── */
@@ -351,7 +340,7 @@
       <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Commercial Ads" />
       <div class="service-card-body">
         <h3>Commercial & Promo Ads</h3>
-        <p>Short, impactful ads designed to elevate your brand and drive results.</p>
+        <p>Short, impactful ads designed to elevate your brand.</p>
         <ul>
           <li>TV Commercials</li>
           <li>Digital Ads</li>
@@ -364,7 +353,7 @@
       <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=600&q=80" alt="Social Media" />
       <div class="service-card-body">
         <h3>Social Media Content</h3>
-        <p>Optimized content for Instagram, TikTok, and other platforms.</p>
+        <p>Optimized content for Instagram, TikTok, and more.</p>
         <ul>
           <li>Reels & Shorts</li>
           <li>Story Templates</li>
@@ -377,7 +366,7 @@
       <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=600&q=80" alt="Motion Graphics" />
       <div class="service-card-body">
         <h3>Motion Graphics & Animation</h3>
-        <p>Bring your ideas to life with stunning motion design and animation.</p>
+        <p>Bring your ideas to life with stunning motion design.</p>
         <ul>
           <li>Logo Animation</li>
           <li>UI Motion</li>
@@ -394,8 +383,8 @@
 </footer>
 
 <script>
-  const logo  = document.getElementById('heroLogo');
-  const video = document.querySelector('.hero-video');
+  const logo    = document.getElementById('heroLogo');
+  const video   = document.querySelector('.hero-video');
   const overlay = document.querySelector('.hero-overlay');
 
   setTimeout(() => logo.classList.add('show'),   300);
