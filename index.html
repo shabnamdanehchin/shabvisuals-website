@@ -94,13 +94,13 @@
       gap: 0.25rem;
     }
 
-    /* wrapper هر آیتم */
+    /* ── NAV ITEM WRAP (works / about) ── */
     .nav-item-wrap {
       position: relative;
       display: flex;
       align-items: center;
-      overflow: hidden;
       cursor: pointer;
+      overflow: visible;
     }
 
     /* گلوله */
@@ -110,17 +110,15 @@
       border-radius: 50%;
       background: #fff;
       flex-shrink: 0;
-      /* شروع از بالا، بیرون از دید */
       transform: translateY(-22px);
       opacity: 0;
-      margin-right: 0px;
-      /* max-width برای انیمیشن عرض */
       max-width: 0;
+      margin-right: 0;
       transition:
-        transform 0.35s cubic-bezier(0.4, 2.5, 0.55, 0.9),
-        opacity   0.15s ease,
-        max-width 0.25s ease,
-        margin-right 0.25s ease;
+        transform   0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9),
+        opacity     0.15s ease,
+        max-width   0.22s ease,
+        margin-right 0.22s ease;
     }
 
     .nav-item-wrap:hover .nav-bullet {
@@ -130,7 +128,7 @@
       margin-right: 6px;
     }
 
-    /* متن آیتم */
+    /* متن — وقتی گلوله می‌افتد، کلمه کمی پایین می‌رود و برمی‌گردد */
     .nav-item {
       padding: 0.5rem 0.75rem;
       font-size: 0.85rem;
@@ -138,24 +136,40 @@
       color: rgba(255,255,255,0.6);
       text-decoration: none;
       text-transform: lowercase;
-      transition: color 0.2s ease;
       white-space: nowrap;
-      /* وقتی گلوله می‌آید، متن آرام کمی به راست می‌رود */
-      transition: color 0.2s ease, padding-left 0.25s ease;
+      display: inline-block;
+      transition:
+        color      0.2s ease,
+        transform  0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9);
     }
 
+    /* همزمان با سقوط گلوله، کلمه 4px پایین می‌رود و bounce می‌خورد */
     .nav-item-wrap:hover .nav-item {
       color: #fff;
-      padding-left: 0;
+      transform: translateY(4px);
     }
 
-    /* get in touch */
+    /* برگشت آرام بعد از hover */
+    .nav-item-wrap:not(:hover) .nav-item {
+      transform: translateY(0);
+    }
+
+    /* ── SERVICES WRAP ── */
+    .nav-services-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: visible;
+      cursor: pointer;
+    }
+
+    /* ── GET IN TOUCH ── */
     .nav-cta-wrap {
       position: relative;
       display: flex;
       align-items: center;
       margin-left: 0.5rem;
-      overflow: hidden;
+      overflow: visible;
       cursor: pointer;
     }
 
@@ -170,10 +184,10 @@
       max-width: 0;
       margin-right: 0;
       transition:
-        transform 0.35s cubic-bezier(0.4, 2.5, 0.55, 0.9),
-        opacity   0.15s ease,
-        max-width 0.25s ease,
-        margin-right 0.25s ease;
+        transform    0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9),
+        opacity      0.15s ease,
+        max-width    0.22s ease,
+        margin-right 0.22s ease;
     }
 
     .nav-cta-wrap:hover .nav-cta-bullet {
@@ -192,25 +206,27 @@
       border-radius: 2rem;
       text-decoration: none;
       text-transform: lowercase;
-      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
       white-space: nowrap;
+      display: inline-block;
+      /* padding-left و padding-right با hover کشیده می‌شوند */
+      transition:
+        color         0.2s ease,
+        border-color  0.2s ease,
+        background    0.2s ease,
+        padding-left  0.35s cubic-bezier(0.4, 2.4, 0.55, 0.9),
+        padding-right 0.35s cubic-bezier(0.4, 2.4, 0.55, 0.9);
     }
 
+    /* همزمان با سقوط گلوله، مستطیل از دو طرف کشیده می‌شود */
     .nav-cta-wrap:hover .nav-cta {
       color: #fff;
       border-color: rgba(255,255,255,0.7);
       background: rgba(255,255,255,0.05);
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
 
     /* ── SERVICES DROPDOWN ── */
-    .nav-services-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: visible;
-      cursor: pointer;
-    }
-
     .services-dropdown {
       position: absolute;
       top: calc(100% + 1rem);
@@ -259,7 +275,6 @@
       font-size: 0.82rem;
       letter-spacing: 0.04em;
       transition: color 0.2s ease, background 0.2s ease;
-      position: relative;
     }
 
     .dropdown-item:hover {
@@ -381,8 +396,8 @@
       user-select: none;
       opacity: 0;
       transition:
-        font-size   1s cubic-bezier(0.4, 0, 0.2, 1),
-        margin-top  1s cubic-bezier(0.4, 0, 0.2, 1),
+        font-size  1s cubic-bezier(0.4, 0, 0.2, 1),
+        margin-top 1s cubic-bezier(0.4, 0, 0.2, 1),
         opacity 0.6s ease;
     }
 
@@ -519,11 +534,13 @@
   <!-- RIGHT -->
   <div class="nav-right">
 
+    <!-- works -->
     <div class="nav-item-wrap">
       <span class="nav-bullet"></span>
       <a class="nav-item" href="#works">works</a>
     </div>
 
+    <!-- services -->
     <div class="nav-services-wrap nav-item-wrap">
       <span class="nav-bullet"></span>
       <span class="nav-item">services</span>
@@ -550,11 +567,13 @@
       </div>
     </div>
 
+    <!-- about -->
     <div class="nav-item-wrap">
       <span class="nav-bullet"></span>
       <a class="nav-item" href="#about">about</a>
     </div>
 
+    <!-- get in touch -->
     <div class="nav-cta-wrap">
       <span class="nav-cta-bullet"></span>
       <a class="nav-cta" href="#contact">get in touch</a>
