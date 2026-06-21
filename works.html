@@ -2,31 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Works — Shab Visuals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Works - Shab Visuals</title>
+
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     :root {
       --bg: #0a0a0a;
       --text: #f0f0f0;
-      --accent: #ffffff;
-      --muted: #555;
-      --overlay-bg: #0a0a0a;
+      --muted: #777;
+      --line: rgba(255, 255, 255, 0.12);
+      --card-radius: 18px;
     }
 
-    html, body {
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      min-height: 100%;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       overflow-x: hidden;
       cursor: none;
     }
 
-    /* ─── Custom Cursor ─── */
+    body {
+      padding-bottom: 80px;
+    }
+
+    a,
+    button,
+    .work-item {
+      cursor: none;
+    }
+
+    /* Custom Cursor */
     .cursor {
       position: fixed;
-      width: 10px; height: 10px;
+      width: 10px;
+      height: 10px;
       background: #fff;
       border-radius: 50%;
       pointer-events: none;
@@ -34,23 +56,41 @@
       transform: translate(-50%, -50%);
       transition: width 0.3s ease, height 0.3s ease;
     }
+
     .cursor-follower {
       position: fixed;
-      width: 36px; height: 36px;
-      border: 1px solid rgba(255,255,255,0.5);
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
       transform: translate(-50%, -50%);
-      transition: left 0.12s ease, top 0.12s ease, width 0.3s ease, height 0.3s ease;
+      transition:
+        left 0.12s ease,
+        top 0.12s ease,
+        width 0.3s ease,
+        height 0.3s ease,
+        border-color 0.3s ease;
     }
-    .cursor.hover { width: 16px; height: 16px; }
-    .cursor-follower.hover { width: 56px; height: 56px; border-color: #fff; }
 
-    /* ─── Navbar ─── */
+    .cursor.hover {
+      width: 16px;
+      height: 16px;
+    }
+
+    .cursor-follower.hover {
+      width: 56px;
+      height: 56px;
+      border-color: #fff;
+    }
+
+    /* Navbar */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
       display: flex;
       justify-content: space-between;
@@ -58,17 +98,20 @@
       padding: 28px 48px;
       mix-blend-mode: difference;
     }
+
     .nav-logo img {
       height: 36px;
       width: auto;
       display: block;
       filter: brightness(0) invert(1);
     }
+
     .nav-links {
       display: flex;
       gap: 36px;
       list-style: none;
     }
+
     .nav-links a {
       color: #fff;
       text-decoration: none;
@@ -76,27 +119,33 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       opacity: 0.7;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s ease;
     }
-    .nav-links a:hover,
-    .nav-links a.active { opacity: 1; }
 
-    /* ─── Page Header ─── */
+    .nav-links a:hover,
+    .nav-links a.active {
+      opacity: 1;
+    }
+
+    /* Header */
     .page-header {
-      padding: 140px 48px 40px;
+      padding: 140px 48px 32px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
+      gap: 24px;
     }
+
     .page-header h1 {
       font-size: clamp(3rem, 8vw, 7rem);
       font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
       opacity: 0;
       transform: translateY(40px);
-      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+      animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
     }
+
     .project-count {
       font-size: 0.78rem;
       letter-spacing: 0.15em;
@@ -104,548 +153,829 @@
       color: var(--muted);
       margin-bottom: 12px;
       opacity: 0;
-      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+      animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+      white-space: nowrap;
     }
 
-    /* ─── Horizontal Scroll Track ─── */
+    /* Works */
+    .works-section {
+      width: 100%;
+      padding: 20px 48px 34px;
+    }
+
     .works-track-outer {
       width: 100%;
-      overflow: hidden;
-      padding: 40px 0 80px;
+      overflow: visible;
       position: relative;
     }
 
     .works-track {
       display: flex;
-      gap: 24px;
-      padding: 60px 48px;
-      width: max-content;
+      align-items: center;
+      gap: clamp(5px, 0.6vw, 10px);
+      width: 100%;
+      min-height: clamp(230px, 28vw, 360px);
       will-change: transform;
     }
 
-    /* ─── Work Cards ─── */
     .work-item {
       position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      height: clamp(210px, 26vw, 330px);
+      border: 1px solid var(--line);
+      border-radius: var(--card-radius);
       overflow: hidden;
-      cursor: none;
-      flex-shrink: 0;
-      width: 460px;
-      height: 580px;
+      isolation: isolate;
+      transform-origin: center;
       will-change: transform;
-      transition: transform 0.1s linear;
+      transition:
+        flex 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
     }
 
-    /* Alternate tall/wide */
-    .work-item:nth-child(even) {
-      width: 380px;
-      height: 500px;
-      margin-top: 80px;
-    }
-    .work-item:nth-child(3n) {
-      width: 520px;
-      height: 620px;
-      margin-top: -40px;
+    .work-item:hover,
+    .work-item.active {
+      border-color: rgba(255, 255, 255, 0.42);
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.35);
     }
 
-    /* placeholder fill */
-    .work-thumb-placeholder {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
-    }
-    .work-item:hover .work-thumb-placeholder { transform: scale(1.05); }
-    .placeholder-inner {
-      text-align: center;
-      opacity: 0.15;
-    }
-    .placeholder-inner span {
-      display: block;
-      font-size: 4rem;
-      font-weight: 700;
-      letter-spacing: -0.04em;
+    .work-item.active {
+      flex: 1.45 1 0;
     }
 
-    /* Hover overlay info */
+    .work-thumb {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)),
+        var(--thumb);
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(1) contrast(1.1);
+      transform: scale(1.01);
+      transition:
+        filter 0.55s ease,
+        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .work-item:hover .work-thumb,
+    .work-item.active .work-thumb {
+      filter: grayscale(0) contrast(1.05) saturate(1.18);
+      transform: scale(1.08);
+    }
+
+    .work-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.08) 62%),
+        linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+      z-index: 1;
+    }
+
     .work-info {
       position: absolute;
       inset: 0;
-      background: rgba(10,10,10,0.6);
+      z-index: 2;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 28px;
-      opacity: 0;
-      transition: opacity 0.4s ease;
+      padding: 18px 12px;
+      text-align: left;
     }
-    .work-item:hover .work-info { opacity: 1; }
+
     .work-number {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
+      font-size: clamp(0.62rem, 0.75vw, 0.75rem);
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 8px;
     }
+
     .work-title {
-      font-size: clamp(1.1rem, 2vw, 1.5rem);
-      font-weight: 600;
-      letter-spacing: -0.01em;
+      font-size: clamp(0.75rem, 1vw, 1.05rem);
+      line-height: 1.05;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      max-height: 150px;
     }
+
     .work-tag {
-      font-size: 0.72rem;
+      margin-top: 12px;
+      font-size: clamp(0.54rem, 0.66vw, 0.68rem);
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
-      margin-top: 6px;
+      color: rgba(255, 255, 255, 0.5);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
     }
 
-    /* ─── Project Overlay ─── */
-    .project-overlay {
-      position: fixed;
-      inset: 0;
-      background: var(--overlay-bg);
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
+    .work-item.active .work-title,
+    .work-item.active .work-tag,
+    .work-item:hover .work-title,
+    .work-item:hover .work-tag {
+      writing-mode: initial;
+      transform: none;
+    }
+
+    .work-item.active .work-info,
+    .work-item:hover .work-info {
+      padding: 20px 16px;
+    }
+
+    .work-item.active .work-title,
+    .work-item:hover .work-title {
+      font-size: clamp(0.95rem, 1.3vw, 1.35rem);
+    }
+
+    /* Detail panel opens inside the same page */
+    .project-detail {
+      width: calc(100% - 96px);
+      max-width: 1160px;
+      margin: 12px auto 0;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.035);
+      max-height: 0;
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1);
-    }
-    .project-overlay.open {
-      opacity: 1;
-      pointer-events: all;
+      transform: translateY(24px);
+      transition:
+        max-height 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.45s ease,
+        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+        margin-top 0.45s ease;
     }
 
-    .overlay-nav {
+    .project-detail.open {
+      max-height: 1200px;
+      opacity: 1;
+      transform: translateY(0);
+      margin-top: 28px;
+    }
+
+    .detail-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 28px 48px;
-      flex-shrink: 0;
+      gap: 24px;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
     }
-    .overlay-back {
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
+
+    .detail-kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: none;
-      transition: opacity 0.2s;
-    }
-    .overlay-back:hover { opacity: 0.5; }
-    .overlay-project-num {
-      font-size: 0.78rem;
-      letter-spacing: 0.15em;
       color: var(--muted);
     }
 
-    .overlay-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 48px 80px;
-      max-width: 1100px;
-      margin: 0 auto;
-      width: 100%;
+    .detail-title {
+      margin-top: 6px;
+      font-size: clamp(1.8rem, 4vw, 4.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
     }
 
-    .overlay-title {
-      font-size: clamp(2.5rem, 6vw, 5.5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+    .detail-close {
+      flex: 0 0 auto;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 50%;
+      background: transparent;
+      color: #fff;
+      font-size: 1.5rem;
       line-height: 1;
-      margin-bottom: 48px;
-      align-self: flex-start;
-      transform: translateY(30px);
-      opacity: 0;
-      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s,
-                  opacity 0.7s ease 0.1s;
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
-    .project-overlay.open .overlay-title { transform: translateY(0); opacity: 1; }
 
-    .overlay-video-wrap {
+    .detail-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.55);
+    }
+
+    .detail-video-wrap {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: 16 / 9;
       background: #111;
       overflow: hidden;
-      transform: translateY(30px);
-      opacity: 0;
-      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s,
-                  opacity 0.7s ease 0.2s;
     }
-    .project-overlay.open .overlay-video-wrap { transform: translateY(0); opacity: 1; }
-    .overlay-video-wrap video { width: 100%; height: 100%; object-fit: cover; }
-    .overlay-video-placeholder {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, #111 0%, #222 100%);
+
+    .detail-video-wrap video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: #111;
+    }
+
+    .detail-video-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: rgba(255,255,255,0.12);
-      font-size: 0.8rem;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 34%),
+        linear-gradient(135deg, #151515, #050505);
+      color: rgba(255, 255, 255, 0.28);
+      font-size: 0.75rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
     }
 
-    .overlay-desc {
-      align-self: flex-start;
-      margin-top: 32px;
-      max-width: 560px;
-      transform: translateY(20px);
+    .detail-desc {
+      display: grid;
+      grid-template-columns: 1fr 0.6fr;
+      gap: 28px;
+      padding: 28px 24px 34px;
       opacity: 0;
-      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.35s,
-                  opacity 0.7s ease 0.35s;
+      transform: translateY(24px);
+      transition:
+        opacity 0.55s ease 0.22s,
+        transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.22s;
     }
-    .project-overlay.open .overlay-desc { transform: translateY(0); opacity: 1; }
-    .overlay-desc p {
-      font-size: 0.92rem;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.5);
+
+    .project-detail.open .detail-desc {
+      opacity: 1;
+      transform: translateY(0);
     }
-    .overlay-desc .desc-tags {
-      margin-top: 16px;
+
+    .detail-desc p {
+      max-width: 680px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+      line-height: 1.75;
+    }
+
+    .detail-tags {
       display: flex;
-      gap: 12px;
+      align-content: flex-start;
+      justify-content: flex-end;
+      gap: 10px;
       flex-wrap: wrap;
     }
-    .overlay-desc .desc-tags span {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
+
+    .detail-tags span {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 7px 12px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
-      border: 1px solid #333;
-      padding: 4px 12px;
     }
 
-    /* ─── Animations ─── */
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-    /* ─── Responsive ─── */
-    @media (max-width: 900px) {
-      nav { padding: 20px 24px; }
-      .page-header { padding: 110px 24px 30px; }
-      .works-track { padding: 40px 24px; gap: 16px; }
-      .work-item { width: 300px !important; height: 380px !important; margin-top: 0 !important; }
-      .overlay-content { padding: 0 24px 60px; }
-      .overlay-nav { padding: 20px 24px; }
+    @media (max-width: 1100px) {
+      .works-section {
+        padding-inline: 24px;
+        overflow-x: auto;
+      }
+
+      .works-track {
+        width: max-content;
+        min-width: 980px;
+      }
+
+      .work-item {
+        width: 70px;
+        flex: 0 0 70px;
+      }
+
+      .work-item.active {
+        flex-basis: 110px;
+      }
+
+      .project-detail {
+        width: calc(100% - 48px);
+      }
+    }
+
+    @media (max-width: 760px) {
+      html,
+      body {
+        cursor: auto;
+      }
+
+      a,
+      button,
+      .work-item {
+        cursor: pointer;
+      }
+
+      .cursor,
+      .cursor-follower {
+        display: none;
+      }
+
+      nav {
+        padding: 20px 22px;
+      }
+
+      .nav-links {
+        gap: 18px;
+      }
+
+      .nav-links a {
+        font-size: 0.66rem;
+      }
+
+      .page-header {
+        padding: 112px 24px 24px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .works-section {
+        padding: 12px 18px 24px;
+      }
+
+      .works-track {
+        min-width: 900px;
+        min-height: 250px;
+      }
+
+      .work-item {
+        height: 240px;
+        flex-basis: 64px;
+      }
+
+      .work-title,
+      .work-tag {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+      }
+
+      .project-detail {
+        width: calc(100% - 36px);
+        border-radius: 22px;
+      }
+
+      .detail-top {
+        padding: 18px;
+      }
+
+      .detail-desc {
+        grid-template-columns: 1fr;
+        padding: 22px 18px 28px;
+      }
+
+      .detail-tags {
+        justify-content: flex-start;
+      }
     }
   </style>
 </head>
+
 <body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
 
-<!-- Custom Cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-follower" id="cursorFollower"></div>
+  <nav>
+    <a href="index.html" class="nav-logo" aria-label="Shab Visuals">
+      <img src="logo.png" alt="Shab Visuals" />
+    </a>
 
-<!-- Navbar -->
-<nav>
-  <a href="index.html" class="nav-logo">
-    <img src="logo.png" alt="Shab Visuals" />
-  </a>
-  <ul class="nav-links">
-    <li><a href="works.html" class="active">Works</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Works</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
 
-<!-- Page Header -->
-<header class="page-header">
-  <h1>Works</h1>
-  <p class="project-count">13 Projects</p>
-</header>
+  <header class="page-header">
+    <h1>Works</h1>
+    <p class="project-count">13 Projects</p>
+  </header>
 
-<!-- ─── Horizontal Works Track ─── -->
-<div class="works-track-outer">
-  <div class="works-track" id="worksTrack">
+  <main>
+    <section class="works-section" aria-label="Works">
+      <div class="works-track-outer">
+        <div class="works-track" id="worksTrack">
+          <article class="work-item active" data-index="0" style="--thumb: linear-gradient(135deg, #ff6a00, #ee0979);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">01</span>
+              <h2 class="work-title">Project One</h2>
+              <span class="work-tag">Motion Design</span>
+            </div>
+          </article>
 
-    <article class="work-item" data-index="0">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>01</span></div></div>
-      <div class="work-info">
-        <span class="work-number">01</span>
-        <h2 class="work-title">Project One</h2>
-        <span class="work-tag">Motion Design</span>
+          <article class="work-item" data-index="1" style="--thumb: linear-gradient(135deg, #00c6ff, #0072ff);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">02</span>
+              <h2 class="work-title">Project Two</h2>
+              <span class="work-tag">Visual Identity</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="2" style="--thumb: linear-gradient(135deg, #f7971e, #ffd200);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">03</span>
+              <h2 class="work-title">Project Three</h2>
+              <span class="work-tag">Video Production</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="3" style="--thumb: linear-gradient(135deg, #654ea3, #eaafc8);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">04</span>
+              <h2 class="work-title">Project Four</h2>
+              <span class="work-tag">Motion Design</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="4" style="--thumb: linear-gradient(135deg, #11998e, #38ef7d);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">05</span>
+              <h2 class="work-title">Project Five</h2>
+              <span class="work-tag">Brand Film</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="5" style="--thumb: linear-gradient(135deg, #fc466b, #3f5efb);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">06</span>
+              <h2 class="work-title">Project Six</h2>
+              <span class="work-tag">Visual Identity</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="6" style="--thumb: linear-gradient(135deg, #c31432, #240b36);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">07</span>
+              <h2 class="work-title">Project Seven</h2>
+              <span class="work-tag">Motion Design</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="7" style="--thumb: linear-gradient(135deg, #36d1dc, #5b86e5);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">08</span>
+              <h2 class="work-title">Project Eight</h2>
+              <span class="work-tag">Video Production</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="8" style="--thumb: linear-gradient(135deg, #ff512f, #dd2476);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">09</span>
+              <h2 class="work-title">Project Nine</h2>
+              <span class="work-tag">Brand Film</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="9" style="--thumb: linear-gradient(135deg, #1d976c, #93f9b9);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">10</span>
+              <h2 class="work-title">Project Ten</h2>
+              <span class="work-tag">Motion Design</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="10" style="--thumb: linear-gradient(135deg, #834d9b, #d04ed6);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">11</span>
+              <h2 class="work-title">Project Eleven</h2>
+              <span class="work-tag">Visual Identity</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="11" style="--thumb: linear-gradient(135deg, #4b6cb7, #182848);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">12</span>
+              <h2 class="work-title">Project Twelve</h2>
+              <span class="work-tag">Video Production</span>
+            </div>
+          </article>
+
+          <article class="work-item" data-index="12" style="--thumb: linear-gradient(135deg, #f953c6, #b91d73);">
+            <div class="work-thumb"></div>
+            <div class="work-info">
+              <span class="work-number">13</span>
+              <h2 class="work-title">Project Thirteen</h2>
+              <span class="work-tag">Brand Film</span>
+            </div>
+          </article>
+        </div>
       </div>
-    </article>
+    </section>
 
-    <article class="work-item" data-index="1">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>02</span></div></div>
-      <div class="work-info">
-        <span class="work-number">02</span>
-        <h2 class="work-title">Project Two</h2>
-        <span class="work-tag">Visual Identity</span>
+    <section class="project-detail open" id="projectDetail" aria-live="polite">
+      <div class="detail-top">
+        <div>
+          <p class="detail-kicker" id="detailKicker">01 / 13 - Motion Design</p>
+          <h2 class="detail-title" id="detailTitle">Project One</h2>
+        </div>
+        <button class="detail-close" id="detailClose" aria-label="Close project">x</button>
       </div>
-    </article>
 
-    <article class="work-item" data-index="2">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>03</span></div></div>
-      <div class="work-info">
-        <span class="work-number">03</span>
-        <h2 class="work-title">Project Three</h2>
-        <span class="work-tag">Video Production</span>
+      <div class="detail-video-wrap" id="detailVideoWrap">
+        <video controls autoplay muted playsinline>
+          <source src="videos/project-01.mp4" type="video/mp4" />
+        </video>
       </div>
-    </article>
 
-    <article class="work-item" data-index="3">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>04</span></div></div>
-      <div class="work-info">
-        <span class="work-number">04</span>
-        <h2 class="work-title">Project Four</h2>
-        <span class="work-tag">Motion Design</span>
+      <div class="detail-desc">
+        <p id="detailDesc">
+          A short description of this project. Replace this text with the real project story, process, client details, or production notes.
+        </p>
+        <div class="detail-tags" id="detailTags">
+          <span>Motion Design</span>
+          <span>2024</span>
+        </div>
       </div>
-    </article>
+    </section>
+  </main>
 
-    <article class="work-item" data-index="4">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>05</span></div></div>
-      <div class="work-info">
-        <span class="work-number">05</span>
-        <h2 class="work-title">Project Five</h2>
-        <span class="work-tag">Brand Film</span>
-      </div>
-    </article>
+  <script>
+    const projects = [
+      {
+        num: "01",
+        title: "Project One",
+        tag: "Motion Design",
+        year: "2024",
+        video: "videos/project-01.mp4",
+        desc: "A short description of this project. Replace this text with the real project story, process, client details, or production notes."
+      },
+      {
+        num: "02",
+        title: "Project Two",
+        tag: "Visual Identity",
+        year: "2024",
+        video: "videos/project-02.mp4",
+        desc: "A clean visual identity project with motion-driven presentation and a cinematic look."
+      },
+      {
+        num: "03",
+        title: "Project Three",
+        tag: "Video Production",
+        year: "2024",
+        video: "videos/project-03.mp4",
+        desc: "A video production project focused on rhythm, atmosphere, editing, and visual storytelling."
+      },
+      {
+        num: "04",
+        title: "Project Four",
+        tag: "Motion Design",
+        year: "2024",
+        video: "videos/project-04.mp4",
+        desc: "Motion graphics, animated transitions, and a bold visual language for a modern campaign."
+      },
+      {
+        num: "05",
+        title: "Project Five",
+        tag: "Brand Film",
+        year: "2024",
+        video: "videos/project-05.mp4",
+        desc: "A brand film with a minimal, emotional, and premium visual direction."
+      },
+      {
+        num: "06",
+        title: "Project Six",
+        tag: "Visual Identity",
+        year: "2024",
+        video: "videos/project-06.mp4",
+        desc: "A complete identity system designed for digital-first brand communication."
+      },
+      {
+        num: "07",
+        title: "Project Seven",
+        tag: "Motion Design",
+        year: "2024",
+        video: "videos/project-07.mp4",
+        desc: "A fast-paced motion piece with abstract forms, typography, and sound-based timing."
+      },
+      {
+        num: "08",
+        title: "Project Eight",
+        tag: "Video Production",
+        year: "2024",
+        video: "videos/project-08.mp4",
+        desc: "A production piece built around cinematic framing, light, and precise editing."
+      },
+      {
+        num: "09",
+        title: "Project Nine",
+        tag: "Brand Film",
+        year: "2024",
+        video: "videos/project-09.mp4",
+        desc: "A brand film made to introduce the mood, personality, and values of the project."
+      },
+      {
+        num: "10",
+        title: "Project Ten",
+        tag: "Motion Design",
+        year: "2024",
+        video: "videos/project-10.mp4",
+        desc: "A motion design project with a strong graphic structure and energetic animation."
+      },
+      {
+        num: "11",
+        title: "Project Eleven",
+        tag: "Visual Identity",
+        year: "2024",
+        video: "videos/project-11.mp4",
+        desc: "A visual identity concept with flexible layouts, sharp contrast, and premium details."
+      },
+      {
+        num: "12",
+        title: "Project Twelve",
+        tag: "Video Production",
+        year: "2024",
+        video: "videos/project-12.mp4",
+        desc: "A video production piece focused on atmosphere, visual pacing, and polished delivery."
+      },
+      {
+        num: "13",
+        title: "Project Thirteen",
+        tag: "Brand Film",
+        year: "2024",
+        video: "videos/project-13.mp4",
+        desc: "A final brand film project with a strong cinematic tone and memorable visual moments."
+      }
+    ];
 
-    <article class="work-item" data-index="5">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>06</span></div></div>
-      <div class="work-info">
-        <span class="work-number">06</span>
-        <h2 class="work-title">Project Six</h2>
-        <span class="work-tag">Visual Identity</span>
-      </div>
-    </article>
+    const cursor = document.getElementById("cursor");
+    const follower = document.getElementById("cursorFollower");
+    let mx = 0;
+    let my = 0;
+    let fx = 0;
+    let fy = 0;
 
-    <article class="work-item" data-index="6">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>07</span></div></div>
-      <div class="work-info">
-        <span class="work-number">07</span>
-        <h2 class="work-title">Project Seven</h2>
-        <span class="work-tag">Motion Design</span>
-      </div>
-    </article>
+    document.addEventListener("mousemove", (event) => {
+      mx = event.clientX;
+      my = event.clientY;
 
-    <article class="work-item" data-index="7">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>08</span></div></div>
-      <div class="work-info">
-        <span class="work-number">08</span>
-        <h2 class="work-title">Project Eight</h2>
-        <span class="work-tag">Video Production</span>
-      </div>
-    </article>
-
-    <article class="work-item" data-index="8">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>09</span></div></div>
-      <div class="work-info">
-        <span class="work-number">09</span>
-        <h2 class="work-title">Project Nine</h2>
-        <span class="work-tag">Brand Film</span>
-      </div>
-    </article>
-
-    <article class="work-item" data-index="9">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>10</span></div></div>
-      <div class="work-info">
-        <span class="work-number">10</span>
-        <h2 class="work-title">Project Ten</h2>
-        <span class="work-tag">Motion Design</span>
-      </div>
-    </article>
-
-    <article class="work-item" data-index="10">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>11</span></div></div>
-      <div class="work-info">
-        <span class="work-number">11</span>
-        <h2 class="work-title">Project Eleven</h2>
-        <span class="work-tag">Visual Identity</span>
-      </div>
-    </article>
-
-    <article class="work-item" data-index="11">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>12</span></div></div>
-      <div class="work-info">
-        <span class="work-number">12</span>
-        <h2 class="work-title">Project Twelve</h2>
-        <span class="work-tag">Video Production</span>
-      </div>
-    </article>
-
-    <article class="work-item" data-index="12">
-      <div class="work-thumb-placeholder"><div class="placeholder-inner"><span>13</span></div></div>
-      <div class="work-info">
-        <span class="work-number">13</span>
-        <h2 class="work-title">Project Thirteen</h2>
-        <span class="work-tag">Brand Film</span>
-      </div>
-    </article>
-
-  </div>
-</div>
-
-<!-- ─── Project Overlay ─── -->
-<div class="project-overlay" id="projectOverlay" role="dialog" aria-modal="true" aria-label="Project Detail">
-  <div class="overlay-nav">
-    <button class="overlay-back" id="overlayClose" aria-label="Close project">← Back</button>
-    <span class="overlay-project-num" id="overlayNum">01 / 13</span>
-  </div>
-  <div class="overlay-content">
-    <h2 class="overlay-title" id="overlayTitle">Project Name</h2>
-    <div class="overlay-video-wrap" id="overlayVideoWrap">
-      <div class="overlay-video-placeholder">Video Placeholder</div>
-    </div>
-    <div class="overlay-desc">
-      <p id="overlayDescText">Placeholder text until real content is ready.</p>
-      <div class="desc-tags" id="overlayTags">
-        <span>Motion Design</span>
-        <span>2024</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  /* ── Project Data ── */
-  const projects = [
-    { num:'01', title:'Project One',      tag:'Motion Design',    year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'02', title:'Project Two',      tag:'Visual Identity',  year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'03', title:'Project Three',    tag:'Video Production', year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'04', title:'Project Four',     tag:'Motion Design',    year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'05', title:'Project Five',     tag:'Brand Film',       year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'06', title:'Project Six',      tag:'Visual Identity',  year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'07', title:'Project Seven',    tag:'Motion Design',    year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'08', title:'Project Eight',    tag:'Video Production', year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'09', title:'Project Nine',     tag:'Brand Film',       year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'10', title:'Project Ten',      tag:'Motion Design',    year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'11', title:'Project Eleven',   tag:'Visual Identity',  year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'12', title:'Project Twelve',   tag:'Video Production', year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-    { num:'13', title:'Project Thirteen', tag:'Brand Film',       year:'2024', desc:'A short description of this project. Placeholder until real content is ready.' },
-  ];
-
-  /* ── Custom Cursor ── */
-  const cursor   = document.getElementById('cursor');
-  const follower = document.getElementById('cursorFollower');
-  let mx = 0, my = 0, fx = 0, fy = 0;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
-  });
-  (function animFollower() {
-    fx += (mx - fx) * 0.12;
-    fy += (my - fy) * 0.12;
-    follower.style.left = fx + 'px';
-    follower.style.top  = fy + 'px';
-    requestAnimationFrame(animFollower);
-  })();
-
-  document.querySelectorAll('a, button, .work-item').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); follower.classList.add('hover'); });
-    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); follower.classList.remove('hover'); });
-  });
-
-  /* ── Wave Scroll Effect ── */
-  const track = document.getElementById('worksTrack');
-  const items = document.querySelectorAll('.work-item');
-
-  let targetX   = 0;   // target scroll position
-  let currentX  = 0;   // smoothed scroll position
-  let lastX     = 0;   // for velocity
-  let velocity  = 0;
-
-  // Convert vertical wheel to horizontal scroll
-  window.addEventListener('wheel', e => {
-    e.preventDefault();
-    targetX += e.deltaY * 1.2;
-    // clamp
-    const maxScroll = track.scrollWidth - window.innerWidth;
-    targetX = Math.max(0, Math.min(targetX, maxScroll));
-  }, { passive: false });
-
-  // Touch / drag support
-  let isDragging = false, dragStartX = 0, dragStartScroll = 0;
-  track.addEventListener('mousedown', e => {
-    isDragging = true;
-    dragStartX = e.clientX;
-    dragStartScroll = targetX;
-    document.body.style.userSelect = 'none';
-  });
-  window.addEventListener('mouseup', () => {
-    isDragging = false;
-    document.body.style.userSelect = '';
-  });
-  window.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    const dx = e.clientX - dragStartX;
-    targetX  = dragStartScroll - dx;
-    const maxScroll = track.scrollWidth - window.innerWidth;
-    targetX = Math.max(0, Math.min(targetX, maxScroll));
-  });
-
-  function animateScroll() {
-    // smooth lerp
-    currentX += (targetX - currentX) * 0.08;
-    velocity  = currentX - lastX;
-    lastX     = currentX;
-
-    track.style.transform = `translateX(${-currentX}px)`;
-
-    // Wave: each card tilts/lifts based on distance from scroll velocity
-    items.forEach((item, i) => {
-      const rect      = item.getBoundingClientRect();
-      const center    = rect.left + rect.width / 2;
-      const screenMid = window.innerWidth / 2;
-      const dist      = (center - screenMid) / window.innerWidth; // -0.5 to 0.5
-
-      // tilt based on velocity
-      const tiltY  = velocity * 0.18;
-      // wave offset: cards closer to center rise, edges fall
-      const waveY  = Math.sin(dist * Math.PI) * Math.abs(velocity) * 1.5;
-
-      item.style.transform = `translateY(${-waveY}px) rotateZ(${tiltY * dist}deg)`;
+      cursor.style.left = mx + "px";
+      cursor.style.top = my + "px";
     });
 
-    requestAnimationFrame(animateScroll);
-  }
-  animateScroll();
+    function animateCursor() {
+      fx += (mx - fx) * 0.12;
+      fy += (my - fy) * 0.12;
 
-  /* ── Overlay Logic ── */
-  const overlay = document.getElementById('projectOverlay');
-  const oTitle  = document.getElementById('overlayTitle');
-  const oNum    = document.getElementById('overlayNum');
-  const oVWrap  = document.getElementById('overlayVideoWrap');
-  const oDesc   = document.getElementById('overlayDescText');
-  const oTags   = document.getElementById('overlayTags');
+      follower.style.left = fx + "px";
+      follower.style.top = fy + "px";
 
-  function openProject(idx) {
-    const p = projects[idx];
-    oTitle.textContent = p.title;
-    oNum.textContent   = p.num + ' / 13';
-    oDesc.textContent  = p.desc;
-    oTags.innerHTML    = `<span>${p.tag}</span><span>${p.year}</span>`;
-    oVWrap.innerHTML   = `<div class="overlay-video-placeholder">Video — ${p.title}</div>`;
+      requestAnimationFrame(animateCursor);
+    }
 
-    document.body.style.overflow = 'hidden';
-    overlay.classList.add('open');
-    overlay.scrollTop = 0;
-  }
+    animateCursor();
 
-  function closeProject() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+    document.querySelectorAll("a, button, .work-item").forEach((element) => {
+      element.addEventListener("mouseenter", () => {
+        cursor.classList.add("hover");
+        follower.classList.add("hover");
+      });
 
-  items.forEach(item => {
-    item.addEventListener('click', () => {
-      if (Math.abs(velocity) < 2) openProject(+item.dataset.index);
+      element.addEventListener("mouseleave", () => {
+        cursor.classList.remove("hover");
+        follower.classList.remove("hover");
+      });
     });
-  });
 
-  document.getElementById('overlayClose').addEventListener('click', closeProject);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
-</script>
+    const track = document.getElementById("worksTrack");
+    const items = document.querySelectorAll(".work-item");
+
+    let targetWave = 0;
+    let currentWave = 0;
+    let lastWheelTime = 0;
+    let pointerX = window.innerWidth / 2;
+
+    window.addEventListener(
+      "wheel",
+      (event) => {
+        targetWave += event.deltaY * 0.055;
+        targetWave = Math.max(-18, Math.min(18, targetWave));
+        lastWheelTime = performance.now();
+      },
+      { passive: true }
+    );
+
+    window.addEventListener("mousemove", (event) => {
+      pointerX = event.clientX;
+    });
+
+    function animateCards() {
+      const now = performance.now();
+      const idleWave = Math.sin(now * 0.0015) * 2.2;
+      const wheelIsActive = now - lastWheelTime < 900;
+
+      targetWave *= 0.92;
+      currentWave += (targetWave - currentWave) * 0.09;
+
+      items.forEach((item, index) => {
+        const rect = item.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const distanceFromPointer = (center - pointerX) / window.innerWidth;
+        const phase = index * 0.52 + now * 0.0018;
+        const softWave = Math.sin(phase) * idleWave;
+        const wheelWave = Math.sin(distanceFromPointer * Math.PI * 2) * Math.abs(currentWave) * 1.8;
+        const lift = wheelIsActive ? wheelWave : softWave;
+        const tilt = currentWave * distanceFromPointer * 0.8;
+
+        item.style.transform = `translateY(${-lift}px) rotateZ(${tilt}deg)`;
+      });
+
+      requestAnimationFrame(animateCards);
+    }
+
+    animateCards();
+
+    const detail = document.getElementById("projectDetail");
+    const detailKicker = document.getElementById("detailKicker");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailVideoWrap = document.getElementById("detailVideoWrap");
+    const detailDesc = document.getElementById("detailDesc");
+    const detailTags = document.getElementById("detailTags");
+    const detailClose = document.getElementById("detailClose");
+
+    function openProject(index) {
+      const project = projects[index];
+
+      items.forEach((item) => item.classList.remove("active"));
+      items[index].classList.add("active");
+
+      detail.classList.remove("open");
+
+      window.setTimeout(() => {
+        detailKicker.textContent = `${project.num} / 13 - ${project.tag}`;
+        detailTitle.textContent = project.title;
+        detailDesc.textContent = project.desc;
+        detailTags.innerHTML = `<span>${project.tag}</span><span>${project.year}</span>`;
+
+        detailVideoWrap.innerHTML = `
+          <video controls autoplay muted playsinline>
+            <source src="${project.video}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        `;
+
+        detail.classList.add("open");
+
+        const video = detailVideoWrap.querySelector("video");
+        if (video) {
+          video.play().catch(() => {});
+        }
+
+        detail.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }, 180);
+    }
+
+    function closeProject() {
+      const video = detailVideoWrap.querySelector("video");
+
+      if (video) {
+        video.pause();
+      }
+
+      detail.classList.remove("open");
+      items.forEach((item) => item.classList.remove("active"));
+    }
+
+    items.forEach((item) => {
+      item.addEventListener("click", () => {
+        openProject(Number(item.dataset.index));
+      });
+    });
+
+    detailClose.addEventListener("click", closeProject);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeProject();
+      }
+    });
+  </script>
 </body>
 </html>
