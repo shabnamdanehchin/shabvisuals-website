@@ -149,6 +149,7 @@
       font-size: 18rem;
     }
 
+    /* ── تغییر اصلی: opacity به transition اضافه شد ── */
     .hero-line {
       position: absolute;
       height: 3px;
@@ -157,7 +158,8 @@
       transition: left 1s cubic-bezier(0.4, 0, 0.2, 1),
                   width 1s cubic-bezier(0.4, 0, 0.2, 1),
                   top 1s cubic-bezier(0.4, 0, 0.2, 1),
-                  bottom 1s cubic-bezier(0.4, 0, 0.2, 1);
+                  bottom 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s ease;
     }
 
     .hero-visuals {
@@ -382,9 +384,6 @@
 </section>
 
 <script>
-  /* ─────────────────────────────────────────
-   * محاسبه خطوط با Canvas API
-   * ───────────────────────────────────────── */
   function calcLines(shabEl, wrapEl, lineSh, lineAb, text) {
     const fs    = parseFloat(getComputedStyle(shabEl).fontSize);
     const ff    = getComputedStyle(shabEl).fontFamily;
@@ -397,7 +396,7 @@
     const ctx = cvs.getContext('2d');
     ctx.font  = `600 ${fs}px ${ff}`;
 
-    /* همیشه با 'shab' کامل حساب کن تا خطوط جا نپرن */
+    /* همیشه با 'shab' کامل حساب کن */
     const mAll = ctx.measureText('shab');
     const mSh  = ctx.measureText('sh');
     const mS   = ctx.measureText('s');
@@ -406,69 +405,61 @@
 
     const ratio = wrapW / mAll.width;
 
-    /* افقی */
     const shLeft  = (mS.width * 0.25) * ratio;
     const shWidth = (mSh.width * 1.05 - mS.width * 0.25) * ratio;
     const abLeft  = (mSha.width - mA.width * 0.5) * ratio;
     const abWidth = wrapW - abLeft;
 
-    /* عمودی */
     const ascent  = mAll.actualBoundingBoxAscent  || fs * 0.75;
     const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
     const topPad  = (wrapH - ascent - descent) / 2;
 
-    /* خط sh */
+    /* همیشه position رو set کن — حتی وقتی opacity صفره */
     lineSh.style.left   = shLeft + 'px';
     lineSh.style.width  = shWidth + 'px';
     lineSh.style.bottom = (descent + topPad - 15) + 'px';
     lineSh.style.top    = 'auto';
 
-    /* خط ab */
     const abTopVal = Math.max(0, topPad - 1);
     lineAb.style.left   = abLeft + 'px';
     lineAb.style.width  = abWidth + 'px';
     lineAb.style.top    = abTopVal + 'px';
     lineAb.style.bottom = 'auto';
 
-    /* نمایش/مخفی کردن خط‌ها بر اساس حروف تایپ‌شده */
+    /* فقط opacity رو بر اساس حروف تایپ‌شده کنترل کن */
     const typed = text || '';
     lineSh.style.opacity = typed.length >= 2 ? '1' : '0';
     lineAb.style.opacity = typed.length >= 4 ? '1' : '0';
   }
 
-  const heroShab   = document.getElementById('heroShab');
-  const heroWrap   = document.getElementById('heroShabWrap');
-  const heroLineSh = document.getElementById('heroLineSh');
-  const heroLineAb = document.getElementById('heroLineAb');
-  const heroVisuals = document.getElementById('heroVisuals');
+  const heroShab     = document.getElementById('heroShab');
+  const heroWrap     = document.getElementById('heroShabWrap');
+  const heroLineSh   = document.getElementById('heroLineSh');
+  const heroLineAb   = document.getElementById('heroLineAb');
+  const heroVisuals  = document.getElementById('heroVisuals');
   const typingCursor = document.getElementById('typingCursor');
+  const heroLogo     = document.getElementById('heroLogo');
+  const heroVideo    = document.getElementById('heroVideo');
 
-  const navShab    = document.getElementById('navShab');
-  const navWrap    = document.getElementById('navShabWrap');
-  const navLineSh  = document.getElementById('navLineSh');
-  const navLineAb  = document.getElementById('navLineAb');
+  const navShab   = document.getElementById('navShab');
+  const navWrap   = document.getElementById('navShabWrap');
+  const navLineSh = document.getElementById('navLineSh');
+  const navLineAb = document.getElementById('navLineAb');
 
   let currentTyped = '';
 
   function updateAllLines() {
     calcLines(heroShab, heroWrap, heroLineSh, heroLineAb, currentTyped);
-    calcLines(navShab,  navWrap,  navLineSh,  navLineAb, 'shab');
+    calcLines(navShab,  navWrap,  navLineSh,  navLineAb,  'shab');
   }
-
-  /* ─────────────────────────────────────────
-   * انیمیشن Hero
-   * ───────────────────────────────────────── */
-  const heroLogo  = document.getElementById('heroLogo');
-  const heroVideo = document.getElementById('heroVideo');
 
   const word = 'shab';
   let charIndex = 0;
 
-  /* خط‌ها در ابتدا مخفی */
+  /* خط‌های hero از اول opacity صفر دارن — transition در CSS تعریف شده */
   heroLineSh.style.opacity = '0';
   heroLineAb.style.opacity = '0';
-  heroLineSh.style.transition = 'opacity 0.3s ease';
-  heroLineAb.style.transition = 'opacity 0.3s ease';
+  /* ← این دو خط inline transition حذف شدن چون CSS کافیه */
 
   function typeNextChar() {
     if (charIndex < word.length) {
@@ -478,19 +469,18 @@
       updateAllLines();
       setTimeout(typeNextChar, 150);
     } else {
-      /* تایپ تموم شد — cursor رو بعد از ۴۰۰ms حذف کن */
       setTimeout(() => {
         typingCursor.style.display = 'none';
 
-        /* زوم */
+        /* zoom */
         heroLogo.classList.add('large');
         heroVisuals.style.opacity = '1';
 
-        /* خطوط رو بعد از زوم آپدیت کن */
+        /* خطوط بعد از zoom آپدیت میشن — چون position از قبل set شده،
+           فقط اندازه نرم عوض میشه نه اینکه یهو ظاهر بشن */
         setTimeout(updateAllLines, 1050);
       }, 400);
 
-      /* ویدیو */
       setTimeout(() => {
         heroVideo.classList.add('visible');
         heroVideo.play().catch(() => {});
@@ -501,7 +491,6 @@
   document.fonts.ready.then(() => {
     updateAllLines();
     window.addEventListener('resize', updateAllLines);
-    /* تایپ بعد از ۵۰۰ms شروع میشه */
     setTimeout(typeNextChar, 500);
   });
 </script>
