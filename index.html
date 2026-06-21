@@ -129,7 +129,6 @@
       line-height: 1;
     }
 
-    /* حالت اولیه (medium) */
     .hero-shab {
       font-family: 'LOT', sans-serif;
       font-size: 10rem;
@@ -143,12 +142,9 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       user-select: none;
-
-      /* زوم با font-size — مثل کد قدیمی */
       transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* حالت large — بعد از 1 ثانیه */
     .hero-logo.large .hero-shab {
       font-size: 18rem;
     }
@@ -158,7 +154,6 @@
       height: 3px;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       pointer-events: none;
-      /* transition برای وقتی font-size عوض می‌شه و JS خطوط رو آپدیت می‌کنه */
       transition: left 1s cubic-bezier(0.4, 0, 0.2, 1),
                   width 1s cubic-bezier(0.4, 0, 0.2, 1),
                   top 1s cubic-bezier(0.4, 0, 0.2, 1),
@@ -178,14 +173,30 @@
       margin-top: 8px;
       display: block;
       user-select: none;
-
+      opacity: 0;
       transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1),
-                  margin-top 1s cubic-bezier(0.4, 0, 0.2, 1);
+                  margin-top 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.6s ease;
     }
 
     .hero-logo.large .hero-visuals {
       font-size: 9rem;
       margin-top: 14px;
+    }
+
+    /* cursor چشمک‌زن */
+    .typing-cursor {
+      display: inline-block;
+      width: 3px;
+      background: #fff;
+      margin-left: 2px;
+      vertical-align: baseline;
+      animation: blink 0.7s step-end infinite;
+      border-radius: 1px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
     }
 
     /* ── SERVICES ── */
@@ -307,11 +318,12 @@
   <div class="hero-content">
     <div class="hero-logo" id="heroLogo">
       <div class="hero-shab-wrap" id="heroShabWrap">
-        <span class="hero-shab" id="heroShab">shab</span>
+        <span class="hero-shab" id="heroShab"></span>
+        <span class="typing-cursor" id="typingCursor"></span>
         <div class="hero-line" id="heroLineSh"></div>
         <div class="hero-line" id="heroLineAb"></div>
       </div>
-      <span class="hero-visuals">visuals</span>
+      <span class="hero-visuals" id="heroVisuals">visuals</span>
     </div>
   </div>
 </section>
@@ -373,16 +385,19 @@
   /* ─────────────────────────────────────────
    * محاسبه خطوط با Canvas API
    * ───────────────────────────────────────── */
-  function calcLines(shabEl, wrapEl, lineSh, lineAb) {
+  function calcLines(shabEl, wrapEl, lineSh, lineAb, text) {
     const fs    = parseFloat(getComputedStyle(shabEl).fontSize);
     const ff    = getComputedStyle(shabEl).fontFamily;
     const wrapW = wrapEl.offsetWidth;
     const wrapH = wrapEl.offsetHeight;
 
+    if (wrapW === 0) return;
+
     const cvs = document.createElement('canvas');
     const ctx = cvs.getContext('2d');
     ctx.font  = `600 ${fs}px ${ff}`;
 
+    /* همیشه با 'shab' کامل حساب کن تا خطوط جا نپرن */
     const mAll = ctx.measureText('shab');
     const mSh  = ctx.measureText('sh');
     const mS   = ctx.measureText('s');
@@ -402,58 +417,93 @@
     const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
     const topPad  = (wrapH - ascent - descent) / 2;
 
-    /* خط sh: دقیقاً زیر حروف */
+    /* خط sh */
     lineSh.style.left   = shLeft + 'px';
     lineSh.style.width  = shWidth + 'px';
-   lineSh.style.bottom = (descent + topPad -15) + 'px';
+    lineSh.style.bottom = (descent + topPad - 15) + 'px';
     lineSh.style.top    = 'auto';
 
-    /* خط ab: دقیقاً بالای حروف */
+    /* خط ab */
     const abTopVal = Math.max(0, topPad - 1);
     lineAb.style.left   = abLeft + 'px';
     lineAb.style.width  = abWidth + 'px';
     lineAb.style.top    = abTopVal + 'px';
     lineAb.style.bottom = 'auto';
+
+    /* نمایش/مخفی کردن خط‌ها بر اساس حروف تایپ‌شده */
+    const typed = text || '';
+    lineSh.style.opacity = typed.length >= 2 ? '1' : '0';
+    lineAb.style.opacity = typed.length >= 4 ? '1' : '0';
   }
 
   const heroShab   = document.getElementById('heroShab');
   const heroWrap   = document.getElementById('heroShabWrap');
   const heroLineSh = document.getElementById('heroLineSh');
   const heroLineAb = document.getElementById('heroLineAb');
+  const heroVisuals = document.getElementById('heroVisuals');
+  const typingCursor = document.getElementById('typingCursor');
 
   const navShab    = document.getElementById('navShab');
   const navWrap    = document.getElementById('navShabWrap');
   const navLineSh  = document.getElementById('navLineSh');
   const navLineAb  = document.getElementById('navLineAb');
 
+  let currentTyped = '';
+
   function updateAllLines() {
-    calcLines(heroShab, heroWrap, heroLineSh, heroLineAb);
-    calcLines(navShab,  navWrap,  navLineSh,  navLineAb);
+    calcLines(heroShab, heroWrap, heroLineSh, heroLineAb, currentTyped);
+    calcLines(navShab,  navWrap,  navLineSh,  navLineAb, 'shab');
+  }
+
+  /* ─────────────────────────────────────────
+   * انیمیشن Hero
+   * ───────────────────────────────────────── */
+  const heroLogo  = document.getElementById('heroLogo');
+  const heroVideo = document.getElementById('heroVideo');
+
+  const word = 'shab';
+  let charIndex = 0;
+
+  /* خط‌ها در ابتدا مخفی */
+  heroLineSh.style.opacity = '0';
+  heroLineAb.style.opacity = '0';
+  heroLineSh.style.transition = 'opacity 0.3s ease';
+  heroLineAb.style.transition = 'opacity 0.3s ease';
+
+  function typeNextChar() {
+    if (charIndex < word.length) {
+      currentTyped += word[charIndex];
+      heroShab.textContent = currentTyped;
+      charIndex++;
+      updateAllLines();
+      setTimeout(typeNextChar, 150);
+    } else {
+      /* تایپ تموم شد — cursor رو بعد از ۴۰۰ms حذف کن */
+      setTimeout(() => {
+        typingCursor.style.display = 'none';
+
+        /* زوم */
+        heroLogo.classList.add('large');
+        heroVisuals.style.opacity = '1';
+
+        /* خطوط رو بعد از زوم آپدیت کن */
+        setTimeout(updateAllLines, 1050);
+      }, 400);
+
+      /* ویدیو */
+      setTimeout(() => {
+        heroVideo.classList.add('visible');
+        heroVideo.play().catch(() => {});
+      }, 1800);
+    }
   }
 
   document.fonts.ready.then(() => {
     updateAllLines();
     window.addEventListener('resize', updateAllLines);
+    /* تایپ بعد از ۵۰۰ms شروع میشه */
+    setTimeout(typeNextChar, 500);
   });
-
-  /* ─────────────────────────────────────────
-   * انیمیشن Hero — مثل کد قدیمی
-   * ───────────────────────────────────────── */
-  const heroLogo  = document.getElementById('heroLogo');
-  const heroVideo = document.getElementById('heroVideo');
-
-  /* بعد از 1 ثانیه: لوگو بزرگ می‌شه (font-size zoom) */
-  setTimeout(() => {
-    heroLogo.classList.add('large');
-    /* خطوط رو بعد از transition آپدیت کن */
-    setTimeout(updateAllLines, 1050);
-  }, 1000);
-
-  /* بعد از 2 ثانیه: ویدیو ظاهر می‌شه */
-  setTimeout(() => {
-    heroVideo.classList.add('visible');
-    heroVideo.play().catch(() => {});
-  }, 2000);
 </script>
 
 </body>
