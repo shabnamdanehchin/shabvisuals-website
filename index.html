@@ -94,41 +94,41 @@
       gap: 0.25rem;
     }
 
-    /* ── NAV ITEM WRAP (works / about) ── */
+    /* ── NAV ITEM WRAP ── */
     .nav-item-wrap {
       position: relative;
       display: flex;
-      align-items: center;
+      align-items: center; /* FIX: گلوله با متن vertically center */
       cursor: pointer;
       overflow: visible;
     }
 
-    /* گلوله */
+    /* گلوله — FIX: translateY تنظیم شد تا از بالا بیاید نه از وسط */
     .nav-bullet {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: #fff;
       flex-shrink: 0;
-      transform: translateY(-22px);
+      /* شروع از بالای wrap، بالاتر از خط متن */
+      transform: translateY(-18px);
       opacity: 0;
       max-width: 0;
       margin-right: 0;
       transition:
-        transform   0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9),
-        opacity     0.15s ease,
-        max-width   0.22s ease,
+        transform    0.4s cubic-bezier(0.4, 2.6, 0.55, 0.9),
+        opacity      0.15s ease,
+        max-width    0.22s ease,
         margin-right 0.22s ease;
     }
 
     .nav-item-wrap:hover .nav-bullet {
-      transform: translateY(0);
+      transform: translateY(0); /* FIX: صفر یعنی همان خط center که align-items تعیین کرده */
       opacity: 1;
-      max-width: 12px;
+      max-width: 14px;
       margin-right: 6px;
     }
 
-    /* متن — وقتی گلوله می‌افتد، کلمه کمی پایین می‌رود و برمی‌گردد */
     .nav-item {
       padding: 0.5rem 0.75rem;
       font-size: 0.85rem;
@@ -139,35 +139,30 @@
       white-space: nowrap;
       display: inline-block;
       transition:
-        color      0.2s ease,
-        transform  0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9);
+        color     0.2s ease,
+        transform 0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9);
     }
 
-    /* همزمان با سقوط گلوله، کلمه 4px پایین می‌رود و bounce می‌خورد */
     .nav-item-wrap:hover .nav-item {
       color: #fff;
       transform: translateY(4px);
     }
 
-    /* برگشت آرام بعد از hover */
-    .nav-item-wrap:not(:hover) .nav-item {
-      transform: translateY(0);
-    }
-
     /* ── SERVICES WRAP ── */
+    /* FIX: overflow visible و position relative برای اینکه dropdown به درستی نشان داده شود */
     .nav-services-wrap {
       position: relative;
       display: flex;
       align-items: center;
-      overflow: visible;
       cursor: pointer;
+      overflow: visible;
     }
 
     /* ── GET IN TOUCH ── */
     .nav-cta-wrap {
       position: relative;
       display: flex;
-      align-items: center;
+      align-items: center; /* FIX: گلوله gradient هم center */
       margin-left: 0.5rem;
       overflow: visible;
       cursor: pointer;
@@ -179,12 +174,12 @@
       border-radius: 50%;
       background: linear-gradient(135deg, #5170ff, #ff66c4);
       flex-shrink: 0;
-      transform: translateY(-22px);
+      transform: translateY(-18px);
       opacity: 0;
       max-width: 0;
       margin-right: 0;
       transition:
-        transform    0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9),
+        transform    0.4s cubic-bezier(0.4, 2.6, 0.55, 0.9),
         opacity      0.15s ease,
         max-width    0.22s ease,
         margin-right 0.22s ease;
@@ -193,7 +188,7 @@
     .nav-cta-wrap:hover .nav-cta-bullet {
       transform: translateY(0);
       opacity: 1;
-      max-width: 12px;
+      max-width: 14px;
       margin-right: 6px;
     }
 
@@ -208,7 +203,6 @@
       text-transform: lowercase;
       white-space: nowrap;
       display: inline-block;
-      /* padding-left و padding-right با hover کشیده می‌شوند */
       transition:
         color         0.2s ease,
         border-color  0.2s ease,
@@ -217,7 +211,6 @@
         padding-right 0.35s cubic-bezier(0.4, 2.4, 0.55, 0.9);
     }
 
-    /* همزمان با سقوط گلوله، مستطیل از دو طرف کشیده می‌شود */
     .nav-cta-wrap:hover .nav-cta {
       color: #fff;
       border-color: rgba(255,255,255,0.7);
@@ -229,9 +222,21 @@
     /* ── SERVICES DROPDOWN ── */
     .services-dropdown {
       position: absolute;
-      top: calc(100% + 1rem);
+      top: 100%; /* FIX: از پایین wrap شروع می‌شود */
       left: 50%;
       transform: translateX(-50%) translateY(-6px);
+      /* FIX: padding-top برای پر کردن gap بین trigger و dropdown
+         موس از این ناحیه رد می‌شود بدون اینکه hover قطع شود */
+      padding-top: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      /* z-index بالا تا روی همه چیز باشد */
+      z-index: 999;
+    }
+
+    /* محتوای واقعی dropdown داخل یک div جداگانه */
+    .dropdown-inner {
       background: rgba(10,10,10,0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -239,9 +244,7 @@
       border-radius: 12px;
       padding: 0.5rem;
       min-width: 240px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      position: relative;
     }
 
     .nav-services-wrap:hover .services-dropdown {
@@ -250,7 +253,8 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    .services-dropdown::before {
+    /* arrow روی dropdown-inner */
+    .dropdown-inner::before {
       content: '';
       position: absolute;
       top: -5px;
@@ -398,7 +402,7 @@
       transition:
         font-size  1s cubic-bezier(0.4, 0, 0.2, 1),
         margin-top 1s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.6s ease;
+        opacity    0.6s ease;
     }
 
     .hero-logo.large .hero-visuals {
@@ -540,30 +544,33 @@
       <a class="nav-item" href="#works">works</a>
     </div>
 
-    <!-- services -->
-    <div class="nav-services-wrap nav-item-wrap">
+    <!-- services — FIX: هر دو کلاس روی یک المان -->
+    <div class="nav-item-wrap nav-services-wrap">
       <span class="nav-bullet"></span>
       <span class="nav-item">services</span>
+      <!-- FIX: padding-top روی خود dropdown، محتوا داخل dropdown-inner -->
       <div class="services-dropdown">
-        <a class="dropdown-item" href="#saas">
-          <span class="dropdown-dot"></span>
-          <span class="dropdown-label">SaaS & Product Videos</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#commercial">
-          <span class="dropdown-dot"></span>
-          <span class="dropdown-label">Commercial & Promo Ads</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#social">
-          <span class="dropdown-dot"></span>
-          <span class="dropdown-label">Social Media Content</span>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#motion">
-          <span class="dropdown-dot"></span>
-          <span class="dropdown-label">Motion Graphics & Animation</span>
-        </a>
+        <div class="dropdown-inner">
+          <a class="dropdown-item" href="#saas">
+            <span class="dropdown-dot"></span>
+            <span class="dropdown-label">SaaS & Product Videos</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#commercial">
+            <span class="dropdown-dot"></span>
+            <span class="dropdown-label">Commercial & Promo Ads</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#social">
+            <span class="dropdown-dot"></span>
+            <span class="dropdown-label">Social Media Content</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#motion">
+            <span class="dropdown-dot"></span>
+            <span class="dropdown-label">Motion Graphics & Animation</span>
+          </a>
+        </div>
       </div>
     </div>
 
