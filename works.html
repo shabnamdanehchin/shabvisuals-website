@@ -15,8 +15,8 @@
     :root {
       --bg: #050505;
       --text: #f4f4f4;
-      --muted: rgba(255, 255, 255, 0.48);
-      --line: rgba(255, 255, 255, 0.12);
+      --muted: rgba(255, 255, 255, 0.5);
+      --line: rgba(255, 255, 255, 0.14);
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -34,14 +34,14 @@
       cursor: none;
     }
 
-    body {
-      padding-bottom: 80px;
-    }
-
     a,
     button,
     .work-item {
       cursor: none;
+    }
+
+    body {
+      min-height: 100vh;
     }
 
     .cursor {
@@ -55,7 +55,7 @@
       pointer-events: none;
       z-index: 9999;
       transform: translate(-50%, -50%);
-      transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+      transition: width 0.25s ease, height 0.25s ease;
       mix-blend-mode: difference;
     }
 
@@ -73,8 +73,7 @@
       transition:
         width 0.3s ease,
         height 0.3s ease,
-        border-color 0.3s ease,
-        opacity 0.3s ease;
+        border-color 0.3s ease;
       mix-blend-mode: difference;
     }
 
@@ -130,435 +129,394 @@
       opacity: 1;
     }
 
-    .page-shell {
+    main {
       min-height: 100vh;
-      padding: 118px 22px 0;
     }
 
-    .page-header {
-      position: relative;
-      z-index: 2;
+    .film-page {
+      min-height: 100vh;
       display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 112px 22px 36px;
+    }
+
+    .film-stage {
+      width: 100%;
+      max-width: 1500px;
+      position: relative;
+    }
+
+    .small-header {
+      display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: flex-end;
-      gap: 24px;
-      padding: 0 20px 22px;
-    }
-
-    .page-header h1 {
-      font-size: clamp(3.4rem, 8vw, 8.6rem);
-      font-weight: 700;
-      letter-spacing: -0.065em;
-      line-height: 0.82;
+      margin-bottom: 18px;
+      padding-inline: 2px;
       opacity: 0;
-      transform: translateY(34px);
-      animation: fadeUp 1s var(--ease) 0.1s forwards;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s var(--ease) 0.1s forwards;
     }
 
-    .project-count {
-      margin-bottom: 8px;
-      color: var(--muted);
-      font-size: 0.72rem;
+    .small-header span {
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.68rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      white-space: nowrap;
-      opacity: 0;
-      transform: translateY(18px);
-      animation: fadeUp 1s var(--ease) 0.24s forwards;
     }
 
-    .works-section {
+    .film-reel {
       position: relative;
-      width: 100%;
+      height: clamp(150px, 22vh, 235px);
+      min-height: 150px;
+      overflow: visible;
+      padding: 24px 0;
+      background: #030303;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow:
+        0 24px 90px rgba(0, 0, 0, 0.72),
+        inset 0 0 35px rgba(255, 255, 255, 0.035);
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 1s var(--ease) 0.22s forwards;
+    }
+
+    .film-reel::before,
+    .film-reel::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 18px;
+      z-index: 4;
+      pointer-events: none;
+      background:
+        radial-gradient(circle, rgba(255, 255, 255, 0.58) 0 4px, transparent 4.8px) 0 50% / 28px 14px repeat-x,
+        linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.1));
+      opacity: 0.72;
+    }
+
+    .film-reel::before {
+      top: 3px;
+    }
+
+    .film-reel::after {
+      bottom: 3px;
     }
 
     .works-track-outer {
-      position: relative;
       width: 100%;
-      height: calc(100vh - 205px);
-      min-height: 430px;
-      overflow: hidden;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      opacity: 0;
-      transform: translateY(26px);
-      animation: fadeUp 1s var(--ease) 0.38s forwards;
+      height: 100%;
+      overflow: visible;
+      position: relative;
     }
 
     .works-track {
       position: relative;
       display: grid;
       grid-template-columns: repeat(13, minmax(0, 1fr));
-      gap: 2px;
+      gap: 5px;
       width: 100%;
       height: 100%;
-      background: rgba(255, 255, 255, 0.08);
-      will-change: transform;
-      transition: grid-template-columns 0.9s var(--ease);
+      overflow: visible;
+      padding: 0 5px;
+      isolation: isolate;
     }
 
     .work-item {
+      --wave-y: 0px;
+      --tilt: 0deg;
+      --active-scale: 1;
       position: relative;
       min-width: 0;
       height: 100%;
       overflow: hidden;
       isolation: isolate;
-      border: 0;
-      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 4px;
+      background: #101010;
+      transform:
+        translateY(var(--wave-y))
+        rotateZ(var(--tilt))
+        scale(var(--active-scale));
       transform-origin: center center;
-      will-change: transform, filter;
+      will-change: transform, filter, opacity;
       transition:
-        transform 0.75s var(--ease),
+        transform 0.85s var(--ease),
+        opacity 0.55s ease,
         filter 0.55s ease,
-        opacity 0.55s ease;
+        border-color 0.35s ease,
+        box-shadow 0.55s ease;
     }
 
-    .works-track:has(.work-item:nth-child(1):hover),
-    .works-track[data-active="0"] {
-      grid-template-columns: 2.6fr repeat(12, 1fr);
+    .work-item::before,
+    .work-item::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      z-index: 5;
+      pointer-events: none;
+      background:
+        radial-gradient(circle, rgba(0, 0, 0, 0.95) 0 2.8px, transparent 3.3px) 4px 50% / 18px 8px repeat-x;
+      opacity: 0.68;
     }
 
-    .works-track:has(.work-item:nth-child(2):hover),
-    .works-track[data-active="1"] {
-      grid-template-columns: 1fr 2.6fr repeat(11, 1fr);
+    .work-item::before {
+      top: 4px;
     }
 
-    .works-track:has(.work-item:nth-child(3):hover),
-    .works-track[data-active="2"] {
-      grid-template-columns: repeat(2, 1fr) 2.6fr repeat(10, 1fr);
+    .work-item::after {
+      bottom: 4px;
     }
 
-    .works-track:has(.work-item:nth-child(4):hover),
-    .works-track[data-active="3"] {
-      grid-template-columns: repeat(3, 1fr) 2.6fr repeat(9, 1fr);
+    .work-item.is-dim {
+      opacity: 0.22;
+      filter: grayscale(1) brightness(0.58);
     }
 
-    .works-track:has(.work-item:nth-child(5):hover),
-    .works-track[data-active="4"] {
-      grid-template-columns: repeat(4, 1fr) 2.6fr repeat(8, 1fr);
+    .work-item.is-neighbor {
+      opacity: 0.72;
+      filter: grayscale(0.75) brightness(0.82);
+      z-index: 6;
+      --active-scale: 1.14;
     }
 
-    .works-track:has(.work-item:nth-child(6):hover),
-    .works-track[data-active="5"] {
-      grid-template-columns: repeat(5, 1fr) 2.6fr repeat(7, 1fr);
+    .work-item.active {
+      z-index: 20;
+      opacity: 1;
+      filter: none;
+      border-color: rgba(255, 255, 255, 0.55);
+      box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.82),
+        0 0 0 1px rgba(255, 255, 255, 0.18);
+      --active-scale: 2.32;
     }
 
-    .works-track:has(.work-item:nth-child(7):hover),
-    .works-track[data-active="6"] {
-      grid-template-columns: repeat(6, 1fr) 2.6fr repeat(6, 1fr);
-    }
-
-    .works-track:has(.work-item:nth-child(8):hover),
-    .works-track[data-active="7"] {
-      grid-template-columns: repeat(7, 1fr) 2.6fr repeat(5, 1fr);
-    }
-
-    .works-track:has(.work-item:nth-child(9):hover),
-    .works-track[data-active="8"] {
-      grid-template-columns: repeat(8, 1fr) 2.6fr repeat(4, 1fr);
-    }
-
-    .works-track:has(.work-item:nth-child(10):hover),
-    .works-track[data-active="9"] {
-      grid-template-columns: repeat(9, 1fr) 2.6fr repeat(3, 1fr);
-    }
-
-    .works-track:has(.work-item:nth-child(11):hover),
-    .works-track[data-active="10"] {
-      grid-template-columns: repeat(10, 1fr) 2.6fr repeat(2, 1fr);
-    }
-
-    .works-track:has(.work-item:nth-child(12):hover),
-    .works-track[data-active="11"] {
-      grid-template-columns: repeat(11, 1fr) 2.6fr 1fr;
-    }
-
-    .works-track:has(.work-item:nth-child(13):hover),
-    .works-track[data-active="12"] {
-      grid-template-columns: repeat(12, 1fr) 2.6fr;
+    .work-thumb,
+    .work-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
     }
 
     .work-thumb {
-      position: absolute;
-      inset: 0;
       background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)),
         var(--thumb);
       background-size: cover;
       background-position: center;
-      filter: grayscale(1) contrast(1.12) brightness(0.82);
+      filter: grayscale(1) contrast(1.12) brightness(0.78);
       transform: scale(1.08);
       transition:
+        opacity 0.5s ease,
         filter 0.85s ease,
         transform 1.2s var(--ease);
     }
 
     .work-item:hover .work-thumb,
     .work-item.active .work-thumb {
-      filter: grayscale(0) contrast(1.04) brightness(1) saturate(1.18);
+      filter: grayscale(0) contrast(1.04) brightness(1) saturate(1.15);
       transform: scale(1.16);
     }
 
-    .work-thumb::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background:
-        linear-gradient(to top, rgba(0, 0, 0, 0.86), transparent 58%),
-        linear-gradient(to right, rgba(0, 0, 0, 0.34), transparent 45%, rgba(0, 0, 0, 0.2));
-      opacity: 0.9;
-      transition: opacity 0.55s ease;
+    .work-item.video-playing .work-thumb {
+      opacity: 0;
     }
 
-    .work-item:hover .work-thumb::after,
-    .work-item.active .work-thumb::after {
-      opacity: 0.72;
+    .work-video {
+      display: block;
+      object-fit: cover;
+      background: #080808;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+
+    .work-item.video-playing .work-video {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .work-shade {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.82), transparent 60%),
+        linear-gradient(to right, rgba(0, 0, 0, 0.26), transparent 42%, rgba(0, 0, 0, 0.2));
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+
+    .work-item.active .work-shade {
+      opacity: 0.42;
     }
 
     .work-info {
       position: absolute;
       inset: 0;
-      z-index: 2;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 18px 10px;
+      padding: 16px 8px;
       color: #fff;
+      pointer-events: none;
     }
 
     .work-number {
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       letter-spacing: 0.18em;
-      color: rgba(255, 255, 255, 0.55);
+      color: rgba(255, 255, 255, 0.62);
       writing-mode: vertical-rl;
       transform: rotate(180deg);
+      transition: all 0.45s var(--ease);
     }
 
     .work-meta {
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      align-items: flex-start;
+      gap: 10px;
     }
 
     .work-title {
-      max-height: 210px;
-      font-size: clamp(0.78rem, 1vw, 1rem);
+      max-height: 145px;
+      font-size: clamp(0.68rem, 0.85vw, 0.95rem);
       line-height: 1.05;
       letter-spacing: -0.02em;
       font-weight: 650;
       writing-mode: vertical-rl;
       transform: rotate(180deg);
-      transition:
-        font-size 0.45s ease,
-        transform 0.55s var(--ease),
-        opacity 0.45s ease;
+      transition: all 0.55s var(--ease);
     }
 
     .work-tag {
-      max-height: 150px;
+      max-height: 120px;
       color: rgba(255, 255, 255, 0.48);
-      font-size: 0.58rem;
+      font-size: 0.52rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       writing-mode: vertical-rl;
       transform: rotate(180deg);
-      transition:
-        transform 0.55s var(--ease),
-        opacity 0.45s ease;
+      transition: all 0.55s var(--ease);
     }
 
-    .work-item:hover .work-info,
     .work-item.active .work-info {
-      padding: 22px 18px;
+      padding: 12px;
     }
 
-    .work-item:hover .work-number,
-    .work-item.active .work-number {
-      writing-mode: initial;
-      transform: none;
-    }
-
-    .work-item:hover .work-title,
+    .work-item.active .work-number,
     .work-item.active .work-title,
-    .work-item:hover .work-tag,
     .work-item.active .work-tag {
       writing-mode: initial;
       transform: none;
       max-height: none;
     }
 
-    .work-item:hover .work-title,
     .work-item.active .work-title {
-      font-size: clamp(1rem, 1.45vw, 1.55rem);
+      font-size: clamp(0.86rem, 1.05vw, 1.08rem);
     }
 
-    .work-item:not(:hover):not(.active) .work-tag {
-      opacity: 0.55;
+    .work-item.active .work-tag {
+      font-size: 0.48rem;
     }
 
-    .open-hint {
-      position: absolute;
-      right: 18px;
-      bottom: 18px;
-      z-index: 3;
-      color: rgba(255, 255, 255, 0.72);
-      font-size: 0.62rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+    .project-copy {
+      max-width: 980px;
+      min-height: 114px;
+      margin: 56px auto 0;
+      text-align: center;
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.45s ease, transform 0.45s var(--ease);
-    }
-
-    .work-item:hover .open-hint,
-    .work-item.active .open-hint {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .project-detail {
-      width: calc(100% - 44px);
-      max-width: 1420px;
-      margin: 0 auto;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-top: 0;
-      background: #070707;
-      max-height: 0;
-      opacity: 0;
-      transform: translateY(-18px);
+      transform: translateY(22px);
+      pointer-events: none;
       transition:
-        max-height 1.05s var(--ease),
-        opacity 0.5s ease,
-        transform 0.75s var(--ease);
+        opacity 0.55s ease,
+        transform 0.75s var(--ease),
+        margin-top 0.75s var(--ease);
     }
 
-    .project-detail.open {
-      max-height: 1300px;
+    .project-copy.open {
       opacity: 1;
       transform: translateY(0);
+      pointer-events: auto;
     }
 
-    .detail-top {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 26px;
-      align-items: start;
-      padding: 26px 30px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .detail-kicker {
-      color: var(--muted);
-      font-size: 0.72rem;
-      letter-spacing: 0.17em;
+    .copy-kicker {
+      margin-bottom: 12px;
+      color: rgba(255, 255, 255, 0.46);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
     }
 
-    .detail-title {
-      margin-top: 10px;
-      font-size: clamp(2.5rem, 6.5vw, 7.8rem);
-      line-height: 0.86;
-      letter-spacing: -0.07em;
+    .copy-title {
+      margin-bottom: 16px;
+      font-size: clamp(2rem, 5vw, 5.4rem);
+      line-height: 0.88;
+      letter-spacing: -0.065em;
       font-weight: 720;
     }
 
-    .detail-close {
+    .copy-desc {
+      max-width: 800px;
+      margin: 0 auto;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+      line-height: 1.7;
+    }
+
+    .copy-desc .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(18px) rotate(2deg);
+      transition:
+        opacity 0.55s ease,
+        transform 0.75s var(--ease);
+      transition-delay: calc(var(--i) * 22ms);
+    }
+
+    .project-copy.open .copy-desc .word {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+
+    .close-active {
+      position: fixed;
+      right: 34px;
+      bottom: 30px;
+      z-index: 200;
       width: 46px;
       height: 46px;
       border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 50%;
-      background: transparent;
+      background: rgba(0, 0, 0, 0.32);
+      backdrop-filter: blur(12px);
       color: #fff;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       line-height: 1;
-      transition:
-        background 0.25s ease,
-        border-color 0.25s ease,
-        transform 0.25s ease;
-    }
-
-    .detail-close:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.6);
-      transform: rotate(90deg);
-    }
-
-    .detail-video-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 8.2;
-      min-height: 380px;
-      background: #101010;
-      overflow: hidden;
-    }
-
-    .detail-video-wrap video {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      background: #101010;
-    }
-
-    .detail-video-placeholder {
-      width: 100%;
-      height: 100%;
-      min-height: 380px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 34%),
-        linear-gradient(135deg, #171717, #050505);
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-
-    .detail-desc {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 0.42fr;
-      gap: 34px;
-      padding: 30px;
       opacity: 0;
-      transform: translateY(28px);
+      pointer-events: none;
+      transform: translateY(12px);
       transition:
-        opacity 0.7s ease 0.24s,
-        transform 0.8s var(--ease) 0.24s;
+        opacity 0.3s ease,
+        transform 0.45s var(--ease),
+        border-color 0.25s ease,
+        background 0.25s ease;
     }
 
-    .project-detail.open .detail-desc {
+    .close-active.show {
       opacity: 1;
+      pointer-events: auto;
       transform: translateY(0);
     }
 
-    .detail-desc p {
-      max-width: 760px;
-      color: rgba(255, 255, 255, 0.64);
-      font-size: clamp(0.95rem, 1.15vw, 1.12rem);
-      line-height: 1.75;
-    }
-
-    .detail-tags {
-      display: flex;
-      align-content: flex-start;
-      justify-content: flex-end;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .detail-tags span {
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 999px;
-      padding: 8px 13px;
-      color: rgba(255, 255, 255, 0.58);
-      font-size: 0.66rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+    .close-active:hover {
+      border-color: rgba(255, 255, 255, 0.58);
+      background: rgba(255, 255, 255, 0.12);
     }
 
     @keyframes fadeUp {
@@ -569,28 +527,17 @@
     }
 
     @media (max-width: 1100px) {
-      .page-shell {
-        padding-top: 112px;
-      }
-
-      .page-header {
-        padding-inline: 6px;
-      }
-
-      .works-track-outer {
+      .film-page {
+        justify-content: flex-start;
         overflow-x: auto;
-        overflow-y: hidden;
-        height: 62vh;
-        min-height: 430px;
       }
 
-      .works-track {
-        width: 1180px;
-        min-width: 1180px;
+      .film-stage {
+        min-width: 1120px;
       }
 
-      .project-detail {
-        width: calc(100% - 44px);
+      .project-copy {
+        max-width: 720px;
       }
     }
 
@@ -628,72 +575,31 @@
         letter-spacing: 0.1em;
       }
 
-      .page-shell {
-        padding: 98px 14px 0;
+      .film-page {
+        padding: 96px 14px 26px;
       }
 
-      .page-header {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 14px;
-        padding: 0 4px 18px;
+      .film-stage {
+        min-width: 980px;
       }
 
-      .page-header h1 {
-        font-size: clamp(3.2rem, 17vw, 5.2rem);
+      .film-reel {
+        height: 170px;
       }
 
-      .project-count {
-        margin-bottom: 0;
-      }
-
-      .works-track-outer {
-        height: 58vh;
-        min-height: 390px;
-      }
-
-      .works-track {
-        width: 1040px;
-        min-width: 1040px;
-      }
-
-      .work-info {
-        padding: 16px 9px;
-      }
-
-      .project-detail {
-        width: calc(100% - 28px);
-      }
-
-      .detail-top {
-        grid-template-columns: 1fr auto;
-        padding: 20px 18px;
-      }
-
-      .detail-title {
-        font-size: clamp(2.2rem, 14vw, 4.6rem);
-      }
-
-      .detail-video-wrap {
-        aspect-ratio: 4 / 5;
-        min-height: 360px;
-      }
-
-      .detail-desc {
-        grid-template-columns: 1fr;
-        padding: 24px 18px 28px;
-      }
-
-      .detail-tags {
-        justify-content: flex-start;
-      }
-    }
-
-    @supports not selector(:has(*)) {
-      .work-item:hover,
       .work-item.active {
-        transform: scaleX(1.08);
-        z-index: 4;
+        --active-scale: 2.12;
+      }
+
+      .project-copy {
+        width: calc(100vw - 36px);
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .close-active {
+        right: 18px;
+        bottom: 18px;
       }
     }
   </style>
@@ -717,202 +623,29 @@
   </nav>
 
   <main>
-    <div class="page-shell">
-      <header class="page-header">
-        <h1>Works</h1>
-        <p class="project-count">13 Projects</p>
-      </header>
+    <section class="film-page" aria-label="Works">
+      <div class="film-stage">
+        <div class="small-header">
+          <span>Shab Visuals</span>
+          <span>13 Projects</span>
+        </div>
 
-      <section class="works-section" aria-label="Works">
-        <div class="works-track-outer">
-          <div class="works-track" id="worksTrack" data-active="0">
-            <article class="work-item active" data-index="0" style="--thumb: linear-gradient(135deg, #ff6a00, #ee0979);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">01</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project One</h2>
-                  <span class="work-tag">Motion Design</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="1" style="--thumb: linear-gradient(135deg, #00c6ff, #0072ff);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">02</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Two</h2>
-                  <span class="work-tag">Visual Identity</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="2" style="--thumb: linear-gradient(135deg, #f7971e, #ffd200);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">03</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Three</h2>
-                  <span class="work-tag">Video Production</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="3" style="--thumb: linear-gradient(135deg, #654ea3, #eaafc8);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">04</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Four</h2>
-                  <span class="work-tag">Motion Design</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="4" style="--thumb: linear-gradient(135deg, #11998e, #38ef7d);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">05</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Five</h2>
-                  <span class="work-tag">Brand Film</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="5" style="--thumb: linear-gradient(135deg, #fc466b, #3f5efb);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">06</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Six</h2>
-                  <span class="work-tag">Visual Identity</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="6" style="--thumb: linear-gradient(135deg, #c31432, #240b36);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">07</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Seven</h2>
-                  <span class="work-tag">Motion Design</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="7" style="--thumb: linear-gradient(135deg, #36d1dc, #5b86e5);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">08</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Eight</h2>
-                  <span class="work-tag">Video Production</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="8" style="--thumb: linear-gradient(135deg, #ff512f, #dd2476);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">09</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Nine</h2>
-                  <span class="work-tag">Brand Film</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="9" style="--thumb: linear-gradient(135deg, #1d976c, #93f9b9);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">10</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Ten</h2>
-                  <span class="work-tag">Motion Design</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="10" style="--thumb: linear-gradient(135deg, #834d9b, #d04ed6);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">11</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Eleven</h2>
-                  <span class="work-tag">Visual Identity</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="11" style="--thumb: linear-gradient(135deg, #4b6cb7, #182848);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">12</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Twelve</h2>
-                  <span class="work-tag">Video Production</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
-
-            <article class="work-item" data-index="12" style="--thumb: linear-gradient(135deg, #f953c6, #b91d73);">
-              <div class="work-thumb"></div>
-              <div class="work-info">
-                <span class="work-number">13</span>
-                <div class="work-meta">
-                  <h2 class="work-title">Project Thirteen</h2>
-                  <span class="work-tag">Brand Film</span>
-                </div>
-              </div>
-              <span class="open-hint">Open</span>
-            </article>
+        <div class="film-reel">
+          <div class="works-track-outer">
+            <div class="works-track" id="worksTrack"></div>
           </div>
         </div>
-      </section>
-    </div>
 
-    <section class="project-detail open" id="projectDetail" aria-live="polite">
-      <div class="detail-top">
-        <div>
-          <p class="detail-kicker" id="detailKicker">01 / 13 - Motion Design</p>
-          <h2 class="detail-title" id="detailTitle">Project One</h2>
-        </div>
-        <button class="detail-close" id="detailClose" aria-label="Close project">x</button>
-      </div>
-
-      <div class="detail-video-wrap" id="detailVideoWrap">
-        <video controls autoplay muted playsinline>
-          <source src="videos/project-01.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-
-      <div class="detail-desc">
-        <p id="detailDesc">
-          A short description of this project. Replace this text with the real project story, process, client details, or production notes.
-        </p>
-        <div class="detail-tags" id="detailTags">
-          <span>Motion Design</span>
-          <span>2024</span>
-        </div>
+        <section class="project-copy" id="projectCopy" aria-live="polite">
+          <p class="copy-kicker" id="copyKicker">01 / 13 - Motion Design</p>
+          <h1 class="copy-title" id="copyTitle">Project One</h1>
+          <p class="copy-desc" id="copyDesc"></p>
+        </section>
       </div>
     </section>
   </main>
+
+  <button class="close-active" id="closeActive" aria-label="Close project">x</button>
 
   <script>
     const projects = [
@@ -922,6 +655,7 @@
         tag: "Motion Design",
         year: "2024",
         video: "videos/project-01.mp4",
+        thumb: "linear-gradient(135deg, #ff6a00, #ee0979)",
         desc: "A short description of this project. Replace this text with the real project story, process, client details, or production notes."
       },
       {
@@ -930,6 +664,7 @@
         tag: "Visual Identity",
         year: "2024",
         video: "videos/project-02.mp4",
+        thumb: "linear-gradient(135deg, #00c6ff, #0072ff)",
         desc: "A clean visual identity project with motion-driven presentation and a cinematic look."
       },
       {
@@ -938,6 +673,7 @@
         tag: "Video Production",
         year: "2024",
         video: "videos/project-03.mp4",
+        thumb: "linear-gradient(135deg, #f7971e, #ffd200)",
         desc: "A video production project focused on rhythm, atmosphere, editing, and visual storytelling."
       },
       {
@@ -946,6 +682,7 @@
         tag: "Motion Design",
         year: "2024",
         video: "videos/project-04.mp4",
+        thumb: "linear-gradient(135deg, #654ea3, #eaafc8)",
         desc: "Motion graphics, animated transitions, and a bold visual language for a modern campaign."
       },
       {
@@ -954,6 +691,7 @@
         tag: "Brand Film",
         year: "2024",
         video: "videos/project-05.mp4",
+        thumb: "linear-gradient(135deg, #11998e, #38ef7d)",
         desc: "A brand film with a minimal, emotional, and premium visual direction."
       },
       {
@@ -962,6 +700,7 @@
         tag: "Visual Identity",
         year: "2024",
         video: "videos/project-06.mp4",
+        thumb: "linear-gradient(135deg, #fc466b, #3f5efb)",
         desc: "A complete identity system designed for digital-first brand communication."
       },
       {
@@ -970,6 +709,7 @@
         tag: "Motion Design",
         year: "2024",
         video: "videos/project-07.mp4",
+        thumb: "linear-gradient(135deg, #c31432, #240b36)",
         desc: "A fast-paced motion piece with abstract forms, typography, and sound-based timing."
       },
       {
@@ -978,6 +718,7 @@
         tag: "Video Production",
         year: "2024",
         video: "videos/project-08.mp4",
+        thumb: "linear-gradient(135deg, #36d1dc, #5b86e5)",
         desc: "A production piece built around cinematic framing, light, and precise editing."
       },
       {
@@ -986,6 +727,7 @@
         tag: "Brand Film",
         year: "2024",
         video: "videos/project-09.mp4",
+        thumb: "linear-gradient(135deg, #ff512f, #dd2476)",
         desc: "A brand film made to introduce the mood, personality, and values of the project."
       },
       {
@@ -994,6 +736,7 @@
         tag: "Motion Design",
         year: "2024",
         video: "videos/project-10.mp4",
+        thumb: "linear-gradient(135deg, #1d976c, #93f9b9)",
         desc: "A motion design project with a strong graphic structure and energetic animation."
       },
       {
@@ -1002,6 +745,7 @@
         tag: "Visual Identity",
         year: "2024",
         video: "videos/project-11.mp4",
+        thumb: "linear-gradient(135deg, #834d9b, #d04ed6)",
         desc: "A visual identity concept with flexible layouts, sharp contrast, and premium details."
       },
       {
@@ -1010,6 +754,7 @@
         tag: "Video Production",
         year: "2024",
         video: "videos/project-12.mp4",
+        thumb: "linear-gradient(135deg, #4b6cb7, #182848)",
         desc: "A video production piece focused on atmosphere, visual pacing, and polished delivery."
       },
       {
@@ -1018,21 +763,145 @@
         tag: "Brand Film",
         year: "2024",
         video: "videos/project-13.mp4",
+        thumb: "linear-gradient(135deg, #f953c6, #b91d73)",
         desc: "A final brand film project with a strong cinematic tone and memorable visual moments."
       }
     ];
 
     const cursor = document.getElementById("cursor");
     const follower = document.getElementById("cursorFollower");
+    const track = document.getElementById("worksTrack");
+    const projectCopy = document.getElementById("projectCopy");
+    const copyKicker = document.getElementById("copyKicker");
+    const copyTitle = document.getElementById("copyTitle");
+    const copyDesc = document.getElementById("copyDesc");
+    const closeActive = document.getElementById("closeActive");
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let followerX = mouseX;
     let followerY = mouseY;
+    let targetWave = 0;
+    let currentWave = 0;
+    let pointerX = window.innerWidth / 2;
+    let lastWheelTime = 0;
+    let activeIndex = null;
+
+    function renderProjects() {
+      track.innerHTML = projects.map((project, index) => `
+        <article class="work-item" data-index="${index}" style="--thumb: ${project.thumb};">
+          <div class="work-thumb"></div>
+          <video class="work-video" muted playsinline controls preload="metadata"></video>
+          <div class="work-shade"></div>
+          <div class="work-info">
+            <span class="work-number">${project.num}</span>
+            <div class="work-meta">
+              <h2 class="work-title">${project.title}</h2>
+              <span class="work-tag">${project.tag}</span>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function typographyText(text) {
+      return text
+        .split(" ")
+        .map((word, index) => `<span class="word" style="--i:${index}">${word}&nbsp;</span>`)
+        .join("");
+    }
+
+    function stopAllVideos() {
+      document.querySelectorAll(".work-video").forEach((video) => {
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+      });
+    }
+
+    function setProjectCopy(project) {
+      projectCopy.classList.remove("open");
+
+      window.setTimeout(() => {
+        copyKicker.textContent = `${project.num} / 13 - ${project.tag} / ${project.year}`;
+        copyTitle.textContent = project.title;
+        copyDesc.innerHTML = typographyText(project.desc);
+        projectCopy.classList.add("open");
+      }, 140);
+    }
+
+    function openProject(index) {
+      const items = document.querySelectorAll(".work-item");
+      const project = projects[index];
+
+      activeIndex = index;
+      stopAllVideos();
+
+      items.forEach((item, itemIndex) => {
+        item.classList.remove("active", "is-neighbor", "is-dim", "video-playing");
+
+        if (itemIndex === index) {
+          item.classList.add("active");
+        } else if (Math.abs(itemIndex - index) === 1) {
+          item.classList.add("is-neighbor");
+        } else {
+          item.classList.add("is-dim");
+        }
+      });
+
+      const activeItem = items[index];
+      const video = activeItem.querySelector(".work-video");
+
+      video.src = project.video;
+      video.load();
+
+      window.setTimeout(() => {
+        activeItem.classList.add("video-playing");
+        video.play().catch(() => {});
+      }, 420);
+
+      setProjectCopy(project);
+      closeActive.classList.add("show");
+    }
+
+    function closeProject() {
+      const items = document.querySelectorAll(".work-item");
+
+      activeIndex = null;
+      stopAllVideos();
+
+      items.forEach((item) => {
+        item.classList.remove("active", "is-neighbor", "is-dim", "video-playing");
+      });
+
+      projectCopy.classList.remove("open");
+      closeActive.classList.remove("show");
+    }
+
+    function bindInteractions() {
+      document.querySelectorAll("a, button, .work-item").forEach((element) => {
+        element.addEventListener("mouseenter", () => {
+          cursor.classList.add("hover");
+          follower.classList.add("hover");
+        });
+
+        element.addEventListener("mouseleave", () => {
+          cursor.classList.remove("hover");
+          follower.classList.remove("hover");
+        });
+      });
+
+      document.querySelectorAll(".work-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          openProject(Number(item.dataset.index));
+        });
+      });
+    }
 
     document.addEventListener("mousemove", (event) => {
       mouseX = event.clientX;
       mouseY = event.clientY;
+      pointerX = event.clientX;
 
       cursor.style.left = mouseX + "px";
       cursor.style.top = mouseY + "px";
@@ -1048,150 +917,54 @@
       requestAnimationFrame(animateCursor);
     }
 
-    animateCursor();
-
-    document.querySelectorAll("a, button, .work-item").forEach((element) => {
-      element.addEventListener("mouseenter", () => {
-        cursor.classList.add("hover");
-        follower.classList.add("hover");
-      });
-
-      element.addEventListener("mouseleave", () => {
-        cursor.classList.remove("hover");
-        follower.classList.remove("hover");
-      });
-    });
-
-    const track = document.getElementById("worksTrack");
-    const items = document.querySelectorAll(".work-item");
-    const detail = document.getElementById("projectDetail");
-    const detailKicker = document.getElementById("detailKicker");
-    const detailTitle = document.getElementById("detailTitle");
-    const detailVideoWrap = document.getElementById("detailVideoWrap");
-    const detailDesc = document.getElementById("detailDesc");
-    const detailTags = document.getElementById("detailTags");
-    const detailClose = document.getElementById("detailClose");
-
-    let targetWave = 0;
-    let currentWave = 0;
-    let pointerX = window.innerWidth / 2;
-    let lastWheelTime = 0;
-
-    window.addEventListener("mousemove", (event) => {
-      pointerX = event.clientX;
-    });
-
     window.addEventListener(
       "wheel",
       (event) => {
-        targetWave += event.deltaY * 0.035;
-        targetWave = Math.max(-14, Math.min(14, targetWave));
+        targetWave += event.deltaY * 0.045;
+        targetWave = Math.max(-22, Math.min(22, targetWave));
         lastWheelTime = performance.now();
       },
       { passive: true }
     );
 
-    function animateSlices() {
+    function animateFilmWave() {
       const now = performance.now();
-      const wheelActive = now - lastWheelTime < 850;
+      const items = document.querySelectorAll(".work-item");
+      const wheelActive = now - lastWheelTime < 900;
 
-      targetWave *= 0.91;
-      currentWave += (targetWave - currentWave) * 0.08;
+      targetWave *= 0.92;
+      currentWave += (targetWave - currentWave) * 0.09;
 
       items.forEach((item, index) => {
         const rect = item.getBoundingClientRect();
         const center = rect.left + rect.width / 2;
         const distance = (center - pointerX) / window.innerWidth;
-        const idle = Math.sin(now * 0.0014 + index * 0.48) * 2.2;
-        const wheelLift = Math.sin(distance * Math.PI * 2) * Math.abs(currentWave) * 1.3;
-        const lift = wheelActive ? wheelLift : idle;
-        const tilt = currentWave * distance * 0.45;
 
-        item.style.transform = `translateY(${-lift}px) rotateZ(${tilt}deg)`;
+        const idleWave = Math.sin(now * 0.0014 + index * 0.64) * 2.4;
+        const scrollWave = Math.sin(index * 0.92 + currentWave * 0.18) * Math.abs(currentWave) * 0.85;
+        const pointerWave = Math.sin(distance * Math.PI * 2) * 4;
+        const lift = wheelActive ? scrollWave + pointerWave : idleWave;
+        const tilt = wheelActive ? Math.sin(index + currentWave * 0.08) * 1.6 : Math.sin(now * 0.001 + index) * 0.35;
+
+        item.style.setProperty("--wave-y", `${-lift}px`);
+        item.style.setProperty("--tilt", `${tilt}deg`);
       });
 
-      requestAnimationFrame(animateSlices);
+      requestAnimationFrame(animateFilmWave);
     }
 
-    animateSlices();
-
-    function setActiveItem(index) {
-      items.forEach((item) => item.classList.remove("active"));
-      items[index].classList.add("active");
-      track.dataset.active = String(index);
-    }
-
-    function openProject(index) {
-      const project = projects[index];
-
-      setActiveItem(index);
-      detail.classList.remove("open");
-
-      window.setTimeout(() => {
-        detailKicker.textContent = `${project.num} / 13 - ${project.tag}`;
-        detailTitle.textContent = project.title;
-        detailDesc.textContent = project.desc;
-        detailTags.innerHTML = `<span>${project.tag}</span><span>${project.year}</span>`;
-
-        detailVideoWrap.innerHTML = `
-          <video controls autoplay muted playsinline>
-            <source src="${project.video}" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        `;
-
-        detail.classList.add("open");
-
-        const video = detailVideoWrap.querySelector("video");
-        if (video) {
-          video.play().catch(() => {});
-        }
-
-        detail.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      }, 220);
-    }
-
-    function closeProject() {
-      const video = detailVideoWrap.querySelector("video");
-
-      if (video) {
-        video.pause();
-      }
-
-      detail.classList.remove("open");
-      items.forEach((item) => item.classList.remove("active"));
-      track.removeAttribute("data-active");
-    }
-
-    items.forEach((item) => {
-      const index = Number(item.dataset.index);
-
-      item.addEventListener("mouseenter", () => {
-        track.dataset.active = String(index);
-      });
-
-      item.addEventListener("click", () => {
-        openProject(index);
-      });
-    });
-
-    track.addEventListener("mouseleave", () => {
-      const active = document.querySelector(".work-item.active");
-      if (active) {
-        track.dataset.active = active.dataset.index;
-      }
-    });
-
-    detailClose.addEventListener("click", closeProject);
+    closeActive.addEventListener("click", closeProject);
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         closeProject();
       }
     });
+
+    renderProjects();
+    bindInteractions();
+    animateCursor();
+    animateFilmWave();
   </script>
 </body>
 </html>
