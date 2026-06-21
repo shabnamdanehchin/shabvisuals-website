@@ -33,12 +33,15 @@
       top: 0; left: 0; right: 0;
       padding: 2rem 4rem;
       z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .navbar-logo {
       display: inline-flex;
       flex-direction: column;
-      align-items: center; /* ← تغییر: از flex-start به center */
+      align-items: center;
     }
 
     .nav-shab-wrap {
@@ -79,9 +82,166 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-top: 1px; /* ← تغییر: از 3px به 1px، نزدیک‌تر به shab */
+      margin-top: 1px;
       display: block;
       user-select: none;
+    }
+
+    /* ── NAVBAR RIGHT ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-item {
+      position: relative;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.65);
+      cursor: pointer;
+      text-decoration: none;
+      text-transform: lowercase;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 1rem;
+      right: 1rem;
+      height: 1px;
+      background: #fff;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-item:hover {
+      color: #fff;
+    }
+
+    .nav-item:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-item.active {
+      color: #fff;
+    }
+
+    /* get in touch button */
+    .nav-cta {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      text-transform: lowercase;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      white-space: nowrap;
+      margin-left: 0.5rem;
+    }
+
+    .nav-cta:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* ── SERVICES DROPDOWN ── */
+    .nav-services-wrap {
+      position: relative;
+    }
+
+    .services-dropdown {
+      position: absolute;
+      top: calc(100% + 1rem);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 0.5rem;
+      min-width: 240px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(-6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .nav-services-wrap:hover .services-dropdown {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* small arrow */
+    .services-dropdown::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 9px;
+      height: 9px;
+      background: rgba(10,10,10,0.95);
+      border-left: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s ease, background 0.2s ease;
+      position: relative;
+    }
+
+    .dropdown-item:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* دایره کوچک کنار هر سرویس */
+    .dropdown-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #5170ff, #ff66c4);
+      flex-shrink: 0;
+      opacity: 0;
+      transform: scale(0.4);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .dropdown-item:hover .dropdown-dot {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .dropdown-label {
+      flex: 1;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 0.25rem 1rem;
     }
 
     /* ── HERO ── */
@@ -271,10 +431,12 @@
       .hero-logo.large .hero-shab { font-size: 13rem; }
       .hero-visuals { font-size: 3.5rem; }
       .hero-logo.large .hero-visuals { font-size: 6.5rem; }
+      .nav-item, .nav-cta { font-size: 0.8rem; }
     }
     @media (max-width: 768px) {
       .navbar { padding: 1rem 1.5rem; }
       .nav-shab { font-size: 1.9rem; }
+      .nav-right { display: none; }
       .hero-shab { font-size: 5rem; }
       .hero-logo.large .hero-shab { font-size: 9rem; }
       .hero-visuals { font-size: 2.5rem; }
@@ -298,6 +460,7 @@
 
 <!-- NAVBAR -->
 <nav class="navbar">
+  <!-- LEFT: logo -->
   <div class="navbar-logo">
     <div class="nav-shab-wrap" id="navShabWrap">
       <span class="nav-shab" id="navShab">shab</span>
@@ -305,6 +468,39 @@
       <div class="nav-line" id="navLineAb"></div>
     </div>
     <span class="nav-visuals">visuals</span>
+  </div>
+
+  <!-- RIGHT: nav items -->
+  <div class="nav-right">
+    <a class="nav-item" href="#works">works</a>
+
+    <div class="nav-services-wrap">
+      <span class="nav-item">services</span>
+      <div class="services-dropdown">
+        <a class="dropdown-item" href="/services/saas-product-videos">
+          <span class="dropdown-dot"></span>
+          <span class="dropdown-label">SaaS & Product Videos</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/services/commercial-promo">
+          <span class="dropdown-dot"></span>
+          <span class="dropdown-label">Commercial & Promo Ads</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/services/social-media">
+          <span class="dropdown-dot"></span>
+          <span class="dropdown-label">Social Media Content</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/services/motion-graphics">
+          <span class="dropdown-dot"></span>
+          <span class="dropdown-label">Motion Graphics & Animation</span>
+        </a>
+      </div>
+    </div>
+
+    <a class="nav-item" href="#about">about</a>
+    <a class="nav-cta" href="#contact">get in touch</a>
   </div>
 </nav>
 
@@ -410,14 +606,9 @@
     const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
     const topPad  = (wrapH - ascent - descent) / 2;
 
-    /* navbar: خط‌ها نزدیک‌تر به حروف */
     const isNav = lineSh.classList.contains('nav-line');
-    const shBottomOffset = isNav
-      ? (descent + topPad - 8)   /* ← navbar: نزدیک‌تر */
-      : (descent + topPad - 15); /* ← hero */
-    const abTopOffset = isNav
-      ? Math.max(0, topPad - 4)  /* ← navbar: نزدیک‌تر */
-      : Math.max(0, topPad - 1); /* ← hero */
+    const shBottomOffset = isNav ? (descent + topPad - 8)  : (descent + topPad - 15);
+    const abTopOffset    = isNav ? Math.max(0, topPad - 4) : Math.max(0, topPad - 1);
 
     lineSh.style.left   = shLeft + 'px';
     lineSh.style.width  = shWidth + 'px';
