@@ -11,7 +11,6 @@
       font-style: normal;
       font-weight: normal;
     }
-    /* فقط یک variant از Agrandir — بدون italic */
     @font-face {
       font-family: 'Agrandir';
       src: url('Agrandir-Regular.otf') format('opentype');
@@ -45,12 +44,10 @@
       line-height: 1;
     }
 
-    /* wrapper دقیقاً به اندازه متن — بدون فضای اضافه */
     .nav-shab-wrap {
       position: relative;
       display: inline-block;
       line-height: 1;
-      /* این مهمه: overflow مخفی نشه چون خط بیرون میزنه */
     }
 
     .nav-shab {
@@ -63,7 +60,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      /* حذف padding تا متن دقیق باشه */
       padding: 0;
     }
 
@@ -72,18 +68,6 @@
       height: 1px;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       pointer-events: none;
-    }
-    /* خط زیر sh — 2px پایین‌تر از متن */
-    .nav-line-sh {
-      bottom: -2px;
-      left: 5%;
-      width: 47%;
-    }
-    /* خط بالای ab — 2px بالاتر از متن */
-    .nav-line-ab {
-      top: -2px;
-      left: 60%;
-      width: 38%;
     }
 
     .nav-visuals {
@@ -97,10 +81,8 @@
       background-clip: text;
       text-align: center;
       letter-spacing: 0.18em;
-      margin-top: 3px;
+      margin-top: 4px;
       display: block;
-      /* جلوگیری از italic خودکار مرورگر */
-      unicode-bidi: normal;
     }
 
     nav ul {
@@ -133,7 +115,7 @@
       width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 1.2s ease;
+      transition: opacity 1.4s ease;
       z-index: 0;
     }
     .hero-video.visible { opacity: 1; }
@@ -144,32 +126,39 @@
       background: rgba(0,0,0,0.45);
       z-index: 1;
       opacity: 0;
-      transition: opacity 1.2s ease;
+      transition: opacity 1.4s ease;
     }
     .hero-overlay.visible { opacity: 1; }
 
-    /* Hero Logo */
+    /* ── HERO LOGO ── */
     .hero-logo {
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      /* فقط opacity — بدون scale تغییر */
+
+      /* حالت اولیه: کوچک و نامرئی */
       opacity: 0;
-      transform: scale(1);
-      transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1);
+      transform: scale(0.6);
+
+      /* transition طولانی‌تر برای جلوه zoom */
+      transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* transform-origin وسط — مثل monks */
+      transform-origin: center center;
     }
+
     .hero-logo.show {
       opacity: 1;
-      /* scale(1) = اندازه واقعی، زوم کم نمیشه */
       transform: scale(1);
     }
 
     .hero-shab-wrap {
       position: relative;
       display: inline-block;
-      /* line-height دقیقاً 1 تا فضای اضافه نباشه */
       line-height: 1;
     }
 
@@ -180,48 +169,24 @@
       line-height: 1;
       display: block;
       padding: 0;
-      /* گرادیان خاکستری-سفید */
       background: linear-gradient(90deg, #555555, #ffffff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      /* مهم: user-select none تا selection اندازه رو خراب نکنه */
+      user-select: none;
     }
 
     .hero-line {
       position: absolute;
-      /* ضخامت خط نسبت به فونت */
       height: 3px;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       pointer-events: none;
     }
 
-    /*
-      چون line-height:1 هست، top:0 = بالای cap-height و bottom:0 = پایین baseline
-      اما فونت‌ها معمولاً descent دارن — باید تست بشه
-      برای چسبیدن واقعی از transform استفاده می‌کنیم
-    */
-    .hero-line-sh {
-      /* دقیقاً زیر "sh" */
-      bottom: 0;
-      left: 5%;
-      width: 46%;
-      /* اگه descent فونت فضا داشت، این رو تنظیم کن */
-      transform: translateY(0px);
-    }
-
-    .hero-line-ab {
-      /* دقیقاً بالای "ab" */
-      top: 0;
-      left: 61%;
-      width: 37%;
-      transform: translateY(0px);
-    }
-
-    /* visuals */
     .hero-visuals {
       font-family: 'Agrandir', 'Arial Narrow', sans-serif;
       font-size: clamp(22px, 4.5vw, 48px);
-      /* مهم‌ترین: جلوگیری از italic */
       font-style: normal !important;
       font-weight: normal;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
@@ -231,9 +196,9 @@
       text-align: center;
       line-height: 1;
       letter-spacing: 0.22em;
-      /* فاصله بین shab و visuals */
       margin-top: 12px;
       display: block;
+      user-select: none;
     }
 
     /* ── SERVICES ── */
@@ -287,7 +252,8 @@
 
     footer {
       text-align: center;
-      padding: 48px; color: #444;
+      padding: 48px;
+      color: #444;
       font-size: 13px;
       border-top: 1px solid #1a1a1a;
     }
@@ -298,10 +264,10 @@
 <!-- NAVBAR -->
 <nav>
   <div class="nav-logo">
-    <div class="nav-shab-wrap">
-      <span class="nav-shab">shab</span>
-      <div class="nav-line nav-line-sh"></div>
-      <div class="nav-line nav-line-ab"></div>
+    <div class="nav-shab-wrap" id="navShabWrap">
+      <span class="nav-shab" id="navShab">shab</span>
+      <div class="nav-line" id="navLineSh"></div>
+      <div class="nav-line" id="navLineAb"></div>
     </div>
     <span class="nav-visuals">visuals</span>
   </div>
@@ -320,10 +286,10 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-logo" id="heroLogo">
-    <div class="hero-shab-wrap" id="shabWrap">
+    <div class="hero-shab-wrap" id="heroShabWrap">
       <span class="hero-shab" id="heroShab">shab</span>
-      <div class="hero-line hero-line-sh" id="lineSh"></div>
-      <div class="hero-line hero-line-ab" id="lineAb"></div>
+      <div class="hero-line" id="heroLineSh"></div>
+      <div class="hero-line" id="heroLineAb"></div>
     </div>
     <span class="hero-visuals">visuals</span>
   </div>
@@ -338,9 +304,11 @@
       <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e2b6?w=600&q=80" alt="SaaS" />
       <div class="service-card-body">
         <h3>SaaS & Product Videos</h3>
-        <p>The most important content for online clients.</p>
+        <p>High-impact videos for digital products and platforms.</p>
         <ul>
-          <li>Product Demos</li><li>Explainer Videos</li><li>Onboarding Clips</li>
+          <li>Product Demos</li>
+          <li>Explainer Videos</li>
+          <li>Onboarding Clips</li>
         </ul>
       </div>
     </a>
@@ -351,7 +319,9 @@
         <h3>Commercial & Promo Ads</h3>
         <p>Short, impactful ads designed to elevate your brand.</p>
         <ul>
-          <li>TV Commercials</li><li>Digital Ads</li><li>Brand Promos</li>
+          <li>TV Commercials</li>
+          <li>Digital Ads</li>
+          <li>Brand Promos</li>
         </ul>
       </div>
     </a>
@@ -360,9 +330,11 @@
       <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=600&q=80" alt="Social" />
       <div class="service-card-body">
         <h3>Social Media Content</h3>
-        <p>Optimized for Instagram, TikTok, and more.</p>
+        <p>Optimized for Instagram, TikTok, YouTube Shorts, and more.</p>
         <ul>
-          <li>Reels & Shorts</li><li>Story Templates</li><li>Feed Visuals</li>
+          <li>Reels & Shorts</li>
+          <li>Story Templates</li>
+          <li>Feed Visuals</li>
         </ul>
       </div>
     </a>
@@ -373,7 +345,9 @@
         <h3>Motion Graphics & Animation</h3>
         <p>Bring your ideas to life with stunning motion design.</p>
         <ul>
-          <li>Logo Animation</li><li>UI Motion</li><li>2D/3D Animation</li>
+          <li>Logo Animation</li>
+          <li>UI Motion</li>
+          <li>2D/3D Animation</li>
         </ul>
       </div>
     </a>
@@ -386,64 +360,106 @@
 </footer>
 
 <script>
+  /**
+   * محاسبه دقیق موقعیت خطوط
+   * 
+   * منطق:
+   * - wrapEl offsetHeight = ارتفاع واقعی المان (با line-height:1 تقریباً = fontSize)
+   * - actualBoundingBoxAscent  = از baseline تا بالای بلندترین حرف
+   * - actualBoundingBoxDescent = از baseline تا پایین‌ترین نقطه (descender)
+   * 
+   * در line-height:1:
+   *   topPadding  = (offsetHeight - ascent - descent) / 2  ← فضای خالی بالا
+   *   bottomPad   = topPadding                              ← فضای خالی پایین
+   *
+   * خط sh  → bottom = descent + bottomPad  (دقیقاً زیر baseline)
+   * خط ab  → top    = topPadding           (دقیقاً بالای cap-height)
+   */
+  function calcLines(shabEl, wrapEl, lineSh, lineAb) {
+    const fs         = parseFloat(getComputedStyle(shabEl).fontSize);
+    const ff         = getComputedStyle(shabEl).fontFamily;
+    const wrapW      = wrapEl.offsetWidth;
+    const wrapH      = wrapEl.offsetHeight;
+
+    const cvs        = document.createElement('canvas');
+    const ctx        = cvs.getContext('2d');
+    ctx.font         = `${fs}px ${ff}`;
+
+    const mAll  = ctx.measureText('shab');
+    const mSh   = ctx.measureText('sh');
+    const mS    = ctx.measureText('s');
+    const mSha  = ctx.measureText('sha');
+    const mA    = ctx.measureText('a');
+
+    const totalW = mAll.width;
+    const ratio  = wrapW / totalW;   // نسبت scale (اگه wrap != canvas)
+
+    /* --- موقعیت افقی --- */
+    // خط sh: از یک‌چهارم s تا بعد از h
+    const shLeft  = (mS.width * 0.25) * ratio;
+    const shWidth = (mSh.width * 1.05 - mS.width * 0.25) * ratio;
+
+    // خط ab: از وسط a تا انتهای b
+    const abLeft  = (mSha.width - mA.width * 0.5) * ratio;
+    const abWidth = wrapW - abLeft;
+
+    /* --- موقعیت عمودی با metrics واقعی --- */
+    const ascent  = mAll.actualBoundingBoxAscent  || fs * 0.75;
+    const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
+    const topPad  = (wrapH - ascent - descent) / 2;
+
+    /* خط sh: ۲px زیر پایین‌ترین حرف (baseline + descent) */
+    const shBottom = descent + topPad + 3;
+    /* خط ab: ۲px بالاتر از بالاترین حرف */
+    const abTop    = topPad - 3;
+
+    /* اعمال */
+    lineSh.style.left   = shLeft  + 'px';
+    lineSh.style.width  = shWidth + 'px';
+    lineSh.style.bottom = shBottom + 'px';
+    lineSh.style.top    = 'auto';
+
+    lineAb.style.left   = abLeft  + 'px';
+    lineAb.style.width  = abWidth + 'px';
+    lineAb.style.top    = (abTop < 0 ? 0 : abTop) + 'px';
+    lineAb.style.bottom = 'auto';
+  }
+
+  /* ── Hero lines ── */
+  const heroShab    = document.getElementById('heroShab');
+  const heroWrap    = document.getElementById('heroShabWrap');
+  const heroLineSh  = document.getElementById('heroLineSh');
+  const heroLineAb  = document.getElementById('heroLineAb');
+
+  /* ── Navbar lines ── */
+  const navShab     = document.getElementById('navShab');
+  const navWrap     = document.getElementById('navShabWrap');
+  const navLineSh   = document.getElementById('navLineSh');
+  const navLineAb   = document.getElementById('navLineAb');
+
+  /* navbar خط ضخامت ۱px */
+  navLineSh.style.height = '1px';
+  navLineAb.style.height = '1px';
+
+  function updateAllLines() {
+    calcLines(heroShab, heroWrap, heroLineSh, heroLineAb);
+    calcLines(navShab,  navWrap,  navLineSh,  navLineAb);
+  }
+
+  document.fonts.ready.then(() => {
+    updateAllLines();
+    window.addEventListener('resize', updateAllLines);
+  });
+
+  /* ── انیمیشن Hero ── */
   const logo    = document.getElementById('heroLogo');
   const video   = document.querySelector('.hero-video');
   const overlay = document.querySelector('.hero-overlay');
-  const shabEl  = document.getElementById('heroShab');
-  const lineSh  = document.getElementById('lineSh');
-  const lineAb  = document.getElementById('lineAb');
 
-  /**
-   * تنظیم دقیق موقعیت خطوط بر اساس اندازه واقعی متن
-   * با استفاده از Canvas برای اندازه‌گیری حروف
-   */
-  function adjustLines() {
-    const fontSize = parseFloat(getComputedStyle(shabEl).fontSize);
-    const fontFamily = getComputedStyle(shabEl).fontFamily;
+  /* لوگو: بعد از ۱۵۰ms ظاهر می‌شه + zoom از 0.6 به 1 */
+  setTimeout(() => logo.classList.add('show'), 150);
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    ctx.font = `${fontSize}px ${fontFamily}`;
-
-    const totalWidth = ctx.measureText('shab').width;
-    const shWidth    = ctx.measureText('sh').width;
-    const sWidth     = ctx.measureText('s').width / 4; // یک‌چهارم s
-    const aOffset    = ctx.measureText('sha').width;   // شروع "a"
-    const aWidth     = ctx.measureText('a').width;
-
-    const wrapWidth  = shabEl.offsetWidth;
-    const scale      = wrapWidth / totalWidth;
-
-    // خط sh: از quarter of s تا بعد از h
-    lineSh.style.left  = (sWidth * scale) + 'px';
-    lineSh.style.width = ((shWidth - sWidth * 0.5) * scale) + 'px';
-
-    // خط ab: از وسط a تا انتهای b
-    const abStart = (aOffset + aWidth * 0.5) * scale;
-    lineAb.style.left  = abStart + 'px';
-    lineAb.style.width = (wrapWidth - abStart) + 'px';
-
-    // تنظیم عمودی بر اساس metrics واقعی
-    const metrics = ctx.measureText('shab');
-    const wrapH   = shabEl.offsetHeight;
-
-    // ascent و descent واقعی
-    const ascent  = metrics.actualBoundingBoxAscent  || fontSize * 0.78;
-    const descent = metrics.actualBoundingBoxDescent || fontSize * 0.22;
-    const topSpace = wrapH - ascent - descent;
-
-    lineSh.style.bottom = descent + 'px';
-    lineAb.style.top    = (topSpace) + 'px';
-  }
-
-  // اجرا بعد از لود فونت
-  document.fonts.ready.then(() => {
-    adjustLines();
-    window.addEventListener('resize', adjustLines);
-  });
-
-  // انیمیشن لوگو
-  setTimeout(() => logo.classList.add('show'),  400);
+  /* ویدیو و overlay: بعد از ۱۸۰۰ms */
   setTimeout(() => {
     video.classList.add('visible');
     overlay.classList.add('visible');
