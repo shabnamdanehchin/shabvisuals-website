@@ -38,10 +38,13 @@
       justify-content: space-between;
     }
 
+    /* لوگوی چپ — کلیک به صفحه اول */
     .navbar-logo {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
+      cursor: pointer;
+      text-decoration: none;
     }
 
     .nav-shab-wrap {
@@ -53,7 +56,6 @@
     .nav-shab {
       font-family: 'LOT', sans-serif;
       font-size: 2.8rem;
-      font-style: normal;
       font-weight: 600;
       letter-spacing: 0.02em;
       line-height: 1;
@@ -75,7 +77,6 @@
     .nav-visuals {
       font-family: 'Agrandir', sans-serif;
       font-size: 1.1rem;
-      font-style: normal;
       font-weight: 100;
       letter-spacing: 0.18em;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
@@ -94,23 +95,20 @@
       gap: 0.25rem;
     }
 
-    /* ── NAV ITEM WRAP ── */
     .nav-item-wrap {
       position: relative;
       display: flex;
-      align-items: center; /* FIX: گلوله با متن vertically center */
+      align-items: center;
       cursor: pointer;
       overflow: visible;
     }
 
-    /* گلوله — FIX: translateY تنظیم شد تا از بالا بیاید نه از وسط */
     .nav-bullet {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: #fff;
       flex-shrink: 0;
-      /* شروع از بالای wrap، بالاتر از خط متن */
       transform: translateY(-18px);
       opacity: 0;
       max-width: 0;
@@ -123,7 +121,7 @@
     }
 
     .nav-item-wrap:hover .nav-bullet {
-      transform: translateY(0); /* FIX: صفر یعنی همان خط center که align-items تعیین کرده */
+      transform: translateY(0);
       opacity: 1;
       max-width: 14px;
       margin-right: 6px;
@@ -148,8 +146,7 @@
       transform: translateY(4px);
     }
 
-    /* ── SERVICES WRAP ── */
-    /* FIX: overflow visible و position relative برای اینکه dropdown به درستی نشان داده شود */
+    /* services wrap */
     .nav-services-wrap {
       position: relative;
       display: flex;
@@ -158,11 +155,11 @@
       overflow: visible;
     }
 
-    /* ── GET IN TOUCH ── */
+    /* get in touch */
     .nav-cta-wrap {
       position: relative;
       display: flex;
-      align-items: center; /* FIX: گلوله gradient هم center */
+      align-items: center;
       margin-left: 0.5rem;
       overflow: visible;
       cursor: pointer;
@@ -222,20 +219,16 @@
     /* ── SERVICES DROPDOWN ── */
     .services-dropdown {
       position: absolute;
-      top: 100%; /* FIX: از پایین wrap شروع می‌شود */
+      top: 100%;
       left: 50%;
       transform: translateX(-50%) translateY(-6px);
-      /* FIX: padding-top برای پر کردن gap بین trigger و dropdown
-         موس از این ناحیه رد می‌شود بدون اینکه hover قطع شود */
       padding-top: 1rem;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease, transform 0.25s ease;
-      /* z-index بالا تا روی همه چیز باشد */
       z-index: 999;
     }
 
-    /* محتوای واقعی dropdown داخل یک div جداگانه */
     .dropdown-inner {
       background: rgba(10,10,10,0.95);
       backdrop-filter: blur(20px);
@@ -253,7 +246,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* arrow روی dropdown-inner */
     .dropdown-inner::before {
       content: '';
       position: absolute;
@@ -357,7 +349,6 @@
     .hero-shab {
       font-family: 'LOT', sans-serif;
       font-size: 10rem;
-      font-style: normal;
       font-weight: 600;
       letter-spacing: 0.02em;
       line-height: 1;
@@ -388,7 +379,6 @@
     .hero-visuals {
       font-family: 'Agrandir', sans-serif;
       font-size: 5rem;
-      font-style: normal;
       font-weight: 100;
       letter-spacing: 0.18em;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
@@ -424,11 +414,47 @@
       50%       { opacity: 0; }
     }
 
+    /* ── TAGLINE BRIDGE ── */
+    .tagline-section {
+      background: #000;
+      padding: 7rem 4rem 5rem;
+      text-align: center;
+    }
+
+    .tagline-text {
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.55);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* کلمات bold با gradient */
+    .tagline-text em {
+      font-style: normal;
+      font-weight: 500;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline-divider {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      margin: 3rem auto 0;
+      opacity: 0.5;
+    }
+
     /* ── SERVICES SECTION ── */
     .services-section {
-      padding: 8rem 4rem;
+      padding: 5rem 4rem 8rem;
       background: #000;
     }
+
     .services-title {
       font-size: 4rem;
       font-weight: 300;
@@ -436,6 +462,7 @@
       text-align: center;
       letter-spacing: -0.02em;
     }
+
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -443,51 +470,104 @@
       max-width: 1400px;
       margin: 0 auto;
     }
+
+    /* ── SERVICE CARD ── */
     .service-card {
       background: rgba(255,255,255,0.02);
       border: 1px solid rgba(255,255,255,0.1);
-      padding: 2.5rem;
       border-radius: 12px;
-      transition: all 0.3s ease;
+      transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
       text-decoration: none;
-      display: block;
+      display: flex;
+      flex-direction: column;
       color: inherit;
+      overflow: hidden;
     }
+
     .service-card:hover {
-      background: rgba(255,255,255,0.05);
-      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.18);
       transform: translateY(-5px);
     }
-    .service-image {
-      width: 100%; height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
+
+    /* تصویر — overflow hidden برای زوم */
+    .service-image-wrap {
+      overflow: hidden;
+      border-radius: 12px 12px 0 0;
+      flex-shrink: 0;
     }
+
+    .service-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* زوم تصویر فقط وقتی موس روی تصویر است */
+    .service-image-wrap:hover .service-image {
+      transform: scale(1.07);
+    }
+
+    /* بخش متن */
+    .service-body {
+      padding: 2rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
     .service-card h3 {
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       font-weight: 500;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
       background: linear-gradient(90deg, #5170ff, #ff66c4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+
     .service-card p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.6);
       margin-bottom: 1.5rem;
     }
-    .service-list { list-style: none; }
+
+    /* list آیتم‌ها */
+    .service-list {
+      list-style: none;
+      margin-top: auto;
+    }
+
     .service-list li {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.55);
       padding: 0.5rem 0;
       border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: default;
+      transition: color 0.2s ease;
     }
+
     .service-list li:last-child { border-bottom: none; }
-    .service-list li::before { content: '→'; margin-right: 0.75rem; color: #5170ff; }
+
+    .service-list li:hover {
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* فلش — حرکت با موس از طریق JS */
+    .service-list li .arrow {
+      display: inline-block;
+      color: #5170ff;
+      font-style: normal;
+      /* transition برای حرکت نرم */
+      transition: transform 0.12s ease-out;
+      will-change: transform;
+    }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
@@ -497,7 +577,10 @@
       .hero-logo.large .hero-shab { font-size: 13rem; }
       .hero-visuals { font-size: 3.5rem; }
       .hero-logo.large .hero-visuals { font-size: 6.5rem; }
+      .tagline-section { padding: 5rem 2rem 4rem; }
+      .services-section { padding: 4rem 2rem 6rem; }
     }
+
     @media (max-width: 768px) {
       .navbar { padding: 1rem 1.5rem; }
       .nav-shab { font-size: 1.9rem; }
@@ -506,17 +589,21 @@
       .hero-logo.large .hero-shab { font-size: 9rem; }
       .hero-visuals { font-size: 2.5rem; }
       .hero-logo.large .hero-visuals { font-size: 4.5rem; }
-      .services-section { padding: 4rem 1.5rem; }
+      .tagline-section { padding: 4rem 1.5rem 3rem; }
+      .tagline-text { font-size: 1.2rem; }
+      .services-section { padding: 3rem 1.5rem 5rem; }
       .services-title { font-size: 2.5rem; }
       .services-grid { grid-template-columns: 1fr; }
     }
+
     @media (max-width: 480px) {
       .nav-shab { font-size: 1.6rem; }
       .hero-shab { font-size: 3.8rem; }
       .hero-logo.large .hero-shab { font-size: 6.5rem; }
       .hero-visuals { font-size: 1.9rem; }
       .hero-logo.large .hero-visuals { font-size: 3.25rem; }
-      .services-section { padding: 3rem 1rem; }
+      .tagline-section { padding: 3rem 1rem 2.5rem; }
+      .services-section { padding: 2rem 1rem 4rem; }
       .services-title { font-size: 2rem; }
     }
   </style>
@@ -525,17 +612,18 @@
 
 <!-- NAVBAR -->
 <nav class="navbar">
-  <!-- LEFT -->
-  <div class="navbar-logo">
+
+  <!-- لوگو — کلیک به بالای صفحه -->
+  <a href="#top" class="navbar-logo" aria-label="Shab Visuals — Home">
     <div class="nav-shab-wrap" id="navShabWrap">
       <span class="nav-shab" id="navShab">shab</span>
       <div class="nav-line" id="navLineSh"></div>
       <div class="nav-line" id="navLineAb"></div>
     </div>
     <span class="nav-visuals">visuals</span>
-  </div>
+  </a>
 
-  <!-- RIGHT -->
+  <!-- منوی راست -->
   <div class="nav-right">
 
     <!-- works -->
@@ -544,11 +632,10 @@
       <a class="nav-item" href="#works">works</a>
     </div>
 
-    <!-- services — FIX: هر دو کلاس روی یک المان -->
+    <!-- services -->
     <div class="nav-item-wrap nav-services-wrap">
       <span class="nav-bullet"></span>
       <span class="nav-item">services</span>
-      <!-- FIX: padding-top روی خود dropdown، محتوا داخل dropdown-inner -->
       <div class="services-dropdown">
         <div class="dropdown-inner">
           <a class="dropdown-item" href="#saas">
@@ -590,7 +677,7 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero-section">
+<section class="hero-section" id="top">
   <video class="hero-video" id="heroVideo" muted loop playsinline>
     <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-blue-waves-1410-large.mp4" type="video/mp4">
   </video>
@@ -607,46 +694,94 @@
   </div>
 </section>
 
+<!-- TAGLINE BRIDGE -->
+<div class="tagline-section">
+  <p class="tagline-text">
+    We turn your <em>bold ideas</em> into reality through
+    <em>four core services.</em>
+  </p>
+  <div class="tagline-divider"></div>
+</div>
+
 <!-- SERVICES -->
-<section class="services-section">
+<section class="services-section" id="services">
   <h2 class="services-title">Our Services</h2>
   <div class="services-grid">
-    <a class="service-card" href="#saas">
-      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS" class="service-image">
-      <h3>SaaS & Product Videos</h3>
-      <p>Showcase your product with engaging visuals that convert.</p>
-      <ul class="service-list">
-        <li>SaaS Promo</li><li>App Demo</li><li>Product Launch Video</li>
-      </ul>
-    </a>
-    <a class="service-card" href="#commercial">
-      <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&h=400&fit=crop" alt="Commercial" class="service-image">
-      <h3>Commercial & Promo Ads</h3>
-      <p>Short, impactful ads designed to elevate your brand.</p>
-      <ul class="service-list">
-        <li>Luxury Brand Ad</li><li>Product Promo</li><li>Teaser Video</li>
-      </ul>
-    </a>
-    <a class="service-card" href="#social">
-      <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Social" class="service-image">
-      <h3>Social Media Content</h3>
-      <p>Optimized content for Instagram, TikTok, and more.</p>
-      <ul class="service-list">
-        <li>Reels Ads</li><li>Short Promo</li><li>Instagram Video Ads</li>
-      </ul>
-    </a>
-    <a class="service-card" href="#motion">
-      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop" alt="Motion" class="service-image">
-      <h3>Motion Graphics & Animation</h3>
-      <p>Bring your ideas to life with stunning motion design.</p>
-      <ul class="service-list">
-        <li>Motion Graphics</li><li>2D Animation</li><li>3D Animation</li><li>Video Wall / Visual Loops</li>
-      </ul>
-    </a>
+
+    <!-- card 1 -->
+    <div class="service-card" id="saas">
+      <div class="service-image-wrap">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop"
+             alt="SaaS & Product Videos" class="service-image">
+      </div>
+      <div class="service-body">
+        <h3>SaaS & Product Videos</h3>
+        <p>Showcase your product with engaging visuals that convert.</p>
+        <ul class="service-list">
+          <li><i class="arrow">→</i> SaaS Promo</li>
+          <li><i class="arrow">→</i> App Demo</li>
+          <li><i class="arrow">→</i> Product Launch Video</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- card 2 -->
+    <div class="service-card" id="commercial">
+      <div class="service-image-wrap">
+        <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&h=400&fit=crop"
+             alt="Commercial & Promo Ads" class="service-image">
+      </div>
+      <div class="service-body">
+        <h3>Commercial & Promo Ads</h3>
+        <p>Short, impactful ads designed to elevate your brand.</p>
+        <ul class="service-list">
+          <li><i class="arrow">→</i> Luxury Brand Ad</li>
+          <li><i class="arrow">→</i> Product Promo</li>
+          <li><i class="arrow">→</i> Teaser Video</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- card 3 -->
+    <div class="service-card" id="social">
+      <div class="service-image-wrap">
+        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop"
+             alt="Social Media Content" class="service-image">
+      </div>
+      <div class="service-body">
+        <h3>Social Media Content</h3>
+        <p>Optimized content for Instagram, TikTok, and more.</p>
+        <ul class="service-list">
+          <li><i class="arrow">→</i> Reels Ads</li>
+          <li><i class="arrow">→</i> Short Promo</li>
+          <li><i class="arrow">→</i> Instagram Video Ads</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- card 4 -->
+    <div class="service-card" id="motion">
+      <div class="service-image-wrap">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop"
+             alt="Motion Graphics & Animation" class="service-image">
+      </div>
+      <div class="service-body">
+        <h3>Motion Graphics & Animation</h3>
+        <p>Bring your ideas to life with stunning motion design.</p>
+        <ul class="service-list">
+          <li><i class="arrow">→</i> Motion Graphics</li>
+          <li><i class="arrow">→</i> 2D Animation</li>
+          <li><i class="arrow">→</i> 3D Animation</li>
+          <li><i class="arrow">→</i> Video Wall / Visual Loops</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <script>
+  /* ── calcLines ── */
   function calcLines(shabEl, wrapEl, lineSh, lineAb, text) {
     const fs    = parseFloat(getComputedStyle(shabEl).fontSize);
     const ff    = getComputedStyle(shabEl).fontFamily;
@@ -744,6 +879,28 @@
     updateAllLines();
     window.addEventListener('resize', updateAllLines);
     setTimeout(typeNextChar, 500);
+  });
+
+  /* ── Arrow magnetic effect ── */
+  /* وقتی موس روی هر li حرکت می‌کند، فلش به سمت موس کشیده می‌شود */
+  document.querySelectorAll('.service-list li').forEach(li => {
+    const arrow = li.querySelector('.arrow');
+    if (!arrow) return;
+
+    li.addEventListener('mousemove', (e) => {
+      const rect = li.getBoundingClientRect();
+      /* موقعیت موس نسبت به مرکز li */
+      const relX = e.clientX - rect.left;
+      const relY = e.clientY - (rect.top + rect.height / 2);
+      /* حداکثر جابجایی: 8px در محور X، 4px در محور Y */
+      const moveX = (relX / rect.width)  * 10;
+      const moveY = (relY / rect.height) * 6;
+      arrow.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+
+    li.addEventListener('mouseleave', () => {
+      arrow.style.transform = 'translate(0, 0)';
+    });
   });
 </script>
 
