@@ -1,380 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shab Visuals</title>
-    <style>
-        @font-face {
-            font-family: 'LOT';
-            src: url('Lot-Regular.otf') format('opentype');
-            font-display: swap;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shab Visuals</title>
+  <style>
+    @font-face {
+      font-family: 'LOT';
+      src: url('Lot-Regular.otf') format('opentype');
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Agrandir';
+      src: url('Agrandir-Thin-Italic.otf') format('opentype');
+      font-display: swap;
+      font-style: normal;
+      font-weight: 100;
+    }
 
-        @font-face {
-            font-family: 'Agrandir';
-            src: url('Agrandir-Thin-Italic.otf') format('opentype');
-            font-display: swap;
-            font-style: italic;
-            font-weight: 100;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #000;
-            color: #fff;
-            overflow-x: hidden;
-        }
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 4rem;
+      z-index: 1000;
+    }
 
-        /* Gradient text styles */
-        .text-gradient-shab {
-            background: linear-gradient(90deg, #555555, #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'LOT', sans-serif;
-        }
+    .navbar-logo {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-        .text-gradient-visuals {
-            background: linear-gradient(90deg, #5170ff, #ff66c4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'Agrandir', sans-serif;
-            font-style: italic;
-        }
+    .nav-shab-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 1;
+    }
 
-        /* Navbar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem 4rem;
-            z-index: 1000;
-            background: transparent;
-        }
+    .nav-shab {
+      font-family: 'LOT', sans-serif;
+      font-size: 2.8rem;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      display: block;
+      background: linear-gradient(90deg, #555, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      user-select: none;
+    }
 
-        .navbar-logo {
-            display: flex;
-            flex-direction: column;
-            line-height: 0.75;
-        }
+    .nav-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      pointer-events: none;
+    }
 
-        .navbar-logo .logo-shab {
-            font-size: 2.8rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-        }
+    .nav-visuals {
+      font-family: 'Agrandir', sans-serif;
+      font-size: 1.1rem;
+      font-style: normal;
+      font-weight: 100;
+      letter-spacing: 0.18em;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 3px;
+      display: block;
+      user-select: none;
+    }
 
-        .navbar-logo .logo-visuals {
-            font-size: 1.4rem;
-            font-weight: 100;
-            letter-spacing: 0.05em;
-            margin-top: -0.1rem;
-        }
+    /* ── HERO ── */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-        /* Hero Section */
-        .hero-section {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 0;
+    }
+    .hero-video.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transform: scale(1.1);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-        }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
 
-        .hero-video.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
+    /* ── HERO LOGO ── */
+    .hero-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-        }
+    .hero-shab-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 1;
+    }
 
-        .hero-logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            line-height: 0.75;
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    /* حالت اولیه (medium) */
+    .hero-shab {
+      font-family: 'LOT', sans-serif;
+      font-size: 10rem;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      display: block;
+      background: linear-gradient(90deg, #555, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      user-select: none;
 
-        /* Medium state - initial */
-        .hero-logo .logo-shab {
-            font-size: 10rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+      /* زوم با font-size — مثل کد قدیمی */
+      transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .hero-logo .logo-visuals {
-            font-size: 5rem;
-            font-weight: 100;
-            letter-spacing: 0.05em;
-            margin-top: -0.6rem;
-            transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1), margin-top 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    /* حالت large — بعد از 1 ثانیه */
+    .hero-logo.large .hero-shab {
+      font-size: 18rem;
+    }
 
-        /* Large state - after 1s */
-        .hero-logo.large .logo-shab {
-            font-size: 18rem;
-        }
+    .hero-line {
+      position: absolute;
+      height: 3px;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      pointer-events: none;
+      /* transition برای وقتی font-size عوض می‌شه و JS خطوط رو آپدیت می‌کنه */
+      transition: left 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  width 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  top 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  bottom 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .hero-logo.large .logo-visuals {
-            font-size: 9rem;
-            margin-top: -1.2rem;
-        }
+    .hero-visuals {
+      font-family: 'Agrandir', sans-serif;
+      font-size: 5rem;
+      font-style: normal;
+      font-weight: 100;
+      letter-spacing: 0.18em;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 8px;
+      display: block;
+      user-select: none;
 
-        /* Services Section */
-        .services-section {
-            padding: 8rem 4rem;
-            background: #000;
-        }
+      transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  margin-top 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        .services-title {
-            font-size: 4rem;
-            font-weight: 300;
-            margin-bottom: 4rem;
-            text-align: center;
-            letter-spacing: -0.02em;
-        }
+    .hero-logo.large .hero-visuals {
+      font-size: 9rem;
+      margin-top: 14px;
+    }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+    /* ── SERVICES ── */
+    .services-section {
+      padding: 8rem 4rem;
+      background: #000;
+    }
+    .services-title {
+      font-size: 4rem;
+      font-weight: 300;
+      margin-bottom: 4rem;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .service-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2.5rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+    .service-card:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-5px);
+    }
+    .service-image {
+      width: 100%; height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .service-card h3 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .service-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.5rem;
+    }
+    .service-list { list-style: none; }
+    .service-list li {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .service-list li:last-child { border-bottom: none; }
+    .service-list li::before { content: '→'; margin-right: 0.75rem; color: #5170ff; }
 
-        .service-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2.5rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            overflow: hidden;
-            cursor: pointer;
-            text-decoration: none;
-            display: block;
-            color: inherit;
-        }
-
-        .service-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .service-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .service-card h3 {
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, #5170ff, #ff66c4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .service-card p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 1.5rem;
-        }
-
-        .service-list {
-            list-style: none;
-        }
-
-        .service-list li {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.6);
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .service-list li:last-child {
-            border-bottom: none;
-        }
-
-        .service-list li::before {
-            content: '→';
-            margin-right: 0.75rem;
-            color: #5170ff;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .navbar { padding: 1.5rem 2rem; }
-            .navbar-logo .logo-shab { font-size: 2.2rem; }
-            .navbar-logo .logo-visuals { font-size: 1.1rem; }
-            .hero-logo .logo-shab { font-size: 7rem; }
-            .hero-logo .logo-visuals { font-size: 3.5rem; }
-            .hero-logo.large .logo-shab { font-size: 13rem; }
-            .hero-logo.large .logo-visuals { font-size: 6.5rem; }
-            .services-section { padding: 6rem 2rem; }
-            .services-title { font-size: 3rem; }
-            .services-grid { gap: 2rem; }
-        }
-
-        @media (max-width: 768px) {
-            .navbar { padding: 1rem 1.5rem; }
-            .navbar-logo .logo-shab { font-size: 1.9rem; }
-            .navbar-logo .logo-visuals { font-size: 0.95rem; }
-            .hero-logo .logo-shab { font-size: 5rem; }
-            .hero-logo .logo-visuals { font-size: 2.5rem; }
-            .hero-logo.large .logo-shab { font-size: 9rem; }
-            .hero-logo.large .logo-visuals { font-size: 4.5rem; }
-            .services-section { padding: 4rem 1.5rem; }
-            .services-title { font-size: 2.5rem; }
-            .services-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .service-card { padding: 2rem; }
-            .service-image { height: 180px; }
-        }
-
-        @media (max-width: 480px) {
-            .navbar { padding: 1rem; }
-            .navbar-logo .logo-shab { font-size: 1.6rem; }
-            .navbar-logo .logo-visuals { font-size: 0.8rem; }
-            .hero-logo .logo-shab { font-size: 3.8rem; }
-            .hero-logo .logo-visuals { font-size: 1.9rem; }
-            .hero-logo.large .logo-shab { font-size: 6.5rem; }
-            .hero-logo.large .logo-visuals { font-size: 3.25rem; }
-            .services-section { padding: 3rem 1rem; }
-            .services-title { font-size: 2rem; }
-            .service-card h3 { font-size: 1.5rem; }
-            .service-image { height: 150px; }
-        }
-    </style>
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .navbar { padding: 1.5rem 2rem; }
+      .nav-shab { font-size: 2.2rem; }
+      .hero-shab { font-size: 7rem; }
+      .hero-logo.large .hero-shab { font-size: 13rem; }
+      .hero-visuals { font-size: 3.5rem; }
+      .hero-logo.large .hero-visuals { font-size: 6.5rem; }
+    }
+    @media (max-width: 768px) {
+      .navbar { padding: 1rem 1.5rem; }
+      .nav-shab { font-size: 1.9rem; }
+      .hero-shab { font-size: 5rem; }
+      .hero-logo.large .hero-shab { font-size: 9rem; }
+      .hero-visuals { font-size: 2.5rem; }
+      .hero-logo.large .hero-visuals { font-size: 4.5rem; }
+      .services-section { padding: 4rem 1.5rem; }
+      .services-title { font-size: 2.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .nav-shab { font-size: 1.6rem; }
+      .hero-shab { font-size: 3.8rem; }
+      .hero-logo.large .hero-shab { font-size: 6.5rem; }
+      .hero-visuals { font-size: 1.9rem; }
+      .hero-logo.large .hero-visuals { font-size: 3.25rem; }
+      .services-section { padding: 3rem 1rem; }
+      .services-title { font-size: 2rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="navbar-logo">
-            <span class="logo-shab text-gradient-shab">shab</span>
-            <span class="logo-visuals text-gradient-visuals">visuals</span>
-        </div>
-    </nav>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    <div class="nav-shab-wrap" id="navShabWrap">
+      <span class="nav-shab" id="navShab">shab</span>
+      <div class="nav-line" id="navLineSh"></div>
+      <div class="nav-line" id="navLineAb"></div>
+    </div>
+    <span class="nav-visuals">visuals</span>
+  </div>
+</nav>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <video class="hero-video" id="heroVideo" muted loop playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-blue-waves-1410-large.mp4" type="video/mp4">
-        </video>
+<!-- HERO -->
+<section class="hero-section">
+  <video class="hero-video" id="heroVideo" muted loop playsinline>
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-blue-waves-1410-large.mp4" type="video/mp4">
+  </video>
 
-        <div class="hero-content">
-            <div class="hero-logo" id="heroLogo">
-                <span class="logo-shab text-gradient-shab">shab</span>
-                <span class="logo-visuals text-gradient-visuals">visuals</span>
-            </div>
-        </div>
-    </section>
+  <div class="hero-content">
+    <div class="hero-logo" id="heroLogo">
+      <div class="hero-shab-wrap" id="heroShabWrap">
+        <span class="hero-shab" id="heroShab">shab</span>
+        <div class="hero-line" id="heroLineSh"></div>
+        <div class="hero-line" id="heroLineAb"></div>
+      </div>
+      <span class="hero-visuals">visuals</span>
+    </div>
+  </div>
+</section>
 
-    <!-- Services Section -->
-    <section class="services-section">
-        <h2 class="services-title">Our Services</h2>
+<!-- SERVICES -->
+<section class="services-section">
+  <h2 class="services-title">Our Services</h2>
+  <div class="services-grid">
 
-        <div class="services-grid">
+    <a class="service-card" href="/services/saas-product-videos">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS" class="service-image">
+      <h3>SaaS & Product Videos</h3>
+      <p>Showcase your product with engaging visuals that convert.</p>
+      <ul class="service-list">
+        <li>SaaS Promo</li>
+        <li>App Demo</li>
+        <li>Product Launch Video</li>
+      </ul>
+    </a>
 
-            <a class="service-card" href="/services/saas-product-videos">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS & Product Videos" class="service-image">
-                <h3>SaaS & Product Videos</h3>
-                <p>The most important content for online clients. Showcase your product with engaging visuals.</p>
-                <ul class="service-list">
-                    <li>SaaS Promo</li>
-                    <li>App Demo</li>
-                    <li>Product Launch Video</li>
-                </ul>
-            </a>
+    <a class="service-card" href="/services/commercial-promo">
+      <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&h=400&fit=crop" alt="Commercial" class="service-image">
+      <h3>Commercial & Promo Ads</h3>
+      <p>Short, impactful ads designed to elevate your brand.</p>
+      <ul class="service-list">
+        <li>Luxury Brand Ad</li>
+        <li>Product Promo</li>
+        <li>Teaser Video</li>
+      </ul>
+    </a>
 
-            <a class="service-card" href="/services/commercial-promo">
-                <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&h=400&fit=crop" alt="Commercial & Promo Ads" class="service-image">
-                <h3>Commercial & Promo Ads</h3>
-                <p>Short, impactful ads designed to elevate your brand and drive results.</p>
-                <ul class="service-list">
-                    <li>Luxury Brand Ad</li>
-                    <li>Product Promo</li>
-                    <li>Teaser Video</li>
-                </ul>
-            </a>
+    <a class="service-card" href="/services/social-media">
+      <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Social" class="service-image">
+      <h3>Social Media Content</h3>
+      <p>Optimized content for Instagram, TikTok, and more.</p>
+      <ul class="service-list">
+        <li>Reels Ads</li>
+        <li>Short Promo</li>
+        <li>Instagram Video Ads</li>
+      </ul>
+    </a>
 
-            <a class="service-card" href="/services/social-media">
-                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Social Media Content" class="service-image">
-                <h3>Social Media Content</h3>
-                <p>Optimized content for Instagram, TikTok, and other platforms.</p>
-                <ul class="service-list">
-                    <li>Reels Ads</li>
-                    <li>Short Promo</li>
-                    <li>Instagram Posts/Video Ads</li>
-                </ul>
-            </a>
+    <a class="service-card" href="/services/motion-graphics">
+      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop" alt="Motion" class="service-image">
+      <h3>Motion Graphics & Animation</h3>
+      <p>Bring your ideas to life with stunning motion design.</p>
+      <ul class="service-list">
+        <li>Motion Graphics</li>
+        <li>2D Animation</li>
+        <li>3D Animation</li>
+        <li>Video Wall / Visual Loops</li>
+      </ul>
+    </a>
 
-            <a class="service-card" href="/services/motion-graphics">
-                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop" alt="Motion Graphics & Animation" class="service-image">
-                <h3>Motion Graphics & Animation</h3>
-                <p>Bring your ideas to life with stunning motion design and animation.</p>
-                <ul class="service-list">
-                    <li>Motion Graphics</li>
-                    <li>2D Animation</li>
-                    <li>3D Animation</li>
-                    <li>Video Wall / Visual Loops</li>
-                </ul>
-            </a>
+  </div>
+</section>
 
-        </div>
-    </section>
+<script>
+  /* ─────────────────────────────────────────
+   * محاسبه خطوط با Canvas API
+   * ───────────────────────────────────────── */
+  function calcLines(shabEl, wrapEl, lineSh, lineAb) {
+    const fs    = parseFloat(getComputedStyle(shabEl).fontSize);
+    const ff    = getComputedStyle(shabEl).fontFamily;
+    const wrapW = wrapEl.offsetWidth;
+    const wrapH = wrapEl.offsetHeight;
 
-    <script>
-        const heroLogo = document.getElementById('heroLogo');
-        const heroVideo = document.getElementById('heroVideo');
+    const cvs = document.createElement('canvas');
+    const ctx = cvs.getContext('2d');
+    ctx.font  = `600 ${fs}px ${ff}`;
 
-        // Baad az 1 saniye logo bozorg mishavad
-        setTimeout(() => {
-            heroLogo.classList.add('large');
-        }, 1000);
+    const mAll = ctx.measureText('shab');
+    const mSh  = ctx.measureText('sh');
+    const mS   = ctx.measureText('s');
+    const mSha = ctx.measureText('sha');
+    const mA   = ctx.measureText('a');
 
-        // Baad az 2 saniye video zohur mikonad
-        setTimeout(() => {
-            heroVideo.classList.add('visible');
-            heroVideo.play().catch(err => {
-                console.log('Video autoplay failed:', err);
-            });
-        }, 2000);
-    </script>
+    const ratio = wrapW / mAll.width;
+
+    /* افقی */
+    const shLeft  = (mS.width * 0.25) * ratio;
+    const shWidth = (mSh.width * 1.05 - mS.width * 0.25) * ratio;
+    const abLeft  = (mSha.width - mA.width * 0.5) * ratio;
+    const abWidth = wrapW - abLeft;
+
+    /* عمودی */
+    const ascent  = mAll.actualBoundingBoxAscent  || fs * 0.75;
+    const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
+    const topPad  = (wrapH - ascent - descent) / 2;
+
+    /* خط sh: دقیقاً زیر حروف */
+    lineSh.style.left   = shLeft + 'px';
+    lineSh.style.width  = shWidth + 'px';
+    lineSh.style.bottom = (descent + topPad) + 'px';
+    lineSh.style.top    = 'auto';
+
+    /* خط ab: دقیقاً بالای حروف */
+    const abTopVal = Math.max(0, topPad - 1);
+    lineAb.style.left   = abLeft + 'px';
+    lineAb.style.width  = abWidth + 'px';
+    lineAb.style.top    = abTopVal + 'px';
+    lineAb.style.bottom = 'auto';
+  }
+
+  const heroShab   = document.getElementById('heroShab');
+  const heroWrap   = document.getElementById('heroShabWrap');
+  const heroLineSh = document.getElementById('heroLineSh');
+  const heroLineAb = document.getElementById('heroLineAb');
+
+  const navShab    = document.getElementById('navShab');
+  const navWrap    = document.getElementById('navShabWrap');
+  const navLineSh  = document.getElementById('navLineSh');
+  const navLineAb  = document.getElementById('navLineAb');
+
+  function updateAllLines() {
+    calcLines(heroShab, heroWrap, heroLineSh, heroLineAb);
+    calcLines(navShab,  navWrap,  navLineSh,  navLineAb);
+  }
+
+  document.fonts.ready.then(() => {
+    updateAllLines();
+    window.addEventListener('resize', updateAllLines);
+  });
+
+  /* ─────────────────────────────────────────
+   * انیمیشن Hero — مثل کد قدیمی
+   * ───────────────────────────────────────── */
+  const heroLogo  = document.getElementById('heroLogo');
+  const heroVideo = document.getElementById('heroVideo');
+
+  /* بعد از 1 ثانیه: لوگو بزرگ می‌شه (font-size zoom) */
+  setTimeout(() => {
+    heroLogo.classList.add('large');
+    /* خطوط رو بعد از transition آپدیت کن */
+    setTimeout(updateAllLines, 1050);
+  }, 1000);
+
+  /* بعد از 2 ثانیه: ویدیو ظاهر می‌شه */
+  setTimeout(() => {
+    heroVideo.classList.add('visible');
+    heroVideo.play().catch(() => {});
+  }, 2000);
+</script>
 
 </body>
 </html>
