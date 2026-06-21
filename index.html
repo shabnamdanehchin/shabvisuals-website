@@ -38,7 +38,7 @@
     .navbar-logo {
       display: inline-flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center; /* ← تغییر: از flex-start به center */
     }
 
     .nav-shab-wrap {
@@ -79,7 +79,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-top: 3px;
+      margin-top: 1px; /* ← تغییر: از 3px به 1px، نزدیک‌تر به shab */
       display: block;
       user-select: none;
     }
@@ -116,7 +116,6 @@
       text-align: center;
     }
 
-    /* ── HERO LOGO ── */
     .hero-logo {
       display: flex;
       flex-direction: column;
@@ -149,7 +148,6 @@
       font-size: 18rem;
     }
 
-    /* ── تغییر اصلی: opacity به transition اضافه شد ── */
     .hero-line {
       position: absolute;
       height: 3px;
@@ -186,7 +184,6 @@
       margin-top: 14px;
     }
 
-    /* cursor چشمک‌زن */
     .typing-cursor {
       display: inline-block;
       width: 3px;
@@ -396,7 +393,6 @@
     const ctx = cvs.getContext('2d');
     ctx.font  = `600 ${fs}px ${ff}`;
 
-    /* همیشه با 'shab' کامل حساب کن */
     const mAll = ctx.measureText('shab');
     const mSh  = ctx.measureText('sh');
     const mS   = ctx.measureText('s');
@@ -414,19 +410,25 @@
     const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
     const topPad  = (wrapH - ascent - descent) / 2;
 
-    /* همیشه position رو set کن — حتی وقتی opacity صفره */
+    /* navbar: خط‌ها نزدیک‌تر به حروف */
+    const isNav = lineSh.classList.contains('nav-line');
+    const shBottomOffset = isNav
+      ? (descent + topPad - 8)   /* ← navbar: نزدیک‌تر */
+      : (descent + topPad - 15); /* ← hero */
+    const abTopOffset = isNav
+      ? Math.max(0, topPad - 4)  /* ← navbar: نزدیک‌تر */
+      : Math.max(0, topPad - 1); /* ← hero */
+
     lineSh.style.left   = shLeft + 'px';
     lineSh.style.width  = shWidth + 'px';
-    lineSh.style.bottom = (descent + topPad - 15) + 'px';
+    lineSh.style.bottom = shBottomOffset + 'px';
     lineSh.style.top    = 'auto';
 
-    const abTopVal = Math.max(0, topPad - 1);
     lineAb.style.left   = abLeft + 'px';
     lineAb.style.width  = abWidth + 'px';
-    lineAb.style.top    = abTopVal + 'px';
+    lineAb.style.top    = abTopOffset + 'px';
     lineAb.style.bottom = 'auto';
 
-    /* فقط opacity رو بر اساس حروف تایپ‌شده کنترل کن */
     const typed = text || '';
     lineSh.style.opacity = typed.length >= 2 ? '1' : '0';
     lineAb.style.opacity = typed.length >= 4 ? '1' : '0';
@@ -456,10 +458,8 @@
   const word = 'shab';
   let charIndex = 0;
 
-  /* خط‌های hero از اول opacity صفر دارن — transition در CSS تعریف شده */
   heroLineSh.style.opacity = '0';
   heroLineAb.style.opacity = '0';
-  /* ← این دو خط inline transition حذف شدن چون CSS کافیه */
 
   function typeNextChar() {
     if (charIndex < word.length) {
@@ -471,13 +471,8 @@
     } else {
       setTimeout(() => {
         typingCursor.style.display = 'none';
-
-        /* zoom */
         heroLogo.classList.add('large');
         heroVisuals.style.opacity = '1';
-
-        /* خطوط بعد از zoom آپدیت میشن — چون position از قبل set شده،
-           فقط اندازه نرم عوض میشه نه اینکه یهو ظاهر بشن */
         setTimeout(updateAllLines, 1050);
       }, 400);
 
