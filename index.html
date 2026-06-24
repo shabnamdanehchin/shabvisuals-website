@@ -3,621 +3,492 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Works</title>
-
+  <title>Shab Visuals</title>
   <style>
-    :root{
-      --bg:#070707;
-      --panel:#111111;
-      --text:#f3f1ea;
-      --muted:rgba(243,241,234,.58);
-      --line:rgba(243,241,234,.12);
-      --ease:cubic-bezier(.16,1,.3,1);
-      --card-w:clamp(76px, 5.8vw, 104px);
-      --card-h:clamp(132px, 18vw, 210px);
-      --gap:12px;
-      --rail-y:50vh;
-      --bump-x:50vw;
+    @font-face {
+      font-family: 'LOT';
+      src: url('Lot-Regular.otf') format('opentype');
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Agrandir';
+      src: url('Agrandir-Thin-Italic.otf') format('opentype');
+      font-display: swap;
+      font-style: normal;
+      font-weight: 100;
     }
 
-    *{box-sizing:border-box}
-    html,body{margin:0;width:100%;height:100%}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body{
-      background:
-        radial-gradient(circle at 50% 20%, rgba(255,255,255,.04), transparent 30%),
-        linear-gradient(180deg, #0b0b0b 0%, #050505 100%);
-      color:var(--text);
-      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
-      overflow:hidden;
-      cursor:none;
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
     }
 
-    a{color:inherit;text-decoration:none}
-
-    .cursor,
-    .cursor-follower{
-      position:fixed;
-      left:0;
-      top:0;
-      pointer-events:none;
-      transform:translate(-50%,-50%);
-      z-index:9999;
-      mix-blend-mode:difference;
+    /* ── NAVBAR ── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 2rem 4rem;
+      z-index: 1000;
     }
 
-    .cursor{
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      background:#fff;
+    .navbar-logo {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center; /* ← تغییر: از flex-start به center */
     }
 
-    .cursor-follower{
-      width:20px;
-      height:20px;
-      border:1px solid rgba(255,255,255,.35);
-      border-radius:50%;
-      transition:
-        width .24s var(--ease),
-        height .24s var(--ease),
-        border-color .24s var(--ease);
+    .nav-shab-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 1;
     }
 
-    body.is-hovering .cursor-follower{
-      width:28px;
-      height:28px;
-      border-color:rgba(255,255,255,.7);
+    .nav-shab {
+      font-family: 'LOT', sans-serif;
+      font-size: 2.8rem;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      display: block;
+      background: linear-gradient(90deg, #555, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      user-select: none;
     }
 
-    nav{
-      position:fixed;
-      inset:0 0 auto 0;
-      z-index:100;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:28px 38px;
+    .nav-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      pointer-events: none;
     }
 
-    .nav-logo{
-      font-size:12px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      opacity:.9;
+    .nav-visuals {
+      font-family: 'Agrandir', sans-serif;
+      font-size: 1.1rem;
+      font-style: normal;
+      font-weight: 100;
+      letter-spacing: 0.18em;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 1px; /* ← تغییر: از 3px به 1px، نزدیک‌تر به shab */
+      display: block;
+      user-select: none;
     }
 
-    .nav-links{
-      margin:0;
-      padding:0;
-      list-style:none;
-      display:flex;
-      gap:30px;
+    /* ── HERO ── */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .nav-links a{
-      font-size:11px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      opacity:.46;
-      transition:opacity .25s ease;
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 0;
+    }
+    .hero-video.visible {
+      opacity: 1;
+      transform: scale(1);
     }
 
-    .nav-links a.active,
-    .nav-links a:hover{
-      opacity:1;
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
     }
 
-    .stage{
-      position:relative;
-      width:100vw;
-      height:100vh;
-      overflow:hidden;
+    .hero-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .rail-guides::before,
-    .rail-guides::after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      height:1px;
-      background:linear-gradient(90deg, transparent, var(--line), transparent);
-      z-index:1;
-      pointer-events:none;
+    .hero-shab-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 1;
     }
 
-    .rail-guides::before{
-      top:calc(var(--rail-y) - (var(--card-h) / 2) - 24px);
+    .hero-shab {
+      font-family: 'LOT', sans-serif;
+      font-size: 10rem;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1;
+      display: block;
+      background: linear-gradient(90deg, #555, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      user-select: none;
+      transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .rail-guides::after{
-      top:calc(var(--rail-y) + (var(--card-h) / 2) + 24px);
+    .hero-logo.large .hero-shab {
+      font-size: 18rem;
     }
 
-    .track-viewport{
-      position:absolute;
-      inset:0;
-      overflow:hidden;
+    .hero-line {
+      position: absolute;
+      height: 3px;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      pointer-events: none;
+      transition: left 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  width 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  top 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  bottom 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.3s ease;
     }
 
-    .works-track{
-      position:absolute;
-      left:0;
-      top:var(--rail-y);
-      display:flex;
-      align-items:center;
-      gap:var(--gap);
-      height:var(--card-h);
-      transform:translate3d(0,-50%,0);
-      will-change:transform;
-      padding-left:34vw;
-      padding-right:48vw;
+    .hero-visuals {
+      font-family: 'Agrandir', sans-serif;
+      font-size: 5rem;
+      font-style: normal;
+      font-weight: 100;
+      letter-spacing: 0.18em;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 8px;
+      display: block;
+      user-select: none;
+      opacity: 0;
+      transition: font-size 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  margin-top 1s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.6s ease;
     }
 
-    .work-item{
-      position:relative;
-      flex:0 0 var(--card-w);
-      width:var(--card-w);
-      height:var(--card-h);
-      border-radius:10px;
-      overflow:hidden;
-      background:var(--panel);
-      border:1px solid rgba(255,255,255,.08);
-      transform-origin:center center;
-      will-change:transform, filter, opacity;
-      transition:
-        transform .45s var(--ease),
-        border-color .35s var(--ease),
-        box-shadow .35s var(--ease),
-        opacity .35s var(--ease),
-        filter .35s var(--ease);
-      cursor:none;
+    .hero-logo.large .hero-visuals {
+      font-size: 9rem;
+      margin-top: 14px;
     }
 
-    .work-item::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.10), transparent 35%, rgba(0,0,0,.26)),
-        linear-gradient(0deg, rgba(0,0,0,.18), rgba(0,0,0,.18));
-      z-index:2;
-      pointer-events:none;
-      transition:opacity .4s var(--ease);
+    .typing-cursor {
+      display: inline-block;
+      width: 3px;
+      background: #fff;
+      margin-left: 2px;
+      vertical-align: baseline;
+      animation: blink 0.7s step-end infinite;
+      border-radius: 1px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
     }
 
-    .work-thumb,
-    .work-video{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
+    /* ── SERVICES ── */
+    .services-section {
+      padding: 8rem 4rem;
+      background: #000;
     }
-
-    .work-thumb{
-      filter:grayscale(1) brightness(.55) saturate(.82);
-      transform:scale(1.04);
-      transition:
-        filter .55s var(--ease),
-        transform .55s var(--ease),
-        opacity .45s var(--ease);
+    .services-title {
+      font-size: 4rem;
+      font-weight: 300;
+      margin-bottom: 4rem;
+      text-align: center;
+      letter-spacing: -0.02em;
     }
-
-    .work-video{
-      opacity:0;
-      transition:opacity .45s var(--ease);
-      background:#000;
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
     }
-
-    .work-meta{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:10px;
-      z-index:3;
-      padding:0 8px;
-      text-align:center;
-      font-size:10px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:#fff;
-      text-shadow:0 2px 12px rgba(0,0,0,.45);
-      pointer-events:none;
+    .service-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2.5rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+      color: inherit;
     }
-
-    .work-item:hover .work-thumb,
-    .work-item.is-hovered .work-thumb{
-      filter:grayscale(0) brightness(1) saturate(1.24);
-      transform:scale(1.08);
+    .service-card:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-5px);
     }
-
-    .work-item:hover::before,
-    .work-item.is-hovered::before{
-      opacity:.72;
+    .service-image {
+      width: 100%; height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
     }
-
-    .work-item.active{
-      z-index:30 !important;
-      border-color:rgba(255,255,255,.26);
-      box-shadow:0 28px 60px rgba(0,0,0,.55);
+    .service-card h3 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-
-    .work-item.active .work-thumb{
-      filter:grayscale(0) brightness(1) saturate(1.1);
-      transform:scale(1.08);
+    .service-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.5rem;
     }
-
-    .work-item.video-playing .work-video{opacity:1}
-    .work-item.video-playing .work-thumb{opacity:0}
-
-    .work-item.ghost{
-      opacity:.22 !important;
-      filter:saturate(.8) !important;
-      z-index:5 !important;
+    .service-list { list-style: none; }
+    .service-list li {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+    .service-list li:last-child { border-bottom: none; }
+    .service-list li::before { content: '→'; margin-right: 0.75rem; color: #5170ff; }
 
-    .work-item.faded{
-      opacity:.08 !important;
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .navbar { padding: 1.5rem 2rem; }
+      .nav-shab { font-size: 2.2rem; }
+      .hero-shab { font-size: 7rem; }
+      .hero-logo.large .hero-shab { font-size: 13rem; }
+      .hero-visuals { font-size: 3.5rem; }
+      .hero-logo.large .hero-visuals { font-size: 6.5rem; }
     }
-
-    .content-area{
-      position:fixed;
-      left:50%;
-      bottom:7vh;
-      width:min(76vw, 720px);
-      text-align:center;
-      transform:translateX(-50%) translateY(16px);
-      opacity:0;
-      pointer-events:none;
-      transition:
-        opacity .45s var(--ease),
-        transform .45s var(--ease);
+    @media (max-width: 768px) {
+      .navbar { padding: 1rem 1.5rem; }
+      .nav-shab { font-size: 1.9rem; }
+      .hero-shab { font-size: 5rem; }
+      .hero-logo.large .hero-shab { font-size: 9rem; }
+      .hero-visuals { font-size: 2.5rem; }
+      .hero-logo.large .hero-visuals { font-size: 4.5rem; }
+      .services-section { padding: 4rem 1.5rem; }
+      .services-title { font-size: 2.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
     }
-
-    .content-area.show{
-      opacity:1;
-      transform:translateX(-50%) translateY(0);
-    }
-
-    .project-title{
-      margin:0 0 10px;
-      font-size:clamp(28px, 4.8vw, 60px);
-      line-height:.95;
-      letter-spacing:-.05em;
-      font-weight:800;
-    }
-
-    .project-desc{
-      margin:0 auto;
-      max-width:640px;
-      font-size:clamp(13px, 1.2vw, 16px);
-      line-height:1.7;
-      color:var(--muted);
-    }
-
-    .close-btn{
-      position:fixed;
-      top:24px;
-      right:24px;
-      z-index:120;
-      width:42px;
-      height:42px;
-      border-radius:50%;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(0,0,0,.34);
-      color:#fff;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      backdrop-filter:blur(10px);
-      cursor:none;
-    }
-
-    .close-btn.show{display:flex}
-
-    @media (max-width: 768px){
-      :root{
-        --card-w:78px;
-        --card-h:140px;
-        --gap:10px;
-      }
-
-      body{cursor:auto}
-      .cursor,.cursor-follower,.close-btn{display:none}
-      nav{padding:22px 18px}
-      .nav-links{gap:18px}
-      .works-track{
-        padding-left:22vw;
-        padding-right:58vw;
-      }
-      .content-area{
-        width:min(88vw, 620px);
-        bottom:5vh;
-      }
+    @media (max-width: 480px) {
+      .nav-shab { font-size: 1.6rem; }
+      .hero-shab { font-size: 3.8rem; }
+      .hero-logo.large .hero-shab { font-size: 6.5rem; }
+      .hero-visuals { font-size: 1.9rem; }
+      .hero-logo.large .hero-visuals { font-size: 3.25rem; }
+      .services-section { padding: 3rem 1rem; }
+      .services-title { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
 
-  <nav>
-    <div class="nav-logo">Studio</div>
-    <ul class="nav-links">
-      <li><a href="#" class="active">Works</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-
-  <main class="stage rail-guides">
-    <div class="track-viewport">
-      <div class="works-track" id="worksTrack"></div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-logo">
+    <div class="nav-shab-wrap" id="navShabWrap">
+      <span class="nav-shab" id="navShab">shab</span>
+      <div class="nav-line" id="navLineSh"></div>
+      <div class="nav-line" id="navLineAb"></div>
     </div>
-  </main>
+    <span class="nav-visuals">visuals</span>
+  </div>
+</nav>
 
-  <section class="content-area" id="contentArea">
-    <h1 class="project-title" id="projectTitle">Project</h1>
-    <p class="project-desc" id="projectDesc"></p>
-  </section>
+<!-- HERO -->
+<section class="hero-section">
+  <video class="hero-video" id="heroVideo" muted loop playsinline>
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-blue-waves-1410-large.mp4" type="video/mp4">
+  </video>
 
-  <button class="close-btn" id="closeBtn" aria-label="Close">✕</button>
+  <div class="hero-content">
+    <div class="hero-logo" id="heroLogo">
+      <div class="hero-shab-wrap" id="heroShabWrap">
+        <span class="hero-shab" id="heroShab"></span>
+        <span class="typing-cursor" id="typingCursor"></span>
+        <div class="hero-line" id="heroLineSh"></div>
+        <div class="hero-line" id="heroLineAb"></div>
+      </div>
+      <span class="hero-visuals" id="heroVisuals">visuals</span>
+    </div>
+  </div>
+</section>
 
-  <script>
-    const projects = [
-      {
-        title: "Project One",
-        desc: "A compact cinematic study with controlled motion and editorial restraint.",
-        thumb: "linear-gradient(155deg, #242424, #6f6f6f)",
-        video: ""
-      },
-      {
-        title: "Project Two",
-        desc: "A narrower gallery language focused on hover color and central rhythm.",
-        thumb: "linear-gradient(155deg, #232937, #7d94ba)",
-        video: ""
-      },
-      {
-        title: "Project Three",
-        desc: "A small-format visual sequence balancing sharp framing and motion depth.",
-        thumb: "linear-gradient(155deg, #311d1d, #a55e5e)",
-        video: ""
-      },
-      {
-        title: "Project Four",
-        desc: "An interaction pass inspired by portfolio rails and tactile scroll response.",
-        thumb: "linear-gradient(155deg, #1f3023, #72a178)",
-        video: ""
-      },
-      {
-        title: "Project Five",
-        desc: "A minimal project card system with layered focus around the active work.",
-        thumb: "linear-gradient(155deg, #251f34, #8d77c8)",
-        video: ""
-      },
-      {
-        title: "Project Six",
-        desc: "An editorial carousel where restraint matters more than decorative motion.",
-        thumb: "linear-gradient(155deg, #372818, #bf8a49)",
-        video: ""
-      },
-      {
-        title: "Project Seven",
-        desc: "A rail built around subtle bump physics triggered only during scroll.",
-        thumb: "linear-gradient(155deg, #1f2430, #72809b)",
-        video: ""
-      },
-      {
-        title: "Project Eight",
-        desc: "A darker sequence with live color return on hover and layered click focus.",
-        thumb: "linear-gradient(155deg, #271d26, #9a5d85)",
-        video: ""
-      },
-      {
-        title: "Project Nine",
-        desc: "A centered composition with thin cards and quiet type underneath.",
-        thumb: "linear-gradient(155deg, #1f3134, #69a8af)",
-        video: ""
-      },
-      {
-        title: "Project Ten",
-        desc: "A portfolio rail that enters from the right and reveals itself with wheel input.",
-        thumb: "linear-gradient(155deg, #2c2418, #9e8052)",
-        video: ""
-      },
-      {
-        title: "Project Eleven",
-        desc: "A compact moving strip designed to feel closer to a refined studio site.",
-        thumb: "linear-gradient(155deg, #222222, #5a5a5a)",
-        video: ""
-      }
-    ];
+<!-- SERVICES -->
+<section class="services-section">
+  <h2 class="services-title">Our Services</h2>
+  <div class="services-grid">
 
-    const track = document.getElementById("worksTrack");
-    const items = [];
-    const contentArea = document.getElementById("contentArea");
-    const projectTitle = document.getElementById("projectTitle");
-    const projectDesc = document.getElementById("projectDesc");
-    const closeBtn = document.getElementById("closeBtn");
-    const cursor = document.getElementById("cursor");
-    const cursorFollower = document.getElementById("cursorFollower");
+    <a class="service-card" href="/services/saas-product-videos">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop" alt="SaaS" class="service-image">
+      <h3>SaaS & Product Videos</h3>
+      <p>Showcase your product with engaging visuals that convert.</p>
+      <ul class="service-list">
+        <li>SaaS Promo</li>
+        <li>App Demo</li>
+        <li>Product Launch Video</li>
+      </ul>
+    </a>
 
-    let scrollTarget = 0;
-    let scrollCurrent = 0;
-    let openIndex = -1;
+    <a class="service-card" href="/services/commercial-promo">
+      <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=600&h=400&fit=crop" alt="Commercial" class="service-image">
+      <h3>Commercial & Promo Ads</h3>
+      <p>Short, impactful ads designed to elevate your brand.</p>
+      <ul class="service-list">
+        <li>Luxury Brand Ad</li>
+        <li>Product Promo</li>
+        <li>Teaser Video</li>
+      </ul>
+    </a>
 
-    let mx = innerWidth * 0.5;
-    let my = innerHeight * 0.5;
-    let fx = mx;
-    let fy = my;
+    <a class="service-card" href="/services/social-media">
+      <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop" alt="Social" class="service-image">
+      <h3>Social Media Content</h3>
+      <p>Optimized content for Instagram, TikTok, and more.</p>
+      <ul class="service-list">
+        <li>Reels Ads</li>
+        <li>Short Promo</li>
+        <li>Instagram Video Ads</li>
+      </ul>
+    </a>
 
-    projects.forEach((project, index) => {
-      const el = document.createElement("article");
-      el.className = "work-item";
-      el.dataset.index = index;
+    <a class="service-card" href="/services/motion-graphics">
+      <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop" alt="Motion" class="service-image">
+      <h3>Motion Graphics & Animation</h3>
+      <p>Bring your ideas to life with stunning motion design.</p>
+      <ul class="service-list">
+        <li>Motion Graphics</li>
+        <li>2D Animation</li>
+        <li>3D Animation</li>
+        <li>Video Wall / Visual Loops</li>
+      </ul>
+    </a>
 
-      el.innerHTML = `
-        <div class="work-thumb" style="background:${project.thumb}"></div>
-        <video class="work-video" muted playsinline loop ${project.video ? `src="${project.video}"` : ""}></video>
-        <div class="work-meta">${project.title}</div>
-      `;
+  </div>
+</section>
 
-      el.addEventListener("mouseenter", () => {
-        document.body.classList.add("is-hovering");
-        el.classList.add("is-hovered");
-      });
+<script>
+  function calcLines(shabEl, wrapEl, lineSh, lineAb, text) {
+    const fs    = parseFloat(getComputedStyle(shabEl).fontSize);
+    const ff    = getComputedStyle(shabEl).fontFamily;
+    const wrapW = wrapEl.offsetWidth;
+    const wrapH = wrapEl.offsetHeight;
 
-      el.addEventListener("mouseleave", () => {
-        document.body.classList.remove("is-hovering");
-        el.classList.remove("is-hovered");
-      });
+    if (wrapW === 0) return;
 
-      el.addEventListener("click", () => {
-        if (openIndex === index) {
-          closeProject();
-        } else {
-          openProject(index);
-        }
-      });
+    const cvs = document.createElement('canvas');
+    const ctx = cvs.getContext('2d');
+    ctx.font  = `600 ${fs}px ${ff}`;
 
-      track.appendChild(el);
-      items.push(el);
-    });
+    const mAll = ctx.measureText('shab');
+    const mSh  = ctx.measureText('sh');
+    const mS   = ctx.measureText('s');
+    const mSha = ctx.measureText('sha');
+    const mA   = ctx.measureText('a');
 
-    function getBaseOffset() {
-      return window.innerWidth * 0.38;
+    const ratio = wrapW / mAll.width;
+
+    const shLeft  = (mS.width * 0.25) * ratio;
+    const shWidth = (mSh.width * 1.05 - mS.width * 0.25) * ratio;
+    const abLeft  = (mSha.width - mA.width * 0.5) * ratio;
+    const abWidth = wrapW - abLeft;
+
+    const ascent  = mAll.actualBoundingBoxAscent  || fs * 0.75;
+    const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
+    const topPad  = (wrapH - ascent - descent) / 2;
+
+    /* navbar: خط‌ها نزدیک‌تر به حروف */
+    const isNav = lineSh.classList.contains('nav-line');
+    const shBottomOffset = isNav
+      ? (descent + topPad - 8)   /* ← navbar: نزدیک‌تر */
+      : (descent + topPad - 15); /* ← hero */
+    const abTopOffset = isNav
+      ? Math.max(0, topPad - 4)  /* ← navbar: نزدیک‌تر */
+      : Math.max(0, topPad - 1); /* ← hero */
+
+    lineSh.style.left   = shLeft + 'px';
+    lineSh.style.width  = shWidth + 'px';
+    lineSh.style.bottom = shBottomOffset + 'px';
+    lineSh.style.top    = 'auto';
+
+    lineAb.style.left   = abLeft + 'px';
+    lineAb.style.width  = abWidth + 'px';
+    lineAb.style.top    = abTopOffset + 'px';
+    lineAb.style.bottom = 'auto';
+
+    const typed = text || '';
+    lineSh.style.opacity = typed.length >= 2 ? '1' : '0';
+    lineAb.style.opacity = typed.length >= 4 ? '1' : '0';
+  }
+
+  const heroShab     = document.getElementById('heroShab');
+  const heroWrap     = document.getElementById('heroShabWrap');
+  const heroLineSh   = document.getElementById('heroLineSh');
+  const heroLineAb   = document.getElementById('heroLineAb');
+  const heroVisuals  = document.getElementById('heroVisuals');
+  const typingCursor = document.getElementById('typingCursor');
+  const heroLogo     = document.getElementById('heroLogo');
+  const heroVideo    = document.getElementById('heroVideo');
+
+  const navShab   = document.getElementById('navShab');
+  const navWrap   = document.getElementById('navShabWrap');
+  const navLineSh = document.getElementById('navLineSh');
+  const navLineAb = document.getElementById('navLineAb');
+
+  let currentTyped = '';
+
+  function updateAllLines() {
+    calcLines(heroShab, heroWrap, heroLineSh, heroLineAb, currentTyped);
+    calcLines(navShab,  navWrap,  navLineSh,  navLineAb,  'shab');
+  }
+
+  const word = 'shab';
+  let charIndex = 0;
+
+  heroLineSh.style.opacity = '0';
+  heroLineAb.style.opacity = '0';
+
+  function typeNextChar() {
+    if (charIndex < word.length) {
+      currentTyped += word[charIndex];
+      heroShab.textContent = currentTyped;
+      charIndex++;
+      updateAllLines();
+      setTimeout(typeNextChar, 150);
+    } else {
+      setTimeout(() => {
+        typingCursor.style.display = 'none';
+        heroLogo.classList.add('large');
+        heroVisuals.style.opacity = '1';
+        setTimeout(updateAllLines, 1050);
+      }, 400);
+
+      setTimeout(() => {
+        heroVideo.classList.add('visible');
+        heroVideo.play().catch(() => {});
+      }, 1800);
     }
+  }
 
-    function getMaxScroll() {
-      return Math.max(0, track.scrollWidth - window.innerWidth * 0.92);
-    }
+  document.fonts.ready.then(() => {
+    updateAllLines();
+    window.addEventListener('resize', updateAllLines);
+    setTimeout(typeNextChar, 500);
+  });
+</script>
 
-    function stopAllVideos() {
-      items.forEach((item) => {
-        const video = item.querySelector(".work-video");
-        item.classList.remove("video-playing");
-        if (video) {
-          video.pause();
-          video.currentTime = 0;
-        }
-      });
-    }
-
-    function openProject(index) {
-      openIndex = index;
-      projectTitle.textContent = projects[index].title;
-      projectDesc.textContent = projects[index].desc;
-      contentArea.classList.add("show");
-      closeBtn.classList.add("show");
-
-      stopAllVideos();
-
-      items.forEach((item, i) => {
-        item.classList.remove("active", "ghost", "faded");
-
-        if (i === index) {
-          item.classList.add("active");
-
-          const video = item.querySelector(".work-video");
-          if (video && video.getAttribute("src")) {
-            item.classList.add("video-playing");
-            const playPromise = video.play();
-            if (playPromise && typeof playPromise.catch === "function") {
-              playPromise.catch(() => {});
-            }
-          }
-        } else if (i === index - 1 || i === index + 1) {
-          item.classList.add("ghost");
-        } else {
-          item.classList.add("faded");
-        }
-      });
-    }
-
-    function closeProject() {
-      openIndex = -1;
-      stopAllVideos();
-      items.forEach((item) => {
-        item.classList.remove("active", "ghost", "faded", "video-playing");
-      });
-      contentArea.classList.remove("show");
-      closeBtn.classList.remove("show");
-    }
-
-    closeBtn.addEventListener("click", closeProject);
-
-    window.addEventListener("wheel", (e) => {
-      if (openIndex !== -1) return;
-      scrollTarget += e.deltaY * 0.9;
-      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
-    }, { passive: true });
-
-    window.addEventListener("mousemove", (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      cursor.style.left = mx + "px";
-      cursor.style.top = my + "px";
-    });
-
-    window.addEventListener("resize", () => {
-      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
-    });
-
-    function animateTrack() {
-      scrollCurrent += (scrollTarget - scrollCurrent) * 0.085;
-
-      const baseOffset = getBaseOffset();
-      const trackX = baseOffset - scrollCurrent;
-      track.style.transform = `translate3d(${trackX}px, -50%, 0)`;
-
-      const bumpCenter = window.innerWidth * 0.5;
-      const bumpRadius = 120;
-      const bumpHeight = 34;
-
-      items.forEach((item, index) => {
-        const rect = item.getBoundingClientRect();
-        const center = rect.left + rect.width / 2;
-        const dist = center - bumpCenter;
-        const closeness = Math.max(0, 1 - Math.abs(dist) / bumpRadius);
-        const hill = Math.pow(closeness, 2.2);
-
-        const lift = -bumpHeight * hill;
-        const scaleBump = 1 + hill * 0.045;
-        const rotate = (dist / bumpRadius) * -3.2 * hill;
-
-        let finalScale = scaleBump;
-        let finalY = lift;
-        let finalRotate = rotate;
-        let finalX = 0;
-
-        if (openIndex === index) {
-          finalScale += 0.72;
-          finalY += -10;
-          finalRotate *= 0.25;
-          item.style.zIndex = 30;
-        } else if (openIndex !== -1 && (index === openIndex - 1 || index === openIndex + 1)) {
-          finalScale += 0.18;
-          item.style.zIndex = 8;
-        } else if (openIndex !== -1) {
-          item.style.zIndex = 2;
-        } else {
-          item.style.zIndex = "";
-        }
-
-        item.style.transform = `translate3d(${finalX}px, ${finalY}px, 0) rotate(${finalRotate}deg) scale(${finalScale})`;
-      });
-
-      fx += (mx - fx) * 0.12;
-      fy += (my - fy) * 0.12;
-      cursorFollower.style.left = fx + "px";
-      cursorFollower.style.top = fy + "px";
-
-      requestAnimationFrame(animateTrack);
-    }
-
-    animateTrack();
-  </script>
 </body>
 </html>
