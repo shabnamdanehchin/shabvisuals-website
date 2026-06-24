@@ -4,48 +4,107 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Works</title>
+
   <style>
     :root{
-      --bg:#050505;
-      --text:#f4f4f4;
-      --muted:rgba(255,255,255,.55);
-      --line:rgba(255,255,255,.12);
+      --bg:#070707;
+      --panel:#111111;
+      --text:#f3f1ea;
+      --muted:rgba(243,241,234,.58);
+      --line:rgba(243,241,234,.12);
       --ease:cubic-bezier(.16,1,.3,1);
-      --card-w:clamp(88px, 6.6vw, 126px);
-      --card-h:clamp(145px, 20vw, 250px);
-      --gap:14px;
+      --card-w:clamp(76px, 5.8vw, 104px);
+      --card-h:clamp(132px, 18vw, 210px);
+      --gap:12px;
+      --rail-y:50vh;
     }
 
     *{box-sizing:border-box}
-    html,body{width:100%;height:100%;margin:0}
+    html,body{margin:0;width:100%;height:100%}
+
     body{
-      background:var(--bg);
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,.04), transparent 30%),
+        linear-gradient(180deg, #0b0b0b 0%, #050505 100%);
       color:var(--text);
-      font-family:Helvetica, Arial, sans-serif;
+      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
       overflow:hidden;
       cursor:none;
     }
 
-    .cursor,.cursor-follower{
+    a{color:inherit;text-decoration:none}
+
+    .cursor,
+    .cursor-follower{
       position:fixed;
-      top:0;left:0;
+      left:0;
+      top:0;
       pointer-events:none;
       transform:translate(-50%,-50%);
       z-index:9999;
       mix-blend-mode:difference;
     }
+
     .cursor{
-      width:6px;height:6px;border-radius:50%;
+      width:6px;
+      height:6px;
+      border-radius:50%;
       background:#fff;
     }
+
     .cursor-follower{
-      width:22px;height:22px;border-radius:50%;
-      border:1px solid rgba(255,255,255,.4);
-      transition:width .25s var(--ease), height .25s var(--ease), border-color .25s var(--ease);
+      width:20px;
+      height:20px;
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:50%;
+      transition:
+        width .24s var(--ease),
+        height .24s var(--ease),
+        border-color .24s var(--ease);
     }
+
     body.is-hovering .cursor-follower{
-      width:30px;height:30px;
+      width:28px;
+      height:28px;
       border-color:rgba(255,255,255,.7);
+    }
+
+    nav{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:100;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:28px 38px;
+    }
+
+    .nav-logo{
+      font-size:12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      opacity:.9;
+    }
+
+    .nav-links{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:flex;
+      gap:30px;
+    }
+
+    .nav-links a{
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      opacity:.46;
+      transition:opacity .25s ease;
+    }
+
+    .nav-links a.active,
+    .nav-links a:hover{
+      opacity:1;
     }
 
     .stage{
@@ -53,30 +112,46 @@
       width:100vw;
       height:100vh;
       overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    }
+
+    .rail-guides::before,
+    .rail-guides::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:1px;
+      background:linear-gradient(90deg, transparent, var(--line), transparent);
+      z-index:1;
+      pointer-events:none;
+    }
+
+    .rail-guides::before{
+      top:calc(var(--rail-y) - (var(--card-h) / 2) - 24px);
+    }
+
+    .rail-guides::after{
+      top:calc(var(--rail-y) + (var(--card-h) / 2) + 24px);
     }
 
     .track-viewport{
-      position:relative;
-      width:min(100vw, 1400px);
-      height:var(--card-h);
-      overflow:visible;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      position:absolute;
+      inset:0;
+      overflow:hidden;
     }
 
     .works-track{
-      position:relative;
-      height:var(--card-h);
+      position:absolute;
+      left:0;
+      top:var(--rail-y);
       display:flex;
       align-items:center;
       gap:var(--gap);
+      height:var(--card-h);
+      transform:translate3d(0,-50%,0);
       will-change:transform;
-      transform:translateX(0);
-      padding:0 calc(50vw - (var(--card-w) / 2));
+      padding-left:34vw;
+      padding-right:48vw;
     }
 
     .work-item{
@@ -86,25 +161,32 @@
       height:var(--card-h);
       border-radius:10px;
       overflow:hidden;
-      background:#111;
+      background:var(--panel);
       border:1px solid rgba(255,255,255,.08);
       transform-origin:center center;
-      will-change:transform, opacity, filter;
-      transition:filter .45s var(--ease), border-color .45s var(--ease), box-shadow .45s var(--ease), opacity .45s var(--ease);
+      will-change:transform, filter, opacity;
+      transition:
+        border-color .4s var(--ease),
+        box-shadow .4s var(--ease),
+        opacity .35s var(--ease),
+        filter .35s var(--ease);
       cursor:none;
     }
 
     .work-item::before{
       content:"";
-      position:absolute;inset:0;
-      background:linear-gradient(180deg, rgba(255,255,255,.08), transparent 35%, rgba(0,0,0,.35));
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.10), transparent 35%, rgba(0,0,0,.26)),
+        linear-gradient(0deg, rgba(0,0,0,.18), rgba(0,0,0,.18));
       z-index:2;
       pointer-events:none;
-      opacity:.55;
-      transition:opacity .45s var(--ease);
+      transition:opacity .4s var(--ease);
     }
 
-    .work-thumb,.work-video{
+    .work-thumb,
+    .work-video{
       position:absolute;
       inset:0;
       width:100%;
@@ -113,9 +195,12 @@
     }
 
     .work-thumb{
-      filter:grayscale(1) brightness(.6) saturate(.8);
-      transform:scale(1.03);
-      transition:filter .5s var(--ease), transform .5s var(--ease);
+      filter:grayscale(1) brightness(.55) saturate(.82);
+      transform:scale(1.04);
+      transition:
+        filter .55s var(--ease),
+        transform .55s var(--ease),
+        opacity .45s var(--ease);
     }
 
     .work-video{
@@ -123,54 +208,66 @@
       transition:opacity .45s var(--ease);
     }
 
+    .work-meta{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:10px;
+      z-index:3;
+      padding:0 8px;
+      text-align:center;
+      font-size:10px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:#fff;
+      text-shadow:0 2px 12px rgba(0,0,0,.45);
+      pointer-events:none;
+    }
+
     .work-item:hover .work-thumb,
-    .work-item.is-hovered .work-thumb,
-    .work-item.active .work-thumb{
-      filter:grayscale(0) brightness(1) saturate(1.25);
+    .work-item.is-hovered .work-thumb{
+      filter:grayscale(0) brightness(,0,.45);
+      pointer-events:none;
+    }
+
+    .work-item:hover .work-thumb,
+    .work-item.is-hovered .work-thumb{
+      filter:grayscale(0) brightness(1) saturate(1.24);
       transform:scale(1.08);
     }
 
     .work-item:hover::before,
-    .work-item.is-hovered::before,
-    .work-item.active::before{
-      opacity:.2;
+    .work-item:0 36px 80px rgba(0,0,0,.6);
     }
 
-    .work-item.active{
-      z-index:50;
-      border-color:rgba(255,255,255,.35);
-      box-shadow:0 40px 90px rgba(0,0,0,.6);
+    .work-item.active .work-thumb{
+      filter:grayscale(0) brightness(1) saturate(1.15);
+      transform:scale(1.08);
     }
 
     .work-item.video-playing .work-video{opacity:1}
     .work-item.video-playing .work-thumb{opacity:0}
 
-    .work-title{
-      position:absolute;
-      left:0;right:0;bottom:10px;
-      z-index:3;
-      padding:0 10px;
-      font-size:11px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color:#fff;
-      text-align:center;
-      opacity:.9;
-      text-shadow:0 2px 10px rgba(0,0,0,.5);
-      pointer-events:none;
+    .work-item.ghost{
+      z-index:20;
+      opacity:.22 !important;
+      filter:blur(1px) saturate(.8) !important;
     }
 
     .content-area{
       position:fixed;
       left:50%;
       bottom:7vh;
-      transform:translateX(-50%) translateY(18px);
+      width:min(76vw, 720px);
       text-align:center;
-      width:min(82vw, 720px);
+      transform:translateX(-50%) translateY(16px);
       opacity:0;
       pointer-events:none;
-      transition:opacity .5s var(--ease), transform .5s var(--ease);
+      transition:
+        opacity .45s var(--ease),
+        transform .45s var(--ease);
     }
+
     .content-area.show{
       opacity:1;
       transform:translateX(-50%) translateY(0);
@@ -178,45 +275,59 @@
 
     .project-title{
       margin:0 0 10px;
-      font-size:clamp(28px, 5vw, 64px);
-      line-height:1;
-      letter-spacing:-.04em;
+      font-size:clamp(28px, 4.8vw, 60px);
+      line-height:.95;
+      letter-spacing:-.05em;
       font-weight:800;
     }
+
     .project-desc{
-      margin:0;
-      font-size:clamp(13px, 1.35vw, 17px);
+      margin:0 auto;
+      max-width:640px;
+      font-size:clamp(13px, 1.2vw, 16px);
       line-height:1.7;
       color:var(--muted);
     }
 
     .close-btn{
       position:fixed;
-      right:24px;
       top:24px;
-      z-index:100;
-      width:44px;height:44px;
+      right:24px;
+      z-index:120;
+      width:42px;
+      height:42px;
       border-radius:50%;
       border:1px solid rgba(255,255,255,.16);
-      background:rgba(0,0,0,.35);
+      background:rgba(0,0,0,.34);
       color:#fff;
       display:none;
       align-items:center;
       justify-content:center;
-      cursor:none;
       backdrop-filter:blur(10px);
+      cursor:none;
     }
+
     .close-btn.show{display:flex}
 
     @media (max-width: 768px){
       :root{
-        --card-w:88px;
-        --card-h:160px;
+        --card-w:78px;
+        --card-h:140px;
         --gap:10px;
       }
+
       body{cursor:auto}
-      .cursor,.cursor-follower,.close-btn{cursor:auto}
-      .works-track{padding:0 calc(50vw - (var(--card-w) / 2))}
+      .cursor,.cursor-follower,.close-btn{display:none}
+      nav{padding:22px 18px}
+      .nav-links{gap:18px}
+      .works-track{
+        padding-left:22vw;
+        padding-right:58vw;
+      }
+      .content-area{
+        width:min(88vw, 620px);
+        bottom:5vh;
+      }
     }
   </style>
 </head>
@@ -224,176 +335,233 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
 
-  <div class="stage">
+  <nav>
+    <div class="nav-logo">Studio</div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Works</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="stage rail-guides">
     <div class="track-viewport">
       <div class="works-track" id="worksTrack"></div>
     </div>
-  </div>
+  </main>
 
-  <div class="content-area" id="contentArea">
+  <section class="content-area" id="contentArea">
     <h1 class="project-title" id="projectTitle">Project</h1>
     <p class="project-desc" id="projectDesc"></p>
-  </div>
+  </section>
 
   <button class="close-btn" id="closeBtn" aria-label="Close">✕</button>
 
   <script>
     const projects = [
-      { title: "Project One", desc: "A compact cinematic study with an interactive horizontal rhythm.", thumb: "linear-gradient(160deg, #2f2f2f, #707070)" },
-      { title: "Project Two", desc: "A visual narrative balancing motion, texture, and depth.", thumb: "linear-gradient(160deg, #272f3f, #6c86b6)" },
-      { title: "Project Three", desc: "An editorial layout experiment with hover-driven color reveal.", thumb: "linear-gradient(160deg, #3a2222, #9f5050)" },
-      { title: "Project Four", desc: "A motion-led interface built around small centered cards.", thumb: "linear-gradient(160deg, #2b3b2f, #68a06f)" },
-      { title: "Project Five", desc: "A minimal showcase with layered focus on the active item.", thumb: "linear-gradient(160deg, #29223b, #7f6cc9)" },
-      { title: "Project Six", desc: "A smooth horizontal reel inspired by editorial portfolio systems.", thumb: "linear-gradient(160deg, #3d2f1d, #c38b49)" },
-      { title: "Project Seven", desc: "A tactile browsing experience with soft bump-based scroll response.", thumb: "linear-gradient(160deg, #20242f, #67738f)" },
-      { title: "Project Eight", desc: "A compact gallery focused on depth, hover color, and active focus.", thumb: "linear-gradient(160deg, #2a1f27, #8e5078)" },
-      { title: "Project Nine", desc: "A quiet interface with strong center alignment and layered cards.", thumb: "linear-gradient(160deg, #1f2f33, #5da0aa)" },
-      { title: "Project Ten", desc: "A soft-motion layout that keeps the active work in front.", thumb: "linear-gradient(160deg, #362c1d, #9a7a4a)" }
+      { title: "Project One", desc: "A compact cinematic study with controlled motion and editorial restraint.", thumb: "linear-gradient(155deg, #242424, #6f6f6f)" },
+      { title: "Project Two", desc: "A narrower gallery language focused on hover color and central rhythm.", thumb: "linear-gradient(155deg, #232937, #7d94ba)" },
+      { title: "Project Three", desc: "A small-format visual sequence balancing sharp framing and motion depth.", thumb: "linear-gradient(155deg, #311d1d, #a55e5e)" },
+      { title: "Project Four", desc: "An interaction pass inspired by portfolio rails and tactile scroll response.", thumb: "linear-gradient(155deg, #1f3023, #72a178)" },
+      { title: "Project Five", desc: "A minimal project card system with layered focus around the active work.", thumb: "linear-gradient(155deg, #251f34, #8d77c8)" },
+      { title: "Project Six", desc: "An editorial carousel where restraint matters more than decorative motion.", thumb: "linear-gradient(155deg, #372818, #bf8a49)" },
+      { title: "Project Seven", desc: "A rail built around subtle bump physics triggered only during scroll.", thumb: "linear-gradient(155deg, #1f2430, #72809b)" },
+      { title: "Project Eight", desc: "A darker sequence with live color return on hover and layered click focus.", thumb: "linear-gradient(155deg, #271d26, #9a5d85)" },
+      { title: "Project Nine", desc: "A centered composition with thin cards and quiet type underneath.", thumb: "linear-gradient(155deg, #1f3134, #69a8af)" },
+      { title: "Project Ten", desc: "A portfolio rail that enters from the right and reveals itself with wheel input.", thumb: "linear-gradient(155deg, #2c2418, #9e8052)" },
+      { title: "Project Eleven", desc: "A compact moving strip designed to feel closer to a refined studio site.", thumb: "linear-gradient(155deg, #222222, #5a5a5a)" }
     ];
 
-    const track = document.getElementById('worksTrack');
-    const contentArea = document.getElementById('contentArea');
-    const projectTitle = document.getElementById('projectTitle');
-    const projectDesc = document.getElementById('projectDesc');
-    const closeBtn = document.getElementById('closeBtn');
-    const cursor = document.getElementById('cursor');
-    const cursorFollower = document.getElementById('cursorFollower');
+    const track = document.getElementById("worksTrack");
+    const items = [];
+    const contentArea = document.getElementById("contentArea");
+    const projectTitle = document.getElementById("projectTitle");
+    const projectDesc = document.getElementById("projectDesc");
+    const closeBtn = document.getElementById("closeBtn");
+    const cursor = document.getElementById("cursor");
+    const cursorFollower = document.getElementById("cursorFollower");
 
     let scrollTarget = 0;
     let scrollCurrent = 0;
-    let activeIndex = -1;
+    let lastScrollTarget = 0;
+    let bumpEnergy = 0;
     let openIndex = -1;
-    let mx = innerWidth / 2;
-    let my = innerHeight / 2;
+
+    let mx = innerWidth * 0.5;
+    let my = innerHeight * 0.5;
     let fx = mx;
     let fy = my;
 
     projects.forEach((project, index) => {
-      const item = document.createElement('div');
-      item.className = 'work-item';
-      item.dataset.index = index;
-      item.innerHTML = `
+      const el = document.createElement("article");
+      el.className = "work-item";
+      el.dataset.index = index;
+      el.innerHTML = `
         <div class="work-thumb" style="background:${project.thumb}"></div>
         <video class="work-video" muted playsinline loop></video>
-        <div class="work-title">${project.title}</div>
+        <div class="work-meta">${project.title}</div>
       `;
-      item.addEventListener('mouseenter', () => document.body.classList.add('is-hovering'));
-      item.addEventListener('mouseleave', () => document.body.classList.remove('is-hovering'));
-      item.addEventListener('click', () => openProject(index));
-      track.appendChild(item);
+
+      el.addEventListener("mouseenter", () => {
+        document.body.classList.add("is-hovering");
+        el.classList.add("is-hovered");
+      });
+
+      el.addEventListener("mouseleave", () => {
+        document.body.classList.remove("is-hovering");
+        el.classList.remove("is-hovered");
+      });
+
+      el.addEventListener("click", () => openProject(index));
+
+      track.appendChild(el);
+      items.push(el);
     });
 
-    const items = [...document.querySelectorAll('.work-item')];
+    function getBaseOffset() {
+      const firstCardCenter = window.innerWidth * 0.38;
+      return firstCardCenter;
+    }
 
-    function openProject(index){
+    function getMaxScroll() {
+      return Math.max(0, track.scrollWidth - window.innerWidth * 0.92);
+    }
+
+    function applyClosedState() {
+      items.forEach((item) => {
+        item.classList.remove("active", "ghost", "video-playing");
+        item.style.opacity = "";
+        item.style.filter = "";
+        item.style.zIndex = "";
+      });
+      contentArea.classList.remove("show");
+      closeBtn.classList.remove("show");
+      openIndex = -1;
+    }
+
+    function openProject(index) {
       openIndex = index;
-      activeIndex = index;
-      contentArea.classList.add('show');
-      closeBtn.classList.add('show');
       projectTitle.textContent = projects[index].title;
       projectDesc.textContent = projects[index].desc;
+      contentArea.classList.add("show");
+      closeBtn.classList.add("show");
 
       items.forEach((item, i) => {
-        item.classList.toggle('active', i === index);
-        item.classList.toggle('video-playing', i === index);
-        item.style.opacity = i === index ? '1' : '.18';
-        item.style.filter = i === index ? 'none' : 'blur(.8px)';
+        item.classList.remove("active", "ghost", "video-playing");
+        if (i === index) {
+          item.classList.add("active");
+          item.classList.add("video-playing");
+        } else if (i === index - 1 || i === index + 1) {
+          item.classList.add("ghost");
+        } else {
+          item.style.opacity = "0";
+        }
       });
     }
 
-    closeBtn.addEventListener('click', () => {
-      openIndex = -1;
-      activeIndex = -1;
-      contentArea.classList.remove('show');
-      closeBtn.classList.remove('show');
-      items.forEach(item => {
-        item.classList.remove('active', 'video-playing');
-        item.style.opacity = '1';
-        item.style.filter = 'none';
+    closeBtn.addEventListener("click", () => {
+      items.forEach((item) => {
+        item.style.opacity = "";
       });
+      applyClosedState();
     });
 
-    window.addEventListener('wheel', (e) => {
+    window.addEventListener("wheel", (e) => {
       if (openIndex !== -1) return;
+
       scrollTarget += e.deltaY * 0.9;
-      const maxScroll = Math.max(0, track.scrollWidth - innerWidth + 120);
-      scrollTarget = Math.max(0, Math.min(maxScroll, scrollTarget));
+      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
+
+      const delta = Math.abs(scrollTarget - lastScrollTarget);
+      bumpEnergy = Math.min(1, bumpEnergy + delta / 180);
+      lastScrollTarget = scrollTarget;
     }, { passive: true });
 
-    window.addEventListener('mousemove', (e) => {
+    window.addEventListener("mousemove", (e) => {
       mx = e.clientX;
       my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
+      cursor.style.left = mx + "px";
+      cursor.style.top = my + "px";
     });
 
-    function animate(){
-      scrollCurrent += (scrollTarget - scrollCurrent) * 0.08;
-      if (openIndex === -1) {
-        track.style.transform = `translateX(${-scrollCurrent}px)`;
-      }
+    window.addEventListener("resize", () => {
+      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
+    });
 
-      const viewportCenter = innerWidth * 0.5;
-      const bumpRadius = innerWidth * 0.22;
+    function animateTrack() {
+      scrollCurrent += (scrollTarget - scrollCurrent) * 0.085;
+      bumpEnergy *= 0.92;
+
+      const baseOffset = getBaseOffset();
+      const trackX = baseOffset - scrollCurrent;
+      track.style.transform = `translate3d(${trackX}px, -50%, 0)`;
+
+      const viewportCenter = window.innerWidth * 0.5;
+      const bumpRadius = window.innerWidth * 0.2;
 
       items.forEach((item, index) => {
         if (openIndex !== -1) {
-          if (index === openIndex) {
-            item.style.position = 'fixed';
-            item.style.left = '50%';
-            item.style.top = '50%';
-            item.style.transform = 'translate(-50%, -50%) scale(2.25)';
-            item.style.width = 'min(22vw, 320px)';
-            item.style.height = 'min(32vw, 460px)';
-            item.style.opacity = '1';
-            item.style.filter = 'none';
-            item.style.zIndex = '50';
+          const isActive = index === openIndex;
+          const isLeftGhost = index === openIndex - 1;
+          const isRightGhost = index === openIndex + 1;
+
+          if (isActive) {
+            item.style.transform = "translate3d(calc(50vw - 50%), calc(50vh - 50%), 0) scale(2.55)";
+            item.style.position = "fixed";
+            item.style.left = "0";
+            item.style.top = "0";
+            item.style.zIndex = "60";
+            item.style.opacity = "1";
+            item.style.filter = "none";
+          } else if (isLeftGhost || isRightGhost) {
+            const dir = isLeftGhost ? -1 : 1;
+            item.style.position = "fixed";
+            item.style.left = "0";
+            item.style.top = "0";
+            item.style.transform = `translate3d(calc(50vw - 50% + ${dir * 90}px), calc(50vh - 50% + 8px), 0) scale(1.78)`;
+            item.style.zIndex = "40";
+            item.style.opacity = ".18";
+            item.style.filter = "blur(1.2px) grayscale(.15)";
           } else {
-            item.style.position = 'relative';
-            item.style.left = '';
-            item.style.top = '';
-            item.style.transform = '';
-            item.style.width = '';
-            item.style.height = '';
-            item.style.zIndex = '1';
+            item.style.position = "relative";
+            item.style.left = "";
+            item.style.top = "";
+            item.style.transform = "scale(.92)";
+            item.style.zIndex = "1";
           }
           return;
         }
 
-        item.style.position = 'relative';
-        item.style.left = '';
-        item.style.top = '';
-        item.style.width = '';
-        item.style.height = '';
-        item.style.zIndex = '1';
+        item.style.position = "relative";
+        item.style.left = "";
+        item.style.top = "";
+        item.style.zIndex = "";
+        item.style.opacity = "";
+        item.style.filter = "";
 
         const rect = item.getBoundingClientRect();
         const center = rect.left + rect.width / 2;
         const dist = center - viewportCenter;
-        const progress = 1 - Math.min(1, Math.abs(dist) / bumpRadius);
+        const closeness = Math.max(0, 1 - Math.abs(dist) / bumpRadius);
+        const bump = Math.pow(closeness, 2.6) * bumpEnergy;
 
-        const isInBump = Math.abs(dist) < bumpRadius * 1.2;
-        const bump = isInBump ? Math.pow(progress, 2.8) : 0;
+        const lift = -26 * bump;
+        const scale = 1 + 0.08 * bump;
+        const rotate = (-2.2 * dist / bumpRadius) * bump;
+        const drift = Math.sign(dist || 1) * bump * 2;
 
-        const lift = -bump * 28;
-        const scale = 1 + bump * 0.11;
-        const rotate = (dist / bumpRadius) * -2.2 * bump;
-        const xShift = bump * 2 * Math.sign(dist || 1);
-
-        item.style.transform = `translate3d(${xShift}px, ${lift}px, 0) rotate(${rotate}deg) scale(${scale})`;
-        item.style.opacity = 0.9 + bump * 0.1;
-        item.style.filter = `grayscale(${1 - bump}) brightness(${0.82 + bump * 0.25}) saturate(${0.95 + bump * 0.8})`;
+        item.style.transform = `translate3d(${drift}px, ${lift}px, 0) rotate(${rotate}deg) scale(${scale})`;
       });
 
       fx += (mx - fx) * 0.12;
       fy += (my - fy) * 0.12;
-      cursorFollower.style.left = fx + 'px';
-      cursorFollower.style.top = fy + 'px';
+      cursorFollower.style.left = fx + "px";
+      cursorFollower.style.top = fy + "px";
 
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animateTrack);
     }
 
-    animate();
+    animateTrack();
   </script>
 </body>
 </html>
