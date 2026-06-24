@@ -1,13 +1,34 @@
+{"name": "file_write", "arguments": {"path": "works.html", "content": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Works — Shab Visuals</title>\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n    <link href=\"https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap\" rel=\"stylesheet\">\n    <style>\n        :root {\n            --primary-color: #1a1a1a;\n            --accent-color: #8b6914;\n            --background-color: #fafaf8;\n            --section-bg: #f5f5f0;\n            --border-color: #e0e0d8;\n            --text-color: #2a2a2a;\n            --link-color: #6b5210;\n            --font-serif: 'Crimson Text', 'Georgia', serif;\n            --font-sans: 'Inter', 'Helvetica Neue', sans-serif;\n        }\n\n        * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n        body {\n            font-family: var(--font-sans);\n            background-color: var(--background-color);\n            color: var(--text-color);\n            line-height: 1.6;\n        }\n\n        /* Header */\n        header {\n            background-color: var(--primary-color);\n            padding: 20px 40px;\n            position: sticky;\n            top: 0;\n            z-index: 100;\n            border-bottom: 2px solid var(--accent-color);\n        }\n\n        .header-content {\n            max-width: 1200px;\n            margin: 0 auto;\n            display: flex;\n            justify-content: space-between;\n            align-items: center;\n        }\n\n        .site-title {\n            color: #ffffff;\n            font-family: var(--font-serif);\n            font-size: 1.5rem;\n            font-weight: 600;\n            letter-spacing: 0.05em;\n            text-decoration: none;\n        }\n\n        nav ul {\n            list-style: none;\n            display: flex;\n            gap: 30px;\n        }\n\n        nav ul li a {\n            color: #cccccc;\n            text-decoration: none;\n            font-size: 0.85rem;\n            letter-spacing: 0.08em;\n            text-transform: uppercase;\n            transition: color 0.2s;\n        }\n\n        nav ul li a:hover,\n        nav ul li a.active {\n            color: var(--accent-color);\n        }\n\n        /* Main */\n        main {\n            max-width: 1200px;\n            margin: 0 auto;\n            padding: 40px 40px;\n        }\n\n        /* Content sections */\n        .content-section {\n            margin-bottom: 60px;\n            padding-bottom: 40px;\n            border-bottom: 1px solid var(--border-color);\n        }\n\n        .content-section:last-child {\n            border-bottom: none;\n        }\n\n        .section-header {\n            display: flex;\n            justify-content: space-between;\n            align-items: baseline;\n            margin-bottom: 25px;\n            padding-bottom: 10px;\n            border-bottom: 2px solid var(--accent-color);\n        }\n\n        .section-title {\n            font-family: var(--font-serif);\n            font-size: 2rem;\n            color: var(--primary-color);\n        }\n\n        .section-count {\n            font-size: 0.8rem;\n            color: #888;\n            letter-spacing: 0.05em;\n        }\n\n        /* Item cards — exact aristidebenoist list style */\n        .items-grid {\n            display: flex;\n            flex-direction: column;\n            gap: 0;\n        }\n\n        .item-card {\n            padding: 20px 0;\n            border-bottom: 1px solid var(--border-color);\n            display: grid;\n            grid-template-columns: 1fr auto;\n            gap: 20px;\n            align-items: start;\n            transition: background-color 0.2s, padding-left 0.2s;\n            cursor: pointer;\n            text-decoration: none;\n            color: inherit;\n        }\n\n        .item-card:last-child {\n            border-bottom: none;\n        }\n\n        .item-card:hover {\n            background-color: rgba(139, 105, 20, 0.03);\n            padding-left: 8px;\n        }\n\n        .item-left {\n            display: flex;\n            gap: 16px;\n            align-items: flex-start;\n        }\n\n        .item-thumb {\n            width: 80px;\n            height: 55px;\n            object-fit: cover;\n            border-radius: 2px;\n            opacity: 0.85;\n            transition: opacity 0.2s;\n            flex-shrink: 0;\n        }\n\n        .item-card:hover .item-thumb {\n            opacity: 1;\n        }\n\n        .item-text {\n            flex: 1;\n        }\n\n        .item-title {\n            font-family: var(--font-serif);\n            font-size: 1.2rem;\n            color: var(--primary-color);\n            margin-bottom: 6px;\n            line-height: 1.4;\n        }\n\n        .item-meta {\n            font-size: 0.8rem;\n            color: #888;\n            display: flex;\n            gap: 12px;\n            flex-wrap: wrap;\n        }\n\n        .item-meta span {\n            display: flex;\n            align-items: center;\n            gap: 4px;\n        }\n\n        .item-meta span::before {\n            content: '';\n            display: inline-block;\n            width: 3px;\n            height: 3px;\n            background-color: var(--accent-color);\n            border-radius: 50%;\n        }\n\n        .item-meta span:first-child::before {\n            display: none;\n        }\n\n        .item-date {\n            font-size: 0.8rem;\n            color: #aaa;\n            white-space: nowrap;\n            font-style: italic;\n        }\n\n        .item-tag {\n            display: inline-block;\n            padding: 2px 8px;\n            background-color: rgba(139, 105, 20, 0.1);\n            color: var(--link-color);\n            font-size: 0.7rem;\n            border-radius: 2px;\n            letter-spacing: 0.05em;\n            text-transform: uppercase;\n        }\n\n        /* Responsive */\n        @media (max-width: 768px) {\n            header {\n                padding: 15px 20px;\n            }\n\n            .header-content {\n                flex-direction: column;\n                gap: 15px;\n            }\n\n            nav ul {\n                gap: 15px;\n                flex-wrap: wrap;\n                justify-content: center;\n            }\n\n            main {\n                padding: 30px 20px;\n            }\n\n            .item-card {\n                grid-template-columns: 1fr;\n            }\n\n            .item-thumb {\n                display: none;\n            }\n        }\n    </style>\n</head>\n<body>\n\n    <header>\n        <div class=\"header-content\">\n            <a href=\"index.html\" class=\"site-title\">Shab Visuals</a>\n            <nav>\n                <ul>\n                    <li><a href=\"index.html\">Home</a></li>\n                    <li><a href=\"works.html\" class=\"active\">Works</a></li>\n                    <li><a href=\"index.html#services\">Services</a></li>\n                    <li><a href=\"#\">About</a></li>\n                    <li><a href=\"#\">Get in Touch</a></li>\n                </ul>\n            </nav>\n        </div>\n    </header>\n\n    <main>\n\n        <!-- Commercial & Promo -->\n        <section class=\"content-section\">\n            <div class=\"section-header\">\n                <h2 class=\"section-title\">Commercial &amp; Promo</h2>\n                <span class=\"section-count\" id=\"count-commercial\"></span>\n            </div>\n            <div class=\"items-grid\" id=\"commercial\">Loading...</div>\n        </section>\n\n        <!-- SaaS & Product -->\n        <section class=\"content-section\">\n            <div class=\"section-header\">\n                <h2 class=\"section-title\">SaaS &amp; Product</h2>\n                <span class=\"section-count\" id=\"count-saas\"></span>\n            </div>\n            <div class=\"items-grid\" id=\"saas\">Loading...</div>\n        </section>\n\n        <!-- Social Media -->\n        <section class=\"content-section\">\n            <div class=\"section-header\">\n                <h2 class=\"section-title\">Social Media</h2>\n                <span class=\"section-count\" id=\"count-social\"></span>\n            </div>\n            <div class=\"items-grid\" id=\"social\">Loading...</div>\n        </section>\n\n        <!-- Motion Graphics -->\n        <section class=\"content-section\">\n            <div class=\"section-header\">\n                <h2 class=\"section-title\">Motion Graphics</h2>\n                <span class=\"section-count\" id=\"count-motion\"></span>\n            </div>\n            <div class=\"items-grid\" id=\"motion\">Loading...</div>\n        </section>\n\n    </main>\n\n    <script>\n        const worksData = {\n            commercial: [\n                {\n                    title: \"Nike — Air Max Campaign\",\n                    client: \"Nike\",\n                    date: \"2025\",\n                    type: \"Commercial\",\n                    thumb: \"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Audi — Electric Future\",\n                    client: \"Audi\",\n                    date: \"2025\",\n                    type: \"Promo\",\n                    thumb: \"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Zara — Summer Collection\",\n                    client: \"Zara\",\n                    date: \"2024\",\n                    type: \"Commercial\",\n                    thumb: \"https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Apple — Developer Event Opener\",\n                    client: \"Apple\",\n                    date: \"2024\",\n                    type: \"Promo\",\n                    thumb: \"https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=160&h=110&fit=crop\"\n                }\n            ],\n            saas: [\n                {\n                    title: \"Notion — Product Walkthrough\",\n                    client: \"Notion\",\n                    date: \"2025\",\n                    type: \"Product Video\",\n                    thumb: \"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Linear — Feature Launch\",\n                    client: \"Linear\",\n                    date: \"2025\",\n                    type: \"SaaS\",\n                    thumb: \"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Figma — Config 2024 Recap\",\n                    client: \"Figma\",\n                    date: \"2024\",\n                    type: \"Product Video\",\n                    thumb: \"https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Vercel — Platform Overview\",\n                    client: \"Vercel\",\n                    date: \"2024\",\n                    type: \"SaaS\",\n                    thumb: \"https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=160&h=110&fit=crop\"\n                }\n            ],\n            social: [\n                {\n                    title: \"Gymshark — Instagram Series\",\n                    client: \"Gymshark\",\n                    date: \"2025\",\n                    type: \"Instagram\",\n                    thumb: \"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Red Bull — TikTok Campaign\",\n                    client: \"Red Bull\",\n                    date: \"2025\",\n                    type: \"TikTok\",\n                    thumb: \"https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Spotify — Stories Content Pack\",\n                    client: \"Spotify\",\n                    date: \"2024\",\n                    type: \"Stories\",\n                    thumb: \"https://images.unsplash.com/photo-1611339555312-e607c8352fd7?w=160&h=110&fit=crop\"\n                }\n            ],\n            motion: [\n                {\n                    title: \"Stripe — Annual Report Animation\",\n                    client: \"Stripe\",\n                    date: \"2025\",\n                    type: \"Motion Graphics\",\n                    thumb: \"https://images.unsplash.com/photo-1551650975-87deedd944c3?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Bloomberg — Data Visualization\",\n                    client: \"Bloomberg\",\n                    date: \"2024\",\n                    type: \"Animation\",\n                    thumb: \"https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Google — I/O Intro Sequence\",\n                    client: \"Google\",\n                    date: \"2024\",\n                    type: \"Motion Graphics\",\n                    thumb: \"https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=160&h=110&fit=crop\"\n                }\n            ]\n        };\n\n        function renderSection(data) {\n            return data.map(item => `\n                <a class=\"item-card\" href=\"#\">\n                    <div class=\"item-left\">\n                        <img class=\"item-thumb\" src=\"${item.thumb}\" alt=\"${item.title}\">\n                        <div class=\"item-text\">\n                            <div class=\"item-title\">${item.title}</div>\n                            <div class=\"item-meta\">\n                                <span>${item.client}</span>\n                                <span class=\"item-tag\">${item.type}</span>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"item-date\">${item.date}</div>\n                </a>\n            `).join('');\n        }\n\n        document.addEventListener('DOMContentLoaded', function () {\n            const sections = [\n                { id: 'commercial', countId: 'count-commercial', data: worksData.commercial },\n                { id: 'saas',       countId: 'count-saas',       data: worksData.saas },\n                { id: 'social',     countId: 'count-social',     data: worksData.social },\n                { id: 'motion',     countId: 'count-motion',     data: worksData.motion }\n            ];\n\n            sections.forEach((section, index) => {\n                setTimeout(() => {\n                    const container = document.getElementById(section.id);\n                    const counter   = document.getElementById(section.countId);\n                    if (container) {\n                        container.innerHTML = renderSection(section.data);\n                    }\n                    if (counter) {\n                        counter.textContent = section.data.length + ' projects';\n                    }\n                }, (index + 1) * 100);\n            });\n        });\n    </script>\n\n</body>\n</html>\n"}}
+</tool_call>
+<tool_response>
+{"success": true, "path": "works.html", "message": "File written successfully"}
+</tool_response>
+
+فایل کامل نوشته شد. اینجا کد کامله:
+
+```html
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آثار - امیرحسین اسلامی</title>
+    <title>Works — Shab Visuals</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #8b6914;
+            --background-color: #fafaf8;
+            --section-bg: #f5f5f0;
+            --border-color: #e0e0d8;
+            --text-color: #2a2a2a;
+            --link-color: #6b5210;
+            --font-serif: 'Crimson Text', 'Georgia', serif;
+            --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,153 +36,231 @@
         }
 
         body {
-            font-family: 'Vazirmatn', sans-serif;
-            background: #000;
-            color: #fff;
+            font-family: var(--font-sans);
+            background-color: var(--background-color);
+            color: var(--text-color);
             line-height: 1.6;
         }
 
-        /* Header - Same as index */
+        /* Header */
         header {
-            position: fixed;
+            background-color: var(--primary-color);
+            padding: 20px 40px;
+            position: sticky;
             top: 0;
-            width: 100%;
-            padding: 1.5rem 2rem;
+            z-index: 100;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .logo {
+        .site-title {
+            color: #ffffff;
+            font-family: var(--font-serif);
             font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-decoration: none;
         }
 
         nav ul {
-            display: flex;
-            gap: 2rem;
             list-style: none;
+            display: flex;
+            gap: 30px;
         }
 
-        nav a {
-            color: #fff;
+        nav ul li a {
+            color: #cccccc;
             text-decoration: none;
-            font-weight: 400;
-            transition: opacity 0.3s;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: color 0.2s;
         }
 
-        nav a:hover {
-            opacity: 0.6;
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: var(--accent-color);
         }
 
-        /* Works Container */
-        .works-container {
+        /* Main */
+        main {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 120px 2rem 4rem;
+            padding: 40px 40px;
         }
 
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 4rem;
-            letter-spacing: -1px;
+        /* Content sections */
+        .content-section {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        /* Work Item */
-        .work-item {
-            margin-bottom: 6rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s ease forwards;
+        .content-section:last-child {
+            border-bottom: none;
         }
 
-        .work-item:nth-child(1) { animation-delay: 0.1s; }
-        .work-item:nth-child(2) { animation-delay: 0.2s; }
-        .work-item:nth-child(3) { animation-delay: 0.3s; }
-        .work-item:nth-child(4) { animation-delay: 0.4s; }
-        .work-item:nth-child(5) { animation-delay: 0.5s; }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
         }
 
-        .work-media {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #111;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--primary-color);
         }
 
-        .work-media:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+        .section-count {
+            font-size: 0.8rem;
+            color: #888;
+            letter-spacing: 0.05em;
         }
 
-        .work-media img,
-        .work-media video {
-            width: 100%;
-            height: 100%;
+        /* Item cards — exact aristidebenoist list style */
+        .items-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .item-card {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: start;
+            transition: background-color 0.2s, padding-left 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .item-card:last-child {
+            border-bottom: none;
+        }
+
+        .item-card:hover {
+            background-color: rgba(139, 105, 20, 0.03);
+            padding-left: 8px;
+        }
+
+        .item-left {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .item-thumb {
+            width: 80px;
+            height: 55px;
             object-fit: cover;
-            display: block;
+            border-radius: 2px;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
         }
 
-        .work-title {
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
+        .item-card:hover .item-thumb {
+            opacity: 1;
         }
 
-        .work-description {
-            font-size: 1rem;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.8;
+        .item-text {
+            flex: 1;
+        }
+
+        .item-title {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .item-meta {
+            font-size: 0.8rem;
+            color: #888;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .item-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .item-meta span::before {
+            content: '';
+            display: inline-block;
+            width: 3px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .item-meta span:first-child::before {
+            display: none;
+        }
+
+        .item-date {
+            font-size: 0.8rem;
+            color: #aaa;
+            white-space: nowrap;
+            font-style: italic;
+        }
+
+        .item-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background-color: rgba(139, 105, 20, 0.1);
+            color: var(--link-color);
+            font-size: 0.7rem;
+            border-radius: 2px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             header {
-                padding: 1rem;
+                padding: 15px 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
             }
 
             nav ul {
-                gap: 1rem;
-                font-size: 0.9rem;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
-            .works-container {
-                padding: 100px 1.5rem 2rem;
+            main {
+                padding: 30px 20px;
             }
 
-            .page-title {
-                font-size: 2rem;
-                margin-bottom: 2rem;
+            .item-card {
+                grid-template-columns: 1fr;
             }
 
-            .work-item {
-                margin-bottom: 4rem;
-            }
-
-            .work-title {
-                font-size: 1.2rem;
-            }
-
-            .work-description {
-                font-size: 0.9rem;
+            .item-thumb {
+                display: none;
             }
         }
     </style>
@@ -169,126 +268,210 @@
 <body>
 
     <header>
-        <div class="logo">امیرحسین اسلامی</div>
-        <nav>
-            <ul>
-                <li><a href="index.html">خانه</a></li>
-                <li><a href="#about">درباره</a></li>
-                <li><a href="#services">خدمات</a></li>
-                <li><a href="works.html">آثار</a></li>
-                <li><a href="#contact">تماس</a></li>
-            </ul>
-        </nav>
+        <div class="header-content">
+            <a href="index.html" class="site-title">Shab Visuals</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="works.html" class="active">Works</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Get in Touch</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <div class="works-container">
-        <h1 class="page-title">آثار</h1>
+    <main>
 
-        <div class="work-item">
-            <div class="work-media">
-                <img src="project1.jpg" alt="پروژه ۱">
+        <!-- Commercial & Promo -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Commercial &amp; Promo</h2>
+                <span class="section-count" id="count-commercial"></span>
             </div>
-            <h2 class="work-title">عنوان پروژه اول</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه اول. این یک موشن گرافیک برای برند تجاری بود.</p>
-        </div>
+            <div class="items-grid" id="commercial">Loading...</div>
+        </section>
 
-        <div class="work-item">
-            <div class="work-media">
-                <video src="project2.mp4" controls></video>
+        <!-- SaaS & Product -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">SaaS &amp; Product</h2>
+                <span class="section-count" id="count-saas"></span>
             </div>
-            <h2 class="work-title">عنوان پروژه دوم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه دوم. یک تیزر تبلیغاتی با مدت زمان ۳۰ثانیه.</p>
-        </div>
+            <div class="items-grid" id="saas">Loading...</div>
+        </section>
 
-        <div class="work-item">
-            <div class="work-media">
-                <img src="project3.jpg" alt="پروژه ۳">
+        <!-- Social Media -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Social Media</h2>
+                <span class="section-count" id="count-social"></span>
             </div>
-            <h2 class="work-title">عنوان پروژه سوم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه سوم.</p>
-        </div>
+            <div class="items-grid" id="social">Loading...</div>
+        </section>
 
-        <div class="work-item">
-            <div class="work-media">
-                <video src="project4.mp4" controls></video>
+        <!-- Motion Graphics -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Motion Graphics</h2>
+                <span class="section-count" id="count-motion"></span>
             </div>
-            <h2 class="work-title">عنوان پروژه چهارم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه چهارم.</p>
-        </div>
+            <div class="items-grid" id="motion">Loading...</div>
+        </section>
 
-        <div class="work-item">
-            <div class="work-media">
-                <img src="project5.jpg" alt="پروژه ۵">
-            </div>
-            <h2 class="work-title">عنوان پروژه پنجم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه پنجم.</p>
-        </div>
+    </main>
 
-        <div class="work-item">
-            <div class="work-media">
-                <img src="project6.jpg" alt="پروژه ۶">
-            </div>
-            <h2 class="work-title">عنوان پروژه ششم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه ششم.</p>
-        </div>
+    <script>
+        const worksData = {
+            commercial: [
+                {
+                    title: "Nike — Air Max Campaign",
+                    client: "Nike",
+                    date: "2025",
+                    type: "Commercial",
+                    thumb: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Audi — Electric Future",
+                    client: "Audi",
+                    date: "2025",
+                    type: "Promo",
+                    thumb: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Zara — Summer Collection",
+                    client: "Zara",
+                    date: "2024",
+                    type: "Commercial",
+                    thumb: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Apple — Developer Event Opener",
+                    client: "Apple",
+                    date: "2024",
+                    type: "Promo",
+                    thumb: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=160&h=110&fit=crop"
+                }
+            ],
+            saas: [
+                {
+                    title: "Notion — Product Walkthrough",
+                    client: "Notion",
+                    date: "2025",
+                    type: "Product Video",
+                    thumb: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Linear — Feature Launch",
+                    client: "Linear",
+                    date: "2025",
+                    type: "SaaS",
+                    thumb: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Figma — Config 2024 Recap",
+                    client: "Figma",
+                    date: "2024",
+                    type: "Product Video",
+                    thumb: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Vercel — Platform Overview",
+                                        client: "Vercel",
+                    date: "2024",
+                    type: "SaaS",
+                    thumb: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=160&h=110&fit=crop"
+                }
+            ],
+            social: [
+                {
+                    title: "Gymshark — Instagram Series",
+                    client: "Gymshark",
+                    date: "2025",
+                    type: "Instagram",
+                    thumb: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Red Bull — TikTok Campaign",
+                    client: "Red Bull",
+                    date: "2025",
+                    type: "TikTok",
+                    thumb: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Spotify — Stories Content Pack",
+                    client: "Spotify",
+                    date: "2024",
+                    type: "Stories",
+                    thumb: "https://images.unsplash.com/photo-1611339555312-e607c8352fd7?w=160&h=110&fit=crop"
+                }
+            ],
+            motion: [
+                {
+                    title: "Stripe — Annual Report Animation",
+                    client: "Stripe",
+                    date: "2025",
+                    type: "Motion Graphics",
+                    thumb: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Bloomberg — Data Visualization",
+                    client: "Bloomberg",
+                    date: "2024",
+                    type: "Animation",
+                    thumb: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=160&h=110&fit=crop"
+                },
+                {
+                    title: "Google — I/O Intro Sequence",
+                    client: "Google",
+                    date: "2024",
+                    type: "Motion Graphics",
+                    thumb: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=160&h=110&fit=crop"
+                }
+            ]
+        };
 
-        <div class="work-item">
-            <div class="work-media">
-                <video src="project7.mp4" controls></video>
-            </div>
-            <h2 class="work-title">عنوان پروژه هفتم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه هفتم.</p>
-        </div>
+        function renderSection(data) {
+            return data.map(item => `
+                <a class="item-card" href="#">
+                    <div class="item-left">
+                        <img class="item-thumb" src="${item.thumb}" alt="${item.title}">
+                        <div class="item-text">
+                            <div class="item-title">${item.title}</div>
+                            <div class="item-meta">
+                                <span>${item.client}</span>
+                                <span class="item-tag">${item.type}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-date">${item.date}</div>
+                </a>
+            `).join('');
+        }
 
-        <div class="work-item">
-            <div class="work-media">
-                <img src="project8.jpg" alt="پروژه ۸">
-            </div>
-            <h2 class="work-title">عنوان پروژه هشتم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه هشتم.</p>
-        </div>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = [
+                { id: 'commercial', countId: 'count-commercial', data: worksData.commercial },
+                { id: 'saas',       countId: 'count-saas',       data: worksData.saas },
+                { id: 'social',     countId: 'count-social',     data: worksData.social },
+                { id: 'motion',     countId: 'count-motion',     data: worksData.motion }
+            ];
 
-        <div class="work-item">
-            <div class="work-media">
-                <video src="project9.mp4" controls></video>
-            </div>
-            <h2 class="work-title">عنوان پروژه نهم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه نهم.</p>
-        </div>
-
-        <div class="work-item">
-            <div class="work-media">
-                <img src="project10.jpg" alt="پروژه ۱۰">
-            </div>
-            <h2 class="work-title">عنوان پروژه دهم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه دهم.</p>
-        </div>
-
-        <div class="work-item">
-            <div class="work-media">
-                <video src="project11.mp4" controls></video>
-            </div>
-            <h2 class="work-title">عنوان پروژه یازدهم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه یازدهم.</p>
-        </div>
-
-        <div class="work-item">
-            <div class="work-media">
-                <img src="project12.jpg" alt="پروژه ۱۲">
-            </div>
-            <h2 class="work-title">عنوان پروژه دوازدهم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه دوازدهم.</p>
-        </div>
-
-        <div class="work-item">
-            <div class="work-media">
-                <video src="project13.mp4" controls></video>
-            </div>
-            <h2 class="work-title">عنوان پروژه سیزدهم</h2>
-            <p class="work-description">توضیح کوتاه درباره پروژه سیزدهم.</p>
-        </div>
-
-    </div>
+            sections.forEach((section, index) => {
+                setTimeout(() => {
+                    const container = document.getElementById(section.id);
+                    const counter   = document.getElementById(section.countId);
+                    if (container) {
+                        container.innerHTML = renderSection(section.data);
+                    }
+                    if (counter) {
+                        counter.textContent = section.data.length + ' projects';
+                    }
+                }, (index + 1) * 100);
+            });
+        });
+    </script>
 
 </body>
 </html>
