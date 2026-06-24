@@ -29,7 +29,7 @@
       --muted:rgba(243,241,234,.58);
       --line:rgba(243,241,234,.12);
       --ease:cubic-bezier(.16,1,.3,1);
-      --card-w:clamp(74px, 5vw, 92px);
+      --card-w:clamp(74px,px5vw, 92px);
       --card-h:clamp(128px, 16vw, 188px);
       --gap:10px;
       --rail-y:50vh;
@@ -100,276 +100,232 @@
 
     .navbar{
       position:fixed;
-      top:0; left:0; right:0;
-      padding:2rem 4rem;
+      top:0;
+      left:0;
+      right:0;
       z-index:1000;
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
+      padding:2rem 4rem;
       pointer-events:none;
     }
 
     .navbar-logo{
-      display:inline-flex;
+      position:relative;
+      display:flex;
       flex-direction:column;
-      align-items:center;
-      cursor:pointer;
-      text-decoration:none;
+      align-items:flex-start;
+      gap:.25rem;
       pointer-events:auto;
+      text-transform:lowercase;
     }
 
     .nav-shab-wrap{
       position:relative;
       display:inline-block;
-      line-height:1;
+      width:max-content;
     }
 
     .nav-shab{
-      font-family:'LOT', sans-serif;
-      font-size:2.8rem;
-      font-weight:600;
-      letter-spacing:0.02em;
-      line-height:1;
+      position:relative;
       display:block;
-      background:linear-gradient(90deg, #555, #fff);
+      font-family:"LOT","Agrandir",sans-serif;
+      font-size:2.8rem;
+      line-height:.82;
+      letter-spacing:.01em;
+      background:linear-gradient(180deg, rgba(245,245,245,.98) 0%, rgba(173,173,173,.82) 100%);
       -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
       background-clip:text;
-      user-select:none;
+      color:transparent;
+      white-space:nowrap;
     }
 
     .nav-line{
       position:absolute;
+      bottom:-.18em;
       height:1px;
-      background:linear-gradient(90deg, #5170ff, #ff66c4);
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(245,242,234,.9), rgba(255,255,255,0));
+      opacity:.9;
       pointer-events:none;
     }
 
     .nav-visuals{
-      font-family:'Agrandir', sans-serif;
+      display:block;
+      padding-left:2px;
+      font-family:"Agrandir",sans-serif;
       font-size:1.1rem;
       font-weight:100;
-      letter-spacing:0.18em;
-      background:linear-gradient(90deg, #5170ff, #ff66c4);
+      line-height:1;
+      letter-spacing:.18em;
+      text-transform:lowercase;
+      background:linear-gradient(90deg, #8fc8ff 0%, #f2a6d5 100%);
       -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
       background-clip:text;
-      margin-top:1px;
-      display:block;
-      user-select:none;
+      color:transparent;
+      white-space:nowrap;
     }
 
     .nav-right{
       display:flex;
       align-items:center;
-      gap:0.25rem;
+      gap:1.75rem;
       pointer-events:auto;
     }
 
-    .nav-item-wrap{
+    .nav-item{
       position:relative;
       display:flex;
       align-items:center;
-      cursor:pointer;
-      overflow:visible;
+    }
+
+    .nav-link{
+      display:inline-flex;
+      align-items:center;
+      gap:.7rem;
+      padding:0;
+      border:0;
+      background:transparent;
+      color:rgba(243,241,234,.54);
+      font-size:.72rem;
+      line-height:1;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      cursor:none;
+      transition:color .28s var(--ease);
+    }
+
+    .nav-link-button{
+      appearance:none;
+    }
+
+    .nav-bullet,
+    .nav-cta-bullet{
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      flex:0 0 5px;
+      transform:scale(.25);
+      opacity:0;
+      transition:
+        transform .28s var(--ease),
+        opacity .28s var(--ease);
     }
 
     .nav-bullet{
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      background:#fff;
-      flex-shrink:0;
-      transform:translateY(-18px);
-      opacity:0;
-      max-width:0;
-      margin-right:0;
-      transition:
-        transform    0.4s cubic-bezier(0.4, 2.6, 0.55, 0.9),
-        opacity      0.15s ease,
-        max-width    0.22s ease,
-        margin-right 0.22s ease;
-    }
-
-    .nav-item-wrap:hover .nav-bullet{
-      transform:translateY(0);
-      opacity:1;
-      max-width:14px;
-      margin-right:6px;
-    }
-
-    .nav-item{
-      padding:0.5rem 0.75rem;
-      font-size:0.85rem;
-      letter-spacing:0.06em;
-      color:rgba(255,255,255,0.6);
-      text-decoration:none;
-      text-transform:lowercase;
-      white-space:nowrap;
-      display:inline-block;
-      transition:
-        color     0.2s ease,
-        transform 0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9);
-    }
-
-    .nav-item-wrap:hover .nav-item{
-      color:#fff;
-      transform:translateY(4px);
-    }
-
-    .nav-services-wrap{
-      position:relative;
-      display:flex;
-      align-items:center;
-      cursor:pointer;
-      overflow:visible;
-    }
-
-    .nav-cta-wrap{
-      position:relative;
-      display:flex;
-      align-items:center;
-      margin-left:0.5rem;
-      overflow:visible;
-      cursor:pointer;
+      background:#f3f1ea;
     }
 
     .nav-cta-bullet{
-      width:7px;
-      height:7px;
-      border-radius:50%;
-      background:linear-gradient(135deg, #5170ff, #ff66c4);
-      flex-shrink:0;
-      transform:translateY(-18px);
-      opacity:0;
-      max-width:0;
-      margin-right:0;
-      transition:
-        transform    0.4s cubic-bezier(0.4, 2.6, 0.55, 0.9),
-        opacity      0.15s ease,
-        max-width    0.22s ease,
-        margin-right 0.22s ease;
+      background:linear-gradient(135deg, #8fc8ff 0%, #f2a6d5 100%);
     }
 
-    .nav-cta-wrap:hover .nav-cta-bullet{
-      transform:translateY(0);
-      opacity:1;
-      max-width:14px;
-      margin-right:6px;
-    }
-
-    .nav-cta{
-      padding:0.5rem 1.2rem;
-      font-size:0.85rem;
-      letter-spacing:0.06em;
-      color:rgba(255,255,255,0.75);
-      border:1px solid rgba(255,255,255,0.3);
-      border-radius:2rem;
-      text-decoration:none;
-      text-transform:lowercase;
-      white-space:nowrap;
+    .nav-label{
       display:inline-block;
       transition:
-        color         0.2s ease,
-        border-color  0.2s ease,
-        background    0.2s ease,
-        padding-left  0.35s cubic-bezier(0.4, 2.4, 0.55, 0.9),
-        padding-right 0.35s cubic-bezier(0.4, 2.4, 0.55, 0.9);
+        color .28s var(--ease),
+        transform .28s var(--ease);
     }
 
-    .nav-cta-wrap:hover .nav-cta{
+    .nav-link:hover,
+    .nav-link.active,
+    .nav-item:hover > .nav-link{
       color:#fff;
-      border-color:rgba(255,255,255,0.7);
-      background:rgba(255,255,255,0.05);
-      padding-left:2rem;
-      padding-right:2rem;
     }
 
-    .services-dropdown{
-      position:absolute;
-      top:100%;
-      left:50%;
-      transform:translateX(-50%) translateY(-6px);
-      padding-top:1rem;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.25s ease, transform 0.25s ease;
-      z-index:999;
-    }
-
-    .dropdown-inner{
-      background:rgba(10,10,10,0.95);
-      backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:12px;
-      padding:0.5rem;
-      min-width:240px;
-      position:relative;
-    }
-
-    .nav-services-wrap:hover .services-dropdown{
-      opacity:1;
-      pointer-events:all;
-      transform:translateX(-50%) translateY(0);
-    }
-
-    .dropdown-inner::before{
-      content:'';
-      position:absolute;
-      top:-5px;
-      left:50%;
-      transform:translateX(-50%) rotate(45deg);
-      width:9px;
-      height:9px;
-      background:rgba(10,10,10,0.95);
-      border-left:1px solid rgba(255,255,255,0.08);
-      border-top:1px solid rgba(255,255,255,0.08);
-    }
-
-    .dropdown-item{
-      display:flex;
-      align-items:center;
-      gap:0.75rem;
-      padding:0.75rem 1rem;
-      border-radius:8px;
-      cursor:pointer;
-      text-decoration:none;
-      color:rgba(255,255,255,0.6);
-      font-size:0.82rem;
-      letter-spacing:0.04em;
-      transition:color 0.2s ease, background 0.2s ease;
-    }
-
-    .dropdown-item:hover{
-      color:#fff;
-      background:rgba(255,255,255,0.04);
-    }
-
-    .dropdown-dot{
-      width:6px;
-      height:6px;
-      border-radius:50%;
-      background:linear-gradient(135deg, #5170ff, #ff66c4);
-      flex-shrink:0;
-      opacity:0;
-      transform:scale(0.4);
-      transition:opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    .dropdown-item:hover .dropdown-dot{
+    .nav-link:hover .nav-bullet,
+    .nav-link.active .nav-bullet,
+    .nav-item:hover > .nav-link .nav-bullet,
+    .nav-link:hover .nav-cta-bullet,
+    .nav-item:hover > .nav-link .nav-cta-bullet{
       opacity:1;
       transform:scale(1);
     }
 
-    .dropdown-label{
-      flex:1;
+    .nav-link:hover .nav-label,
+    .nav-link.active .nav-label,
+    .nav-item:hover > .nav-link .nav-label{
+      color:#fff;
+      transform:translateY(4px);
     }
 
-    .dropdown-divider{
-      height:1px;
-      background:rgba(255,255,255,0.06);
-      margin:0.25rem 1rem;
+    .nav-cta{
+      padding:.95rem 1.1rem;
+      border:1px solid rgba(243,241,234,.18);
+      border-radius:999px;
+      transition:
+        color .28s var(--ease),
+        border-color .28s var(--ease),
+        background-color .28s var(--ease),
+        padding .28s var(--ease);
+    }
+
+    .nav-cta:hover,
+    .nav-item:hover > .nav-cta{
+      padding:.95rem 1.35rem;
+      border-color:rgba(243,241,234,.34);
+      background:rgba(255,255,255,.05);
+    }
+
+    .services-dropdown{
+      position:absolute;
+      top:calc(100% + 18px);
+      right:0;
+      width:286px;
+      padding:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(10,10,10,.95);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      opacity:0;
+      transform:translateY(8px);
+      pointer-events:none;
+      transition:
+        opacity .28s var(--ease),
+        transform .28s var(--ease);
+    }
+
+    .nav-item.has-dropdown:hover .services-dropdown,
+    .nav-item.has-dropdown:focus-within .services-dropdown{
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
+    }
+
+    .services-dropdown a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:13px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      color:rgba(243,241,234,.66);
+      font-size:12px;
+      line-height:1.25;
+      letter-spacing:.04em;
+      transition:
+        color .24s var(--ease),
+        padding-left .24s var(--ease);
+    }
+
+    .services-dropdown a:last-child{
+      border-bottom:0;
+    }
+
+    .services-dropdown a::after{
+      content:"+";
+      color:rgba(243,241,234,.36);
+      transition:transform .24s var(--ease), color .24s var(--ease);
+    }
+
+    .services-dropdown a:hover{
+      color:#fff;
+      padding-left:16px;
+    }
+
+    .services-dropdown a:hover::after{
+      color:#fff;
+      transform:rotate(45deg);
     }
 
     .stage{
@@ -757,9 +713,21 @@
     }
 
     @media (max-width: 1024px){
-      .navbar{ padding:1.5rem 2rem; }
-      .nav-shab{ font-size:2.2rem; }
-      .nav-visuals{ font-size:1rem; }
+      .navbar{
+        padding:1.5rem 2rem;
+      }
+
+      .nav-shab{
+        font-size:2.2rem;
+      }
+
+      .nav-visuals{
+        font-size:1rem;
+      }
+
+      .nav-right{
+        gap:1.1rem;
+      }
     }
 
     @media (max-width: 768px){
@@ -783,8 +751,18 @@
         padding:1rem 1.5rem;
       }
 
-      .nav-shab{ font-size:1.9rem; }
-      .nav-right{ display:none; }
+      .nav-shab{
+        font-size:1.9rem;
+      }
+
+      .nav-visuals{
+        font-size:.95rem;
+        letter-spacing:.15em;
+      }
+
+      .nav-right{
+        display:none;
+      }
 
       .works-track{
         padding-left:22vw;
@@ -823,8 +801,14 @@
     }
 
     @media (max-width: 480px){
-      .nav-shab{ font-size:1.6rem; }
-      .nav-visuals{ font-size:.9rem; letter-spacing:.3em; }
+      .nav-shab{
+        font-size:1.6rem;
+      }
+
+      .nav-visuals{
+        font-size:.9rem;
+        letter-spacing:.12em;
+      }
     }
   </style>
 </head>
@@ -834,63 +818,51 @@
   <div class="cursor-follower" id="cursorFollower"></div>
 
   <header class="navbar">
-    <a href="#top" class="navbar-logo" aria-label="Shab Visuals — Home">
-      <div class="nav-shab-wrap" id="navShabWrap">
+    <a class="navbar-logo" href="#" aria-label="Shab Visuals">
+      <span class="nav-shab-wrap" id="navShabWrap">
         <span class="nav-shab" id="navShab">shab</span>
-        <div class="nav-line" id="navLineSh"></div>
-        <div class="nav-line" id="navLineAb"></div>
-      </div>
+        <span class="nav-line" id="navLineSh"></span>
+        <span class="nav-line" id="navLineAb"></span>
+      </span>
       <span class="nav-visuals">visuals</span>
     </a>
 
-    <div class="nav-right">
-      <div class="nav-item-wrap">
-        <span class="nav-bullet"></span>
-        <a class="nav-item" href="works.html">works</a>
+    <nav class="nav-right" aria-label="Primary navigation">
+      <div class="nav-item">
+        <a class="nav-link active" href="#">
+          <span class="nav-bullet"></span>
+          <span class="nav-label">works</span>
+        </a>
       </div>
 
-      <div class="nav-item-wrap nav-services-wrap">
-        <span class="nav-bullet"></span>
-        <span class="nav-item">services</span>
+      <div class="nav-item has-dropdown">
+        <button class="nav-link nav-link-button" type="button" aria-haspopup="true" aria-expanded="false">
+          <span class="nav-bullet"></span>
+          <span class="nav-label">services</span>
+        </button>
 
         <div class="services-dropdown">
-          <div class="dropdown-inner">
-            <a class="dropdown-item" href="#saas">
-              <span class="dropdown-dot"></span>
-              <span class="dropdown-label">SaaS & Product Videos</span>
-            </a>
-            <div class="dropdown-divider"></div>
-
-            <a class="dropdown-item" href="#commercial">
-              <span class="dropdown-dot"></span>
-              <span class="dropdown-label">Commercial & Promo Ads</span>
-            </a>
-            <div class="dropdown-divider"></div>
-
-            <a class="dropdown-item" href="#social">
-              <span class="dropdown-dot"></span>
-              <span class="dropdown-label">Social Media Content</span>
-            </a>
-            <div class="dropdown-divider"></div>
-
-            <a class="dropdown-item" href="#motion">
-              <span class="dropdown-dot"></span>
-              <span class="dropdown-label">Motion Graphics & Animation</span>
-            </a>
-          </div>
+          <a href="#">SaaS & Product Videos</a>
+          <a href="#">Commercial & Promo Ads</a>
+          <a href="#">Social Media Content</a>
+          <a href="#">Motion Graphics & Animation</a>
         </div>
       </div>
 
-      <div class="nav-item-wrap">
-        <span class="nav-bullet"></span>
-        <a class="nav-item" href="#about">about</a>
+      <div class="nav-item">
+        <a class="nav-link" href="#about">
+          <span class="nav-bullet"></span>
+          <span class="nav-label">about</span>
+        </a>
       </div>
 
-      <div class="nav-cta-wrap">
-        <span class="nav-cta-bullet"></span>
-        <a class="nav-cta" href="#contact">get in touch</a>
+      <div class="nav-item">
+        <a class="nav-link nav-cta" href="#contact">
+          <span class="nav-cta-bullet"></span>
+          <span class="nav-label">get in touch</span>
+        </a>
       </div>
-    </div>
+    </nav>
   </header>
 
   <main class="stage rail-guides" id="top">
@@ -1011,57 +983,6 @@
       }
     ];
 
-    function calcLines(shabEl, wrapEl, lineSh, lineAb, text) {
-      const fs = parseFloat(getComputedStyle(shabEl).fontSize);
-      const ff = getComputedStyle(shabEl).fontFamily;
-      const wrapW = wrapEl.offsetWidth;
-      const wrapH = wrapEl.offsetHeight;
-      if (wrapW === 0) return;
-
-      const cvs = document.createElement('canvas');
-      const ctx = cvs.getContext('2d');
-      ctx.font = `600 ${fs}px ${ff}`;
-
-      const mAll = ctx.measureText('shab');
-      const mSh = ctx.measureText('sh');
-      const mS = ctx.measureText('s');
-      const mSha = ctx.measureText('sha');
-      const mA = ctx.measureText('a');
-
-      const ratio = wrapW / mAll.width;
-      const shLeft = (mS.width * 0.25) * ratio;
-      const shWidth = (mSh.width * 1.05 - mS.width * 0.25) * ratio;
-      const abLeft = (mSha.width - mA.width * 0.5) * ratio;
-      const abWidth = wrapW - abLeft;
-
-      const ascent = mAll.actualBoundingBoxAscent || fs * 0.75;
-      const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
-      const topPad = (wrapH - ascent - descent) / 2;
-
-      const isNav = lineSh.classList.contains('nav-line');
-      const shBottomOffset = isNav ? (descent + topPad - 8) : (descent + topPad - 15);
-      const abTopOffset = isNav ? Math.max(0, topPad - 4) : Math.max(0, topPad - 1);
-
-      lineSh.style.left = shLeft + 'px';
-      lineSh.style.width = shWidth + 'px';
-      lineSh.style.bottom = shBottomOffset + 'px';
-      lineSh.style.top = 'auto';
-
-      lineAb.style.left = abLeft + 'px';
-      lineAb.style.width = abWidth + 'px';
-      lineAb.style.top = abTopOffset + 'px';
-      lineAb.style.bottom = 'auto';
-
-      const typed = text || '';
-      lineSh.style.opacity = typed.length >= 2 ? '1' : '0';
-      lineAb.style.opacity = typed.length >= 4 ? '1' : '0';
-    }
-
-    const heroShab = document.getElementById('navShab');
-    const heroWrap = document.getElementById('navShabWrap');
-    const heroLineSh = document.getElementById('navLineSh');
-    const heroLineAb = document.getElementById('navLineAb');
-
     const track = document.getElementById("worksTrack");
     const items = [];
     const projectOverlay = document.getElementById("projectOverlay");
@@ -1077,6 +998,10 @@
     const closeBtn = document.getElementById("closeBtn");
     const cursor = document.getElementById("cursor");
     const cursorFollower = document.getElementById("cursorFollower");
+    const navShab = document.getElementById("navShab");
+    const navShabWrap = document.getElementById("navShabWrap");
+    const navLineSh = document.getElementById("navLineSh");
+    const navLineAb = document.getElementById("navLineAb");
 
     let scrollTarget = 0;
     let scrollCurrent = 0;
@@ -1088,8 +1013,32 @@
     let fx = mx;
     let fy = my;
 
+    function calcLines(shabEl, wrapEl, lineSh, lineAb, text) {
+      if (!shabEl || !wrapEl || !lineSh || !lineAb) return;
+
+      const style = getComputedStyle(shabEl);
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      if (!ctx) return;
+
+      ctx.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+
+      const totalWidth = ctx.measureText(text).width;
+      const shWidth = ctx.measureText("sh").width;
+      const abWidth = ctx.measureText("ab").width;
+
+      wrapEl.style.width = `${totalWidth}px`;
+
+      lineSh.style.left = "0px";
+      lineSh.style.width = `${shWidth}px`;
+
+      lineAb.style.left = `${totalWidth - abWidth}px`;
+      lineAb.style.width = `${abWidth}px`;
+    }
+
     function updateNavLines() {
-      calcLines(heroShab, heroWrap, heroLineSh, heroLineAb, 'shab');
+      calcLines(navShab, navShabWrap, navLineSh, navLineAb, "shab");
     }
 
     function setMediaBackground(el, project) {
@@ -1177,4 +1126,146 @@
       projectDesc.textContent = project.desc;
 
       setMediaBackground(projectImage, project);
-      setMediaBackground(neighborLeftMedia, leftPro
+      setMediaBackground(neighborLeftMedia, leftProject);
+      setMediaBackground(neighborRightMedia, rightProject);
+
+      if (project.video) {
+        projectVideo.src = project.video;
+        projectCard.classList.add("video-playing");
+
+        const playPromise = projectVideo.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {});
+        }
+      }
+
+      neighborLeft.classList.add("show");
+      neighborRight.classList.add("show");
+      projectOverlay.classList.add("show");
+      projectCard.classList.add("show");
+      closeBtn.classList.add("show");
+
+      items.forEach((item, i) => {
+        item.classList.remove("active", "ghost", "faded");
+
+        if (i === index) {
+          item.classList.add("active");
+        } else if (i === index - 1 || i === index + 1) {
+          item.classList.add("ghost");
+        } else {
+          item.classList.add("faded");
+        }
+      });
+    }
+
+    function closeProject() {
+      openIndex = -1;
+
+      stopAllVideos();
+
+      projectOverlay.classList.remove("show");
+      projectCard.classList.remove("show");
+      closeBtn.classList.remove("show");
+      neighborLeft.classList.remove("show");
+      neighborRight.classList.remove("show");
+
+      items.forEach((item) => {
+        item.classList.remove("active", "ghost", "faded", "video-playing");
+      });
+    }
+
+    closeBtn.addEventListener("click", closeProject);
+
+    window.addEventListener("wheel", (e) => {
+      if (openIndex !== -1) {
+        closeProject();
+      }
+
+      scrollTarget += e.deltaY * 0.9;
+      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
+      bumpEnergy = Math.min(1, bumpEnergy + Math.abs(e.deltaY) * 0.006);
+    }, { passive: true });
+
+    window.addEventListener("mousemove", (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+
+      cursor.style.left = mx + "px";
+      cursor.style.top = my + "px";
+    });
+
+    window.addEventListener("resize", () => {
+      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
+      updateNavLines();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && openIndex !== -1) {
+        closeProject();
+      }
+    });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(updateNavLines);
+    } else {
+      window.addEventListener("load", updateNavLines);
+    }
+
+    function animateTrack() {
+      scrollCurrent += (scrollTarget - scrollCurrent) * 0.085;
+      bumpEnergy *= 0.9;
+
+      const baseOffset = getBaseOffset();
+      const trackX = baseOffset - scrollCurrent;
+
+      track.style.transform = `translate3d(${trackX}px, -50%, 0)`;
+
+      const bumpCenter = window.innerWidth * 0.5;
+      const bumpRadius = 135;
+      const bumpHeight = 32 * bumpEnergy;
+
+      items.forEach((item, index) => {
+        const rect = item.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const dist = center - bumpCenter;
+        const closeness = Math.max(0, 1 - Math.abs(dist) / bumpRadius);
+        const hill = Math.pow(closeness, 2.25);
+
+        let finalScale = 1 + hill * 0.035 * bumpEnergy;
+        let finalY = -bumpHeight * hill;
+        let finalRotate = (dist / bumpRadius) * -3.2 * hill * bumpEnergy;
+
+        if (openIndex === index) {
+          finalScale = 2.25;
+          finalY = -18;
+          finalRotate = 0;
+          item.style.zIndex = 30;
+        } else if (openIndex !== -1 && (index === openIndex - 1 || index === openIndex + 1)) {
+          finalScale = 1.6;
+          finalY = -8;
+          finalRotate *= 0.2;
+          item.style.zIndex = 8;
+        } else if (openIndex !== -1) {
+          finalScale = 0.94;
+          item.style.zIndex = 2;
+        } else {
+          item.style.zIndex = "";
+        }
+
+        item.style.transform = `translate3d(0, ${finalY}px, 0) rotate(${finalRotate}deg) scale(${finalScale})`;
+      });
+
+      fx += (mx - fx) * 0.12;
+      fy += (my - fy) * 0.12;
+
+      cursorFollower.style.left = fx + "px";
+      cursorFollower.style.top = fy + "px";
+
+      requestAnimationFrame(animateTrack);
+    }
+
+    updateNavLines();
+    animateTrack();
+  </script>
+</body>
+</html>
