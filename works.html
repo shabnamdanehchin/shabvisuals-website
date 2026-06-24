@@ -100,180 +100,276 @@
 
     .navbar{
       position:fixed;
-      inset:0 0 auto 0;
-      z-index:120;
+      top:0; left:0; right:0;
+      padding:2rem 4rem;
+      z-index:1000;
       display:flex;
-      align-items:flex-start;
+      align-items:center;
       justify-content:space-between;
-      padding:28px 38px;
       pointer-events:none;
     }
 
-    .brand{
-      position:relative;
+    .navbar-logo{
       display:inline-flex;
       flex-direction:column;
-      gap:3px;
+      align-items:center;
+      cursor:pointer;
+      text-decoration:none;
       pointer-events:auto;
-      text-transform:lowercase;
     }
 
-    .brand-shab{
+    .nav-shab-wrap{
       position:relative;
-      font-family:"LOT", "Agrandir", sans-serif;
-      font-size:24px;
-      line-height:.82;
-      letter-spacing:.01em;
-      color:#f5f2ea;
+      display:inline-block;
+      line-height:1;
     }
 
-    .brand-visuals{
-      font-family:"Agrandir", sans-serif;
-      font-size:10px;
+    .nav-shab{
+      font-family:'LOT', sans-serif;
+      font-size:2.8rem;
+      font-weight:600;
+      letter-spacing:0.02em;
       line-height:1;
-      letter-spacing:.42em;
-      text-transform:uppercase;
-      color:rgba(245,242,234,.62);
-      padding-left:2px;
+      display:block;
+      background:linear-gradient(90deg, #555, #fff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      user-select:none;
     }
 
     .nav-line{
       position:absolute;
-      left:0;
-      width:100%;
       height:1px;
-      background:linear-gradient(90deg, transparent, rgba(245,242,234,.74), transparent);
-      transform-origin:left center;
-      opacity:.72;
+      background:linear-gradient(90deg, #5170ff, #ff66c4);
+      pointer-events:none;
     }
 
-    .nav-line.top{
-      top:-8px;
+    .nav-visuals{
+      font-family:'Agrandir', sans-serif;
+      font-size:1.1rem;
+      font-weight:100;
+      letter-spacing:0.18em;
+      background:linear-gradient(90deg, #5170ff, #ff66c4);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      margin-top:1px;
+      display:block;
+      user-select:none;
     }
 
-    .nav-line.bottom{
-      bottom:-8px;
-    }
-
-    .nav-menu{
-      pointer-events:auto;
+    .nav-right{
       display:flex;
       align-items:center;
-      gap:28px;
-      margin:0;
-      padding:0;
-      list-style:none;
+      gap:0.25rem;
+      pointer-events:auto;
+    }
+
+    .nav-item-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+      cursor:pointer;
+      overflow:visible;
+    }
+
+    .nav-bullet{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#fff;
+      flex-shrink:0;
+      transform:translateY(-18px);
+      opacity:0;
+      max-width:0;
+      margin-right:0;
+      transition:
+        transform    0.4s cubic-bezier(0.4, 2.6, 0.55, 0.9),
+        opacity      0.15s ease,
+        max-width    0.22s ease,
+        margin-right 0.22s ease;
+    }
+
+    .nav-item-wrap:hover .nav-bullet{
+      transform:translateY(0);
+      opacity:1;
+      max-width:14px;
+      margin-right:6px;
     }
 
     .nav-item{
-      position:relative;
-    }
-
-    .nav-link,
-    .touch-link{
-      position:relative;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      border:0;
-      background:transparent;
-      color:rgba(243,241,234,.54);
-      font-size:11px;
-      line-height:1;
-      letter-spacing:.2em;
-      text-transform:uppercase;
-      padding:0;
-      cursor:none;
-      transition:color .25s var(--ease);
-    }
-
-    .nav-link::before,
-    .touch-link::before{
-      content:"";
-      width:5px;
-      height:5px;
-      border-radius:50%;
-      background:#f3f1ea;
-      transform:scale(.28);
-      opacity:.36;
+      padding:0.5rem 0.75rem;
+      font-size:0.85rem;
+      letter-spacing:0.06em;
+      color:rgba(255,255,255,0.6);
+      text-decoration:none;
+      text-transform:lowercase;
+      white-space:nowrap;
+      display:inline-block;
       transition:
-        transform .25s var(--ease),
-        opacity .25s var(--ease);
+        color     0.2s ease,
+        transform 0.38s cubic-bezier(0.4, 2.6, 0.55, 0.9);
     }
 
-    .nav-link:hover,
-    .nav-link.active,
-    .touch-link:hover,
-    .nav-item:hover .touch-link{
+    .nav-item-wrap:hover .nav-item{
       color:#fff;
+      transform:translateY(4px);
     }
 
-    .nav-link:hover::before,
-    .nav-link.active::before,
-    .touch-link:hover::before,
-    .nav-item:hover .touch-link::before{
+    .nav-services-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+      cursor:pointer;
+      overflow:visible;
+    }
+
+    .nav-cta-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+      margin-left:0.5rem;
+      overflow:visible;
+      cursor:pointer;
+    }
+
+    .nav-cta-bullet{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:linear-gradient(135deg, #5170ff, #ff66c4);
+      flex-shrink:0;
+      transform:translateY(-18px);
+      opacity:0;
+      max-width:0;
+      margin-right:0;
+      transition:
+        transform    0.4s cubic-bezier(0.4, 2.6, 0.55, 0.9),
+        opacity      0.15s ease,
+        max-width    0.22s ease,
+        margin-right 0.22s ease;
+    }
+
+    .nav-cta-wrap:hover .nav-cta-bullet{
+      transform:translateY(0);
       opacity:1;
-      transform:scale(1);
+      max-width:14px;
+      margin-right:6px;
+    }
+
+    .nav-cta{
+      padding:0.5rem 1.2rem;
+      font-size:0.85rem;
+      letter-spacing:0.06em;
+      color:rgba(255,255,255,0.75);
+      border:1px solid rgba(255,255,255,0.3);
+      border-radius:2rem;
+      text-decoration:none;
+      text-transform:lowercase;
+      white-space:nowrap;
+      display:inline-block;
+      transition:
+        color         0.2s ease,
+        border-color  0.2s ease,
+        background    0.2s ease,
+        padding-left  0.35s cubic-bezier(0.4, 2.4, 0.55, 0.9),
+        padding-right 0.35s cubic-bezier(0.4, 2.4, 0.55, 0.9);
+    }
+
+    .nav-cta-wrap:hover .nav-cta{
+      color:#fff;
+      border-color:rgba(255,255,255,0.7);
+      background:rgba(255,255,255,0.05);
+      padding-left:2rem;
+      padding-right:2rem;
     }
 
     .services-dropdown{
       position:absolute;
-      right:0;
-      top:calc(100% + 18px);
-      width:286px;
-      padding:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(8,8,8,.82);
-      backdrop-filter:blur(18px);
+      top:100%;
+      left:50%;
+      transform:translateX(-50%) translateY(-6px);
+      padding-top:1rem;
       opacity:0;
-      transform:translateY(8px);
       pointer-events:none;
-      transition:
-        opacity .28s var(--ease),
-        transform .28s var(--ease);
+      transition:opacity 0.25s ease, transform 0.25s ease;
+      z-index:999;
     }
 
-    .nav-item:hover .services-dropdown,
-    .nav-item:focus-within .services-dropdown{
+    .dropdown-inner{
+      background:rgba(10,10,10,0.95);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:12px;
+      padding:0.5rem;
+      min-width:240px;
+      position:relative;
+    }
+
+    .nav-services-wrap:hover .services-dropdown{
       opacity:1;
-      transform:translateY(0);
-      pointer-events:auto;
+      pointer-events:all;
+      transform:translateX(-50%) translateY(0);
     }
 
-    .services-dropdown a{
+    .dropdown-inner::before{
+      content:'';
+      position:absolute;
+      top:-5px;
+      left:50%;
+      transform:translateX(-50%) rotate(45deg);
+      width:9px;
+      height:9px;
+      background:rgba(10,10,10,0.95);
+      border-left:1px solid rgba(255,255,255,0.08);
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+
+    .dropdown-item{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:13px 10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      color:rgba(243,241,234,.66);
-      font-size:12px;
-      line-height:1.25;
-      letter-spacing:.04em;
-      transition:
-        color .24s var(--ease),
-        padding-left .24s var(--ease);
+      gap:0.75rem;
+      padding:0.75rem 1rem;
+      border-radius:8px;
+      cursor:pointer;
+      text-decoration:none;
+      color:rgba(255,255,255,0.6);
+      font-size:0.82rem;
+      letter-spacing:0.04em;
+      transition:color 0.2s ease, background 0.2s ease;
     }
 
-    .services-dropdown a:last-child{
-      border-bottom:0;
-    }
-
-    .services-dropdown a::after{
-      content:"+";
-      color:rgba(243,241,234,.36);
-      transition:transform .24s var(--ease), color .24s var(--ease);
-    }
-
-    .services-dropdown a:hover{
+    .dropdown-item:hover{
       color:#fff;
-      padding-left:16px;
+      background:rgba(255,255,255,0.04);
     }
 
-    .services-dropdown a:hover::after{
-      color:#fff;
-      transform:rotate(45deg);
+    .dropdown-dot{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:linear-gradient(135deg, #5170ff, #ff66c4);
+      flex-shrink:0;
+      opacity:0;
+      transform:scale(0.4);
+      transition:opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .dropdown-item:hover .dropdown-dot{
+      opacity:1;
+      transform:scale(1);
+    }
+
+    .dropdown-label{
+      flex:1;
+    }
+
+    .dropdown-divider{
+      height:1px;
+      background:rgba(255,255,255,0.06);
+      margin:0.25rem 1rem;
     }
 
     .stage{
@@ -660,6 +756,12 @@
       display:flex;
     }
 
+    @media (max-width: 1024px){
+      .navbar{ padding:1.5rem 2rem; }
+      .nav-shab{ font-size:2.2rem; }
+      .nav-visuals{ font-size:1rem; }
+    }
+
     @media (max-width: 768px){
       :root{
         --card-w:78px;
@@ -678,38 +780,11 @@
       }
 
       .navbar{
-        padding:22px 18px;
-        align-items:flex-start;
+        padding:1rem 1.5rem;
       }
 
-      .brand-shab{
-        font-size:22px;
-      }
-
-      .brand-visuals{
-        font-size:9px;
-        letter-spacing:.34em;
-      }
-
-      .nav-menu{
-        gap:15px;
-      }
-
-      .nav-link,
-      .touch-link{
-        font-size:9px;
-        letter-spacing:.14em;
-      }
-
-      .nav-menu .nav-item:nth-child(2),
-      .nav-menu .nav-item:nth-child(3){
-        display:none;
-      }
-
-      .services-dropdown{
-        right:0;
-        width:240px;
-      }
+      .nav-shab{ font-size:1.9rem; }
+      .nav-right{ display:none; }
 
       .works-track{
         padding-left:22vw;
@@ -746,6 +821,11 @@
         left:87%;
       }
     }
+
+    @media (max-width: 480px){
+      .nav-shab{ font-size:1.6rem; }
+      .nav-visuals{ font-size:.9rem; letter-spacing:.3em; }
+    }
   </style>
 </head>
 
@@ -754,40 +834,66 @@
   <div class="cursor-follower" id="cursorFollower"></div>
 
   <header class="navbar">
-    <a class="brand" href="#" aria-label="Shab Visuals">
-      <span class="brand-shab">
-        <span class="nav-line top"></span>
-        shab
-        <span class="nav-line bottom"></span>
-      </span>
-      <span class="brand-visuals">visuals</span>
+    <a href="#top" class="navbar-logo" aria-label="Shab Visuals — Home">
+      <div class="nav-shab-wrap" id="navShabWrap">
+        <span class="nav-shab" id="navShab">shab</span>
+        <div class="nav-line" id="navLineSh"></div>
+        <div class="nav-line" id="navLineAb"></div>
+      </div>
+      <span class="nav-visuals">visuals</span>
     </a>
 
-    <nav aria-label="Primary navigation">
-      <ul class="nav-menu">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">works</a>
-        </li>
+    <div class="nav-right">
+      <div class="nav-item-wrap">
+        <span class="nav-bullet"></span>
+        <a class="nav-item" href="works.html">works</a>
+      </div>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#">about</a>
-        </li>
+      <div class="nav-item-wrap nav-services-wrap">
+        <span class="nav-bullet"></span>
+        <span class="nav-item">services</span>
 
-        <li class="nav-item">
-          <button class="touch-link" type="button">get in touch</button>
+        <div class="services-dropdown">
+          <div class="dropdown-inner">
+            <a class="dropdown-item" href="#saas">
+              <span class="dropdown-dot"></span>
+              <span class="dropdown-label">SaaS & Product Videos</span>
+            </a>
+            <div class="dropdown-divider"></div>
 
-          <div class="services-dropdown">
-            <a href="#">SaaS & Product Videos</a>
-            <a href="#">Commercial & Promo Ads</a>
-            <a href="#">Social Media Content</a>
-            <a href="#">Motion Graphics & Animation</a>
+            <a class="dropdown-item" href="#commercial">
+              <span class="dropdown-dot"></span>
+              <span class="dropdown-label">Commercial & Promo Ads</span>
+            </a>
+            <div class="dropdown-divider"></div>
+
+            <a class="dropdown-item" href="#social">
+              <span class="dropdown-dot"></span>
+              <span class="dropdown-label">Social Media Content</span>
+            </a>
+            <div class="dropdown-divider"></div>
+
+            <a class="dropdown-item" href="#motion">
+              <span class="dropdown-dot"></span>
+              <span class="dropdown-label">Motion Graphics & Animation</span>
+            </a>
           </div>
-        </li>
-      </ul>
-    </nav>
+        </div>
+      </div>
+
+      <div class="nav-item-wrap">
+        <span class="nav-bullet"></span>
+        <a class="nav-item" href="#about">about</a>
+      </div>
+
+      <div class="nav-cta-wrap">
+        <span class="nav-cta-bullet"></span>
+        <a class="nav-cta" href="#contact">get in touch</a>
+      </div>
+    </div>
   </header>
 
-  <main class="stage rail-guides">
+  <main class="stage rail-guides" id="top">
     <div class="track-viewport">
       <div class="works-track" id="worksTrack"></div>
     </div>
@@ -905,6 +1011,57 @@
       }
     ];
 
+    function calcLines(shabEl, wrapEl, lineSh, lineAb, text) {
+      const fs = parseFloat(getComputedStyle(shabEl).fontSize);
+      const ff = getComputedStyle(shabEl).fontFamily;
+      const wrapW = wrapEl.offsetWidth;
+      const wrapH = wrapEl.offsetHeight;
+      if (wrapW === 0) return;
+
+      const cvs = document.createElement('canvas');
+      const ctx = cvs.getContext('2d');
+      ctx.font = `600 ${fs}px ${ff}`;
+
+      const mAll = ctx.measureText('shab');
+      const mSh = ctx.measureText('sh');
+      const mS = ctx.measureText('s');
+      const mSha = ctx.measureText('sha');
+      const mA = ctx.measureText('a');
+
+      const ratio = wrapW / mAll.width;
+      const shLeft = (mS.width * 0.25) * ratio;
+      const shWidth = (mSh.width * 1.05 - mS.width * 0.25) * ratio;
+      const abLeft = (mSha.width - mA.width * 0.5) * ratio;
+      const abWidth = wrapW - abLeft;
+
+      const ascent = mAll.actualBoundingBoxAscent || fs * 0.75;
+      const descent = mAll.actualBoundingBoxDescent || fs * 0.18;
+      const topPad = (wrapH - ascent - descent) / 2;
+
+      const isNav = lineSh.classList.contains('nav-line');
+      const shBottomOffset = isNav ? (descent + topPad - 8) : (descent + topPad - 15);
+      const abTopOffset = isNav ? Math.max(0, topPad - 4) : Math.max(0, topPad - 1);
+
+      lineSh.style.left = shLeft + 'px';
+      lineSh.style.width = shWidth + 'px';
+      lineSh.style.bottom = shBottomOffset + 'px';
+      lineSh.style.top = 'auto';
+
+      lineAb.style.left = abLeft + 'px';
+      lineAb.style.width = abWidth + 'px';
+      lineAb.style.top = abTopOffset + 'px';
+      lineAb.style.bottom = 'auto';
+
+      const typed = text || '';
+      lineSh.style.opacity = typed.length >= 2 ? '1' : '0';
+      lineAb.style.opacity = typed.length >= 4 ? '1' : '0';
+    }
+
+    const heroShab = document.getElementById('navShab');
+    const heroWrap = document.getElementById('navShabWrap');
+    const heroLineSh = document.getElementById('navLineSh');
+    const heroLineAb = document.getElementById('navLineAb');
+
     const track = document.getElementById("worksTrack");
     const items = [];
     const projectOverlay = document.getElementById("projectOverlay");
@@ -930,6 +1087,10 @@
     let my = innerHeight * 0.5;
     let fx = mx;
     let fy = my;
+
+    function updateNavLines() {
+      calcLines(heroShab, heroWrap, heroLineSh, heroLineAb, 'shab');
+    }
 
     function setMediaBackground(el, project) {
       if (project.image) {
@@ -1016,133 +1177,4 @@
       projectDesc.textContent = project.desc;
 
       setMediaBackground(projectImage, project);
-      setMediaBackground(neighborLeftMedia, leftProject);
-      setMediaBackground(neighborRightMedia, rightProject);
-
-      if (project.video) {
-        projectVideo.src = project.video;
-        projectCard.classList.add("video-playing");
-
-        const playPromise = projectVideo.play();
-
-        if (playPromise && typeof playPromise.catch === "function") {
-          playPromise.catch(() => {});
-        }
-      }
-
-      neighborLeft.classList.add("show");
-      neighborRight.classList.add("show");
-      projectOverlay.classList.add("show");
-      projectCard.classList.add("show");
-      closeBtn.classList.add("show");
-
-      items.forEach((item, i) => {
-        item.classList.remove("active", "ghost", "faded");
-
-        if (i === index) {
-          item.classList.add("active");
-        } else if (i === index - 1 || i === index + 1) {
-          item.classList.add("ghost");
-        } else {
-          item.classList.add("faded");
-        }
-      });
-    }
-
-    function closeProject() {
-      openIndex = -1;
-
-      stopAllVideos();
-
-      projectOverlay.classList.remove("show");
-      projectCard.classList.remove("show");
-      closeBtn.classList.remove("show");
-      neighborLeft.classList.remove("show");
-      neighborRight.classList.remove("show");
-
-      items.forEach((item) => {
-        item.classList.remove("active", "ghost", "faded", "video-playing");
-      });
-    }
-
-    closeBtn.addEventListener("click", closeProject);
-
-    window.addEventListener("wheel", (e) => {
-      if (openIndex !== -1) {
-        closeProject();
-      }
-
-      scrollTarget += e.deltaY * 0.9;
-      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
-      bumpEnergy = Math.min(1, bumpEnergy + Math.abs(e.deltaY) * 0.006);
-    }, { passive: true });
-
-    window.addEventListener("mousemove", (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-
-      cursor.style.left = mx + "px";
-      cursor.style.top = my + "px";
-    });
-
-    window.addEventListener("resize", () => {
-      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
-    });
-
-    function animateTrack() {
-      scrollCurrent += (scrollTarget - scrollCurrent) * 0.085;
-      bumpEnergy *= 0.9;
-
-      const baseOffset = getBaseOffset();
-      const trackX = baseOffset - scrollCurrent;
-
-      track.style.transform = `translate3d(${trackX}px, -50%, 0)`;
-
-      const bumpCenter = window.innerWidth * 0.5;
-      const bumpRadius = 135;
-      const bumpHeight = 32 * bumpEnergy;
-
-      items.forEach((item, index) => {
-        const rect = item.getBoundingClientRect();
-        const center = rect.left + rect.width / 2;
-        const dist = center - bumpCenter;
-        const closeness = Math.max(0, 1 - Math.abs(dist) / bumpRadius);
-        const hill = Math.pow(closeness, 2.25);
-
-        let finalScale = 1 + hill * 0.035 * bumpEnergy;
-        let finalY = -bumpHeight * hill;
-        let finalRotate = (dist / bumpRadius) * -3.2 * hill * bumpEnergy;
-
-        if (openIndex === index) {
-          finalScale = 2.25;
-          finalY = -18;
-          finalRotate = 0;
-          item.style.zIndex = 30;
-        } else if (openIndex !== -1 && (index === openIndex - 1 || index === openIndex + 1)) {
-          finalScale = 1.6;
-          finalY = -8;
-          finalRotate *= 0.2;
-          item.style.zIndex = 8;
-        } else if (openIndex !== -1) {
-          finalScale = 0.94;
-          item.style.zIndex = 2;
-        } else {
-          item.style.zIndex = "";
-        }
-
-        item.style.transform = `translate3d(0, ${finalY}px, 0) rotate(${finalRotate}deg) scale(${finalScale})`;
-      });
-
-      fx += (mx - fx) * 0.12;
-      fy += (my - fy) * 0.12;
-
-      cursorFollower.style.left = fx + "px";
-      cursorFollower.style.top = fy + "px";
-
-      requestAnimationFrame(animateTrack);
-    }
-
-    animateTrack();
-  </script>
-</body>
-</html>
+      setMediaBackground(neighborLeftMedia, leftPro
