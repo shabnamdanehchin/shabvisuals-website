@@ -1,477 +1,564 @@
-{"name": "file_write", "arguments": {"path": "works.html", "content": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Works — Shab Visuals</title>\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n    <link href=\"https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap\" rel=\"stylesheet\">\n    <style>\n        :root {\n            --primary-color: #1a1a1a;\n            --accent-color: #8b6914;\n            --background-color: #fafaf8;\n            --section-bg: #f5f5f0;\n            --border-color: #e0e0d8;\n            --text-color: #2a2a2a;\n            --link-color: #6b5210;\n            --font-serif: 'Crimson Text', 'Georgia', serif;\n            --font-sans: 'Inter', 'Helvetica Neue', sans-serif;\n        }\n\n        * {\n            margin: 0;\n            padding: 0;\n            box-sizing: border-box;\n        }\n\n        body {\n            font-family: var(--font-sans);\n            background-color: var(--background-color);\n            color: var(--text-color);\n            line-height: 1.6;\n        }\n\n        /* Header */\n        header {\n            background-color: var(--primary-color);\n            padding: 20px 40px;\n            position: sticky;\n            top: 0;\n            z-index: 100;\n            border-bottom: 2px solid var(--accent-color);\n        }\n\n        .header-content {\n            max-width: 1200px;\n            margin: 0 auto;\n            display: flex;\n            justify-content: space-between;\n            align-items: center;\n        }\n\n        .site-title {\n            color: #ffffff;\n            font-family: var(--font-serif);\n            font-size: 1.5rem;\n            font-weight: 600;\n            letter-spacing: 0.05em;\n            text-decoration: none;\n        }\n\n        nav ul {\n            list-style: none;\n            display: flex;\n            gap: 30px;\n        }\n\n        nav ul li a {\n            color: #cccccc;\n            text-decoration: none;\n            font-size: 0.85rem;\n            letter-spacing: 0.08em;\n            text-transform: uppercase;\n            transition: color 0.2s;\n        }\n\n        nav ul li a:hover,\n        nav ul li a.active {\n            color: var(--accent-color);\n        }\n\n        /* Main */\n        main {\n            max-width: 1200px;\n            margin: 0 auto;\n            padding: 40px 40px;\n        }\n\n        /* Content sections */\n        .content-section {\n            margin-bottom: 60px;\n            padding-bottom: 40px;\n            border-bottom: 1px solid var(--border-color);\n        }\n\n        .content-section:last-child {\n            border-bottom: none;\n        }\n\n        .section-header {\n            display: flex;\n            justify-content: space-between;\n            align-items: baseline;\n            margin-bottom: 25px;\n            padding-bottom: 10px;\n            border-bottom: 2px solid var(--accent-color);\n        }\n\n        .section-title {\n            font-family: var(--font-serif);\n            font-size: 2rem;\n            color: var(--primary-color);\n        }\n\n        .section-count {\n            font-size: 0.8rem;\n            color: #888;\n            letter-spacing: 0.05em;\n        }\n\n        /* Item cards — exact aristidebenoist list style */\n        .items-grid {\n            display: flex;\n            flex-direction: column;\n            gap: 0;\n        }\n\n        .item-card {\n            padding: 20px 0;\n            border-bottom: 1px solid var(--border-color);\n            display: grid;\n            grid-template-columns: 1fr auto;\n            gap: 20px;\n            align-items: start;\n            transition: background-color 0.2s, padding-left 0.2s;\n            cursor: pointer;\n            text-decoration: none;\n            color: inherit;\n        }\n\n        .item-card:last-child {\n            border-bottom: none;\n        }\n\n        .item-card:hover {\n            background-color: rgba(139, 105, 20, 0.03);\n            padding-left: 8px;\n        }\n\n        .item-left {\n            display: flex;\n            gap: 16px;\n            align-items: flex-start;\n        }\n\n        .item-thumb {\n            width: 80px;\n            height: 55px;\n            object-fit: cover;\n            border-radius: 2px;\n            opacity: 0.85;\n            transition: opacity 0.2s;\n            flex-shrink: 0;\n        }\n\n        .item-card:hover .item-thumb {\n            opacity: 1;\n        }\n\n        .item-text {\n            flex: 1;\n        }\n\n        .item-title {\n            font-family: var(--font-serif);\n            font-size: 1.2rem;\n            color: var(--primary-color);\n            margin-bottom: 6px;\n            line-height: 1.4;\n        }\n\n        .item-meta {\n            font-size: 0.8rem;\n            color: #888;\n            display: flex;\n            gap: 12px;\n            flex-wrap: wrap;\n        }\n\n        .item-meta span {\n            display: flex;\n            align-items: center;\n            gap: 4px;\n        }\n\n        .item-meta span::before {\n            content: '';\n            display: inline-block;\n            width: 3px;\n            height: 3px;\n            background-color: var(--accent-color);\n            border-radius: 50%;\n        }\n\n        .item-meta span:first-child::before {\n            display: none;\n        }\n\n        .item-date {\n            font-size: 0.8rem;\n            color: #aaa;\n            white-space: nowrap;\n            font-style: italic;\n        }\n\n        .item-tag {\n            display: inline-block;\n            padding: 2px 8px;\n            background-color: rgba(139, 105, 20, 0.1);\n            color: var(--link-color);\n            font-size: 0.7rem;\n            border-radius: 2px;\n            letter-spacing: 0.05em;\n            text-transform: uppercase;\n        }\n\n        /* Responsive */\n        @media (max-width: 768px) {\n            header {\n                padding: 15px 20px;\n            }\n\n            .header-content {\n                flex-direction: column;\n                gap: 15px;\n            }\n\n            nav ul {\n                gap: 15px;\n                flex-wrap: wrap;\n                justify-content: center;\n            }\n\n            main {\n                padding: 30px 20px;\n            }\n\n            .item-card {\n                grid-template-columns: 1fr;\n            }\n\n            .item-thumb {\n                display: none;\n            }\n        }\n    </style>\n</head>\n<body>\n\n    <header>\n        <div class=\"header-content\">\n            <a href=\"index.html\" class=\"site-title\">Shab Visuals</a>\n            <nav>\n                <ul>\n                    <li><a href=\"index.html\">Home</a></li>\n                    <li><a href=\"works.html\" class=\"active\">Works</a></li>\n                    <li><a href=\"index.html#services\">Services</a></li>\n                    <li><a href=\"#\">About</a></li>\n                    <li><a href=\"#\">Get in Touch</a></li>\n                </ul>\n            </nav>\n        </div>\n    </header>\n\n    <main>\n\n        <!-- Commercial & Promo -->\n        <section class=\"content-section\">\n            <div class=\"section-header\">\n                <h2 class=\"section-title\">Commercial &amp; Promo</h2>\n                <span class=\"section-count\" id=\"count-commercial\"></span>\n            </div>\n            <div class=\"items-grid\" id=\"commercial\">Loading...</div>\n        </section>\n\n        <!-- SaaS & Product -->\n        <section class=\"content-section\">\n            <div class=\"section-header\">\n                <h2 class=\"section-title\">SaaS &amp; Product</h2>\n                <span class=\"section-count\" id=\"count-saas\"></span>\n            </div>\n            <div class=\"items-grid\" id=\"saas\">Loading...</div>\n        </section>\n\n        <!-- Social Media -->\n        <section class=\"content-section\">\n            <div class=\"section-header\">\n                <h2 class=\"section-title\">Social Media</h2>\n                <span class=\"section-count\" id=\"count-social\"></span>\n            </div>\n            <div class=\"items-grid\" id=\"social\">Loading...</div>\n        </section>\n\n        <!-- Motion Graphics -->\n        <section class=\"content-section\">\n            <div class=\"section-header\">\n                <h2 class=\"section-title\">Motion Graphics</h2>\n                <span class=\"section-count\" id=\"count-motion\"></span>\n            </div>\n            <div class=\"items-grid\" id=\"motion\">Loading...</div>\n        </section>\n\n    </main>\n\n    <script>\n        const worksData = {\n            commercial: [\n                {\n                    title: \"Nike — Air Max Campaign\",\n                    client: \"Nike\",\n                    date: \"2025\",\n                    type: \"Commercial\",\n                    thumb: \"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Audi — Electric Future\",\n                    client: \"Audi\",\n                    date: \"2025\",\n                    type: \"Promo\",\n                    thumb: \"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Zara — Summer Collection\",\n                    client: \"Zara\",\n                    date: \"2024\",\n                    type: \"Commercial\",\n                    thumb: \"https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Apple — Developer Event Opener\",\n                    client: \"Apple\",\n                    date: \"2024\",\n                    type: \"Promo\",\n                    thumb: \"https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=160&h=110&fit=crop\"\n                }\n            ],\n            saas: [\n                {\n                    title: \"Notion — Product Walkthrough\",\n                    client: \"Notion\",\n                    date: \"2025\",\n                    type: \"Product Video\",\n                    thumb: \"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Linear — Feature Launch\",\n                    client: \"Linear\",\n                    date: \"2025\",\n                    type: \"SaaS\",\n                    thumb: \"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Figma — Config 2024 Recap\",\n                    client: \"Figma\",\n                    date: \"2024\",\n                    type: \"Product Video\",\n                    thumb: \"https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Vercel — Platform Overview\",\n                    client: \"Vercel\",\n                    date: \"2024\",\n                    type: \"SaaS\",\n                    thumb: \"https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=160&h=110&fit=crop\"\n                }\n            ],\n            social: [\n                {\n                    title: \"Gymshark — Instagram Series\",\n                    client: \"Gymshark\",\n                    date: \"2025\",\n                    type: \"Instagram\",\n                    thumb: \"https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Red Bull — TikTok Campaign\",\n                    client: \"Red Bull\",\n                    date: \"2025\",\n                    type: \"TikTok\",\n                    thumb: \"https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Spotify — Stories Content Pack\",\n                    client: \"Spotify\",\n                    date: \"2024\",\n                    type: \"Stories\",\n                    thumb: \"https://images.unsplash.com/photo-1611339555312-e607c8352fd7?w=160&h=110&fit=crop\"\n                }\n            ],\n            motion: [\n                {\n                    title: \"Stripe — Annual Report Animation\",\n                    client: \"Stripe\",\n                    date: \"2025\",\n                    type: \"Motion Graphics\",\n                    thumb: \"https://images.unsplash.com/photo-1551650975-87deedd944c3?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Bloomberg — Data Visualization\",\n                    client: \"Bloomberg\",\n                    date: \"2024\",\n                    type: \"Animation\",\n                    thumb: \"https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=160&h=110&fit=crop\"\n                },\n                {\n                    title: \"Google — I/O Intro Sequence\",\n                    client: \"Google\",\n                    date: \"2024\",\n                    type: \"Motion Graphics\",\n                    thumb: \"https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=160&h=110&fit=crop\"\n                }\n            ]\n        };\n\n        function renderSection(data) {\n            return data.map(item => `\n                <a class=\"item-card\" href=\"#\">\n                    <div class=\"item-left\">\n                        <img class=\"item-thumb\" src=\"${item.thumb}\" alt=\"${item.title}\">\n                        <div class=\"item-text\">\n                            <div class=\"item-title\">${item.title}</div>\n                            <div class=\"item-meta\">\n                                <span>${item.client}</span>\n                                <span class=\"item-tag\">${item.type}</span>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"item-date\">${item.date}</div>\n                </a>\n            `).join('');\n        }\n\n        document.addEventListener('DOMContentLoaded', function () {\n            const sections = [\n                { id: 'commercial', countId: 'count-commercial', data: worksData.commercial },\n                { id: 'saas',       countId: 'count-saas',       data: worksData.saas },\n                { id: 'social',     countId: 'count-social',     data: worksData.social },\n                { id: 'motion',     countId: 'count-motion',     data: worksData.motion }\n            ];\n\n            sections.forEach((section, index) => {\n                setTimeout(() => {\n                    const container = document.getElementById(section.id);\n                    const counter   = document.getElementById(section.countId);\n                    if (container) {\n                        container.innerHTML = renderSection(section.data);\n                    }\n                    if (counter) {\n                        counter.textContent = section.data.length + ' projects';\n                    }\n                }, (index + 1) * 100);\n            });\n        });\n    </script>\n\n</body>\n</html>\n"}}
-</tool_call>
-<tool_response>
-{"success": true, "path": "works.html", "message": "File written successfully"}
-</tool_response>
-
-فایل کامل نوشته شد. اینجا کد کامله:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Works — Shab Visuals</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #1a1a1a;
-            --accent-color: #8b6914;
-            --background-color: #fafaf8;
-            --section-bg: #f5f5f0;
-            --border-color: #e0e0d8;
-            --text-color: #2a2a2a;
-            --link-color: #6b5210;
-            --font-serif: 'Crimson Text', 'Georgia', serif;
-            --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Works</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    :root{
+      --bg:#070707;
+      --panel:#111111;
+      --text:#f3f1ea;
+      --muted:rgba(243,241,234,.58);
+      --line:rgba(243,241,234,.12);
+      --ease:cubic-bezier(.16,1,.3,1);
+      --card-w:clamp(74px, 5vw, 92px);
+      --card-h:clamp(128px, 16vw, 188px);
+      --gap:10px;
+      --rail-y:50vh;
+    }
 
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;height:100%}
 
-        /* Header */
-        header {
-            background-color: var(--primary-color);
-            padding: 20px 40px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 2px solid var(--accent-color);
-        }
+    body{
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,.04), transparent 30%),
+        linear-gradient(180deg, #0b0b0b 0%, #050505 100%);
+      color:var(--text);
+      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+      overflow:hidden;
+      cursor:none;
+    }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    a{color:inherit;text-decoration:none}
 
-        .site-title {
-            color: #ffffff;
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-        }
+    .cursor,
+    .cursor-follower{
+      position:fixed;
+      left:0;
+      top:0;
+      pointer-events:none;
+      transform:translate(-50%,-50%);
+      z-index:9999;
+      mix-blend-mode:difference;
+    }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-        }
+    .cursor{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:#fff;
+    }
 
-        nav ul li a {
-            color: #cccccc;
-            text-decoration: none;
-            font-size: 0.85rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            transition: color 0.2s;
-        }
+    .cursor-follower{
+      width:20px;
+      height:20px;
+      border:1px solid rgba(255,255,255,.35);
+      border-radius:50%;
+      transition:
+        width .24s var(--ease),
+        height .24s var(--ease),
+        border-color .24s var(--ease);
+    }
 
-        nav ul li a:hover,
-        nav ul li a.active {
-            color: var(--accent-color);
-        }
+    body.is-hovering .cursor-follower{
+      width:28px;
+      height:28px;
+      border-color:rgba(255,255,255,.7);
+    }
 
-        /* Main */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 40px;
-        }
+    nav{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:100;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:28px 38px;
+    }
 
-        /* Content sections */
-        .content-section {
-            margin-bottom: 60px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid var(--border-color);
-        }
+    .nav-logo{
+      font-size:12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      opacity:.9;
+    }
 
-        .content-section:last-child {
-            border-bottom: none;
-        }
+    .nav-links{
+      margin:0;
+      padding:0;
+      list-style:none;
+      display:flex;
+      gap:30px;
+    }
 
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent-color);
-        }
+    .nav-links a{
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      opacity:.46;
+      transition:opacity .25s ease;
+    }
 
-        .section-title {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            color: var(--primary-color);
-        }
+    .nav-links a.active,
+    .nav-links a:hover{
+      opacity:1;
+    }
 
-        .section-count {
-            font-size: 0.8rem;
-            color: #888;
-            letter-spacing: 0.05em;
-        }
+    .stage{
+      position:relative;
+      width:100vw;
+      height:100vh;
+      overflow:hidden;
+    }
 
-        /* Item cards — exact aristidebenoist list style */
-        .items-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
+    .rail-guides::before,
+    .rail-guides::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:1px;
+      background:linear-gradient(90deg, transparent, var(--line), transparent);
+      z-index:1;
+      pointer-events:none;
+    }
 
-        .item-card {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 20px;
-            align-items: start;
-            transition: background-color 0.2s, padding-left 0.2s;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
+    .rail-guides::before{
+      top:calc(var(--rail-y) - (var(--card-h) / 2) - 24px);
+    }
 
-        .item-card:last-child {
-            border-bottom: none;
-        }
+    .rail-guides::after{
+      top:calc(var(--rail-y) + (var(--card-h) / 2) + 24px);
+    }
 
-        .item-card:hover {
-            background-color: rgba(139, 105, 20, 0.03);
-            padding-left: 8px;
-        }
+    .track-viewport{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+    }
 
-        .item-left {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
+    .works-track{
+      position:absolute;
+      left:0;
+      top:var(--rail-y);
+      display:flex;
+      align-items:center;
+      gap:var(--gap);
+      height:var(--card-h);
+      transform:translate3d(0,-50%,0);
+      will-change:transform;
+      padding-left:34vw;
+      padding-right:48vw;
+    }
 
-        .item-thumb {
-            width: 80px;
-            height: 55px;
-            object-fit: cover;
-            border-radius: 2px;
-            opacity: 0.85;
-            transition: opacity 0.2s;
-            flex-shrink: 0;
-        }
+    .work-item{
+      position:relative;
+      flex:0 0 var(--card-w);
+      width:var(--card-w);
+      height:var(--card-h);
+      border-radius:10px;
+      overflow:hidden;
+      background:var(--panel);
+      border:1px solid rgba(255,255,255,.08);
+      transform-origin:center center;
+      will-change:transform, filter, opacity;
+      transition:
+        transform .45s var(--ease),
+        border-color .35s var(--ease),
+        box-shadow .35s var(--ease),
+        opacity .35s var(--ease),
+        filter .35s var(--ease);
+      cursor:none;
+    }
 
-        .item-card:hover .item-thumb {
-            opacity: 1;
-        }
+    .work-item::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.10), transparent 35%, rgba(0,0,0,.26)),
+        linear-gradient(0deg, rgba(0,0,0,.18), rgba(0,0,0,.18));
+      z-index:2;
+      pointer-events:none;
+      transition:opacity .4s var(--ease);
+    }
 
-        .item-text {
-            flex: 1;
-        }
+    .work-thumb,
+    .work-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
 
-        .item-title {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-bottom: 6px;
-            line-height: 1.4;
-        }
+    .work-thumb{
+      filter:grayscale(1) brightness(.55) saturate(.82);
+      transform:scale(1.04);
+      transition:
+        filter .55s var(--ease),
+        transform .55s var(--ease),
+        opacity .45s var(--ease);
+    }
 
-        .item-meta {
-            font-size: 0.8rem;
-            color: #888;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+    .work-video{
+      opacity:0;
+      transition:opacity .45s var(--ease);
+      background:#000;
+    }
 
-        .item-meta span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+    .work-meta{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:10px;
+      z-index:3;
+      padding:0 8px;
+      text-align:center;
+      font-size:10px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:#fff;
+      text-shadow:0 2px 12px rgba(0,0,0,.45);
+      pointer-events:none;
+    }
 
-        .item-meta span::before {
-            content: '';
-            display: inline-block;
-            width: 3px;
-            height: 3px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-        }
+    .work-item:hover .work-thumb,
+    .work-item.is-hovered .work-thumb{
+      filter:grayscale(0) brightness(1) saturate(1.24);
+      transform:scale(1.08);
+    }
 
-        .item-meta span:first-child::before {
-            display: none;
-        }
+    .work-item:hover::before,
+    .work-item.is-hovered::before{
+      opacity:.72;
+    }
 
-        .item-date {
-            font-size: 0.8rem;
-            color: #aaa;
-            white-space: nowrap;
-            font-style: italic;
-        }
+    .work-item.active{
+      z-index:30 !important;
+      border-color:rgba(255,255,255,.26);
+      box-shadow:0 28px 60px rgba(0,0,0,.55);
+    }
 
-        .item-tag {
-            display: inline-block;
-            padding: 2px 8px;
-            background-color: rgba(139, 105, 20, 0.1);
-            color: var(--link-color);
-            font-size: 0.7rem;
-            border-radius: 2px;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
+    .work-item.active .work-thumb{
+      filter:grayscale(0) brightness(1) saturate(1.1);
+      transform:scale(1.08);
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
+    .work-item.video-playing .work-video{opacity:1}
+    .work-item.video-playing .work-thumb{opacity:0}
 
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
+    .work-item.ghost{
+      opacity:.26 !important;
+      filter:saturate(.85) !important;
+      z-index:8 !important;
+    }
 
-            nav ul {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+    .work-item.faded{
+      opacity:.08 !important;
+    }
 
-            main {
-                padding: 30px 20px;
-            }
+    .content-area{
+      position:fixed;
+      left:50%;
+      bottom:7vh;
+      width:min(76vw, 720px);
+      text-align:center;
+      transform:translateX(-50%) translateY(16px);
+      opacity:0;
+      pointer-events:none;
+      transition:
+        opacity .45s var(--ease),
+        transform .45s var(--ease);
+    }
 
-            .item-card {
-                grid-template-columns: 1fr;
-            }
+    .content-area.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
 
-            .item-thumb {
-                display: none;
-            }
-        }
-    </style>
+    .project-title{
+      margin:0 0 10px;
+      font-size:clamp(28px, 4.8vw, 60px);
+      line-height:.95;
+      letter-spacing:-.05em;
+      font-weight:800;
+    }
+
+    .project-desc{
+      margin:0 auto;
+      max-width:640px;
+      font-size:clamp(13px, 1.2vw, 16px);
+      line-height:1.7;
+      color:var(--muted);
+    }
+
+    .close-btn{
+      position:fixed;
+      top:24px;
+      right:24px;
+      z-index:120;
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.34);
+      color:#fff;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter:blur(10px);
+      cursor:none;
+    }
+
+    .close-btn.show{display:flex}
+
+    @media (max-width: 768px){
+      :root{
+        --card-w:78px;
+        --card-h:140px;
+        --gap:10px;
+      }
+
+      body{cursor:auto}
+      .cursor,.cursor-follower,.close-btn{display:none}
+      nav{padding:22px 18px}
+      .nav-links{gap:18px}
+      .works-track{
+        padding-left:22vw;
+        padding-right:58vw;
+      }
+      .content-area{
+        width:min(88vw, 620px);
+        bottom:5vh;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
 
-    <header>
-        <div class="header-content">
-            <a href="index.html" class="site-title">Shab Visuals</a>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="works.html" class="active">Works</a></li>
-                    <li><a href="index.html#services">Services</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Get in Touch</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <nav>
+    <div class="nav-logo">Studio</div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Works</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
 
-    <main>
+  <main class="stage rail-guides">
+    <div class="track-viewport">
+      <div class="works-track" id="worksTrack"></div>
+    </div>
+  </main>
 
-        <!-- Commercial & Promo -->
-        <section class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">Commercial &amp; Promo</h2>
-                <span class="section-count" id="count-commercial"></span>
-            </div>
-            <div class="items-grid" id="commercial">Loading...</div>
-        </section>
+  <section class="content-area" id="contentArea">
+    <h1 class="project-title" id="projectTitle">Project</h1>
+    <p class="project-desc" id="projectDesc"></p>
+  </section>
 
-        <!-- SaaS & Product -->
-        <section class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">SaaS &amp; Product</h2>
-                <span class="section-count" id="count-saas"></span>
-            </div>
-            <div class="items-grid" id="saas">Loading...</div>
-        </section>
+  <button class="close-btn" id="closeBtn" aria-label="Close">✕</button>
 
-        <!-- Social Media -->
-        <section class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">Social Media</h2>
-                <span class="section-count" id="count-social"></span>
-            </div>
-            <div class="items-grid" id="social">Loading...</div>
-        </section>
+  <script>
+    const projects = [
+      { title: "Project One", desc: "A compact cinematic study with controlled motion and editorial restraint.", thumb: "linear-gradient(155deg, #242424, #6f6f6f)", video: "" },
+      { title: "Project Two", desc: "A narrower gallery language focused on hover color and central rhythm.", thumb: "linear-gradient(155deg, #232937, #7d94ba)", video: "" },
+      { title: "Project Three", desc: "A small-format visual sequence balancing sharp framing and motion depth.", thumb: "linear-gradient(155deg, #311d1d, #a55e5e)", video: "" },
+      { title: "Project Four", desc: "An interaction pass inspired by portfolio rails and tactile scroll response.", thumb: "linear-gradient(155deg, #1f3023, #72a178)", video: "" },
+      { title: "Project Five", desc: "A minimal project card system with layered focus around the active work.", thumb: "linear-gradient(155deg, #251f34, #8d77c8)", video: "" },
+      { title: "Project Six", desc: "An editorial carousel where restraint matters more than decorative motion.", thumb: "linear-gradient(155deg, #372818, #bf8a49)", video: "" },
+      { title: "Project Seven", desc: "A rail built around subtle bump physics triggered only during scroll.", thumb: "linear-gradient(155deg, #1f2430, #72809b)", video: "" },
+      { title: "Project Eight", desc: "A darker sequence with live color return on hover and layered click focus.", thumb: "linear-gradient(155deg, #271d26, #9a5d85)", video: "" },
+      { title: "Project Nine", desc: "A centered composition with thin cards and quiet type underneath.", thumb: "linear-gradient(155deg, #1f3134, #69a8af)", video: "" },
+      { title: "Project Ten", desc: "A portfolio rail that enters from the right and reveals itself with wheel input.", thumb: "linear-gradient(155deg, #2c2418, #9e8052)", video: "" },
+      { title: "Project Eleven", desc: "A compact moving strip designed to feel closer to a refined studio site.", thumb: "linear-gradient(155deg, #222222, #5a5a5a)", video: "" }
+    ];
 
-        <!-- Motion Graphics -->
-        <section class="content-section">
-            <div class="section-header">
-                <h2 class="section-title">Motion Graphics</h2>
-                <span class="section-count" id="count-motion"></span>
-            </div>
-            <div class="items-grid" id="motion">Loading...</div>
-        </section>
+    const track = document.getElementById("worksTrack");
+    const items = [];
+    const contentArea = document.getElementById("contentArea");
+    const projectTitle = document.getElementById("projectTitle");
+    const projectDesc = document.getElementById("projectDesc");
+    const closeBtn = document.getElementById("closeBtn");
+    const cursor = document.getElementById("cursor");
+    const cursorFollower = document.getElementById("cursorFollower");
 
-    </main>
+    let scrollTarget = 0;
+    let scrollCurrent = 0;
+    let openIndex = -1;
 
-    <script>
-        const worksData = {
-            commercial: [
-                {
-                    title: "Nike — Air Max Campaign",
-                    client: "Nike",
-                    date: "2025",
-                    type: "Commercial",
-                    thumb: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Audi — Electric Future",
-                    client: "Audi",
-                    date: "2025",
-                    type: "Promo",
-                    thumb: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Zara — Summer Collection",
-                    client: "Zara",
-                    date: "2024",
-                    type: "Commercial",
-                    thumb: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Apple — Developer Event Opener",
-                    client: "Apple",
-                    date: "2024",
-                    type: "Promo",
-                    thumb: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=160&h=110&fit=crop"
-                }
-            ],
-            saas: [
-                {
-                    title: "Notion — Product Walkthrough",
-                    client: "Notion",
-                    date: "2025",
-                    type: "Product Video",
-                    thumb: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Linear — Feature Launch",
-                    client: "Linear",
-                    date: "2025",
-                    type: "SaaS",
-                    thumb: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Figma — Config 2024 Recap",
-                    client: "Figma",
-                    date: "2024",
-                    type: "Product Video",
-                    thumb: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Vercel — Platform Overview",
-                                        client: "Vercel",
-                    date: "2024",
-                    type: "SaaS",
-                    thumb: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=160&h=110&fit=crop"
-                }
-            ],
-            social: [
-                {
-                    title: "Gymshark — Instagram Series",
-                    client: "Gymshark",
-                    date: "2025",
-                    type: "Instagram",
-                    thumb: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Red Bull — TikTok Campaign",
-                    client: "Red Bull",
-                    date: "2025",
-                    type: "TikTok",
-                    thumb: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Spotify — Stories Content Pack",
-                    client: "Spotify",
-                    date: "2024",
-                    type: "Stories",
-                    thumb: "https://images.unsplash.com/photo-1611339555312-e607c8352fd7?w=160&h=110&fit=crop"
-                }
-            ],
-            motion: [
-                {
-                    title: "Stripe — Annual Report Animation",
-                    client: "Stripe",
-                    date: "2025",
-                    type: "Motion Graphics",
-                    thumb: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Bloomberg — Data Visualization",
-                    client: "Bloomberg",
-                    date: "2024",
-                    type: "Animation",
-                    thumb: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=160&h=110&fit=crop"
-                },
-                {
-                    title: "Google — I/O Intro Sequence",
-                    client: "Google",
-                    date: "2024",
-                    type: "Motion Graphics",
-                    thumb: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=160&h=110&fit=crop"
-                }
-            ]
-        };
+    let mx = innerWidth * 0.5;
+    let my = innerHeight * 0.5;
+    let fx = mx;
+    let fy = my;
 
-        function renderSection(data) {
-            return data.map(item => `
-                <a class="item-card" href="#">
-                    <div class="item-left">
-                        <img class="item-thumb" src="${item.thumb}" alt="${item.title}">
-                        <div class="item-text">
-                            <div class="item-title">${item.title}</div>
-                            <div class="item-meta">
-                                <span>${item.client}</span>
-                                <span class="item-tag">${item.type}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item-date">${item.date}</div>
-                </a>
-            `).join('');
+    projects.forEach((project, index) => {
+      const el = document.createElement("article");
+      el.className = "work-item";
+      el.dataset.index = index;
+
+      el.innerHTML = `
+        <div class="work-thumb" style="background:${project.thumb}"></div>
+        <video class="work-video" muted playsinline loop ${project.video ? `src="${project.video}"` : ""}></video>
+        <div class="work-meta">${project.title}</div>
+      `;
+
+      el.addEventListener("mouseenter", () => {
+        document.body.classList.add("is-hovering");
+        el.classList.add("is-hovered");
+      });
+
+      el.addEventListener("mouseleave", () => {
+        document.body.classList.remove("is-hovering");
+        el.classList.remove("is-hovered");
+      });
+
+      el.addEventListener("click", () => {
+        if (openIndex === index) {
+          closeProject();
+        } else {
+          openProject(index);
+        }
+      });
+
+      track.appendChild(el);
+      items.push(el);
+    });
+
+    function getBaseOffset() {
+      return window.innerWidth * 0.38;
+    }
+
+    function getMaxScroll() {
+      return Math.max(0, track.scrollWidth - window.innerWidth * 0.92);
+    }
+
+    function stopAllVideos() {
+      items.forEach((item) => {
+        const video = item.querySelector(".work-video");
+        item.classList.remove("video-playing");
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+    }
+
+    function openProject(index) {
+      openIndex = index;
+      projectTitle.textContent = projects[index].title;
+      projectDesc.textContent = projects[index].desc;
+      contentArea.classList.add("show");
+      closeBtn.classList.add("show");
+
+      stopAllVideos();
+
+      items.forEach((item, i) => {
+        item.classList.remove("active", "ghost", "faded");
+
+        if (i === index) {
+          item.classList.add("active");
+          const video = item.querySelector(".work-video");
+          if (video && video.getAttribute("src")) {
+            item.classList.add("video-playing");
+            const playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === "function") {
+              playPromise.catch(() => {});
+            }
+          }
+        } else if (i === index - 1 || i === index + 1) {
+          item.classList.add("ghost");
+        } else {
+          item.classList.add("faded");
+        }
+      });
+    }
+
+    function closeProject() {
+      openIndex = -1;
+      stopAllVideos();
+      items.forEach((item) => {
+        item.classList.remove("active", "ghost", "faded", "video-playing");
+      });
+      contentArea.classList.remove("show");
+      closeBtn.classList.remove("show");
+    }
+
+    closeBtn.addEventListener("click", closeProject);
+
+    window.addEventListener("wheel", (e) => {
+      if (openIndex !== -1) return;
+      scrollTarget += e.deltaY * 0.9;
+      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
+    }, { passive: true });
+
+    window.addEventListener("mousemove", (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      cursor.style.left = mx + "px";
+      cursor.style.top = my + "px";
+    });
+
+    window.addEventListener("resize", () => {
+      scrollTarget = Math.max(0, Math.min(getMaxScroll(), scrollTarget));
+    });
+
+    function animateTrack() {
+      scrollCurrent += (scrollTarget - scrollCurrent) * 0.085;
+
+      const baseOffset = getBaseOffset();
+      const trackX = baseOffset - scrollCurrent;
+      track.style.transform = `translate3d(${trackX}px, -50%, 0)`;
+
+      const bumpCenter = window.innerWidth * 0.5;
+      const bumpRadius = 135;
+      const bumpHeight = 30;
+
+      items.forEach((item, index) => {
+        const rect = item.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const dist = center - bumpCenter;
+        const closeness = Math.max(0, 1 - Math.abs(dist) / bumpRadius);
+        const hill = Math.pow(closeness, 2.25);
+
+        let finalScale = 1 + hill * 0.035;
+        let finalY = -bumpHeight * hill;
+        let finalRotate = (dist / bumpRadius) * -2.8 * hill;
+
+        if (openIndex === index) {
+          finalScale = 2.15;
+          finalY = -16;
+          finalRotate = 0;
+          item.style.zIndex = 30;
+        } else if (openIndex !== -1 && (index === openIndex - 1 || index === openIndex + 1)) {
+          finalScale = 1.55;
+          finalY = -6;
+          finalRotate *= 0.2;
+          item.style.zIndex = 8;
+        } else if (openIndex !== -1) {
+          finalScale = 0.95;
+          item.style.zIndex = 2;
+        } else {
+          item.style.zIndex = "";
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const sections = [
-                { id: 'commercial', countId: 'count-commercial', data: worksData.commercial },
-                { id: 'saas',       countId: 'count-saas',       data: worksData.saas },
-                { id: 'social',     countId: 'count-social',     data: worksData.social },
-                { id: 'motion',     countId: 'count-motion',     data: worksData.motion }
-            ];
+        item.style.transform = `translate3d(0, ${finalY}px, 0) rotate(${finalRotate}deg) scale(${finalScale})`;
+      });
 
-            sections.forEach((section, index) => {
-                setTimeout(() => {
-                    const container = document.getElementById(section.id);
-                    const counter   = document.getElementById(section.countId);
-                    if (container) {
-                        container.innerHTML = renderSection(section.data);
-                    }
-                    if (counter) {
-                        counter.textContent = section.data.length + ' projects';
-                    }
-                }, (index + 1) * 100);
-            });
-        });
-    </script>
+      fx += (mx - fx) * 0.12;
+      fy += (my - fy) * 0.12;
+      cursorFollower.style.left = fx + "px";
+      cursorFollower.style.top = fy + "px";
 
+      requestAnimationFrame(animateTrack);
+    }
+
+    animateTrack();
+  </script>
 </body>
 </html>
