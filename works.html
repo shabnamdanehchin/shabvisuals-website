@@ -3,353 +3,397 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Works - Horizontal Bump Gallery</title>
-
+  <title>Works</title>
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root{
+      --bg:#050505;
+      --text:#f4f4f4;
+      --muted:rgba(255,255,255,.55);
+      --line:rgba(255,255,255,.12);
+      --ease:cubic-bezier(.16,1,.3,1);
+      --card-w:clamp(88px, 6.6vw, 126px);
+      --card-h:clamp(145px, 20vw, 250px);
+      --gap:14px;
     }
 
-    :root {
-      --bg: #050505;
-      --text: #f4f4f4;
-      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:Helvetica, Arial, sans-serif;
+      overflow:hidden;
+      cursor:none;
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      overflow: hidden; /* جلوگیری از اسکرول پیش‌فرض مرورگر */
-      cursor: none;
-      height: 100vh;
+    .cursor,.cursor-follower{
+      position:fixed;
+      top:0;left:0;
+      pointer-events:none;
+      transform:translate(-50%,-50%);
+      z-index:9999;
+      mix-blend-mode:difference;
+    }
+    .cursor{
+      width:6px;height:6px;border-radius:50%;
+      background:#fff;
+    }
+    .cursor-follower{
+      width:22px;height:22px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.4);
+      transition:width .25s var(--ease), height .25s var(--ease), border-color .25s var(--ease);
+    }
+    body.is-hovering .cursor-follower{
+      width:30px;height:30px;
+      border-color:rgba(255,255,255,.7);
     }
 
-    /* --- Cursor --- */
-    .cursor {
-      position: fixed;
-      left: 0; top: 0;
-      width: 6px; height: 6px;
-      background: #fff;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      mix-blend-mode: difference;
-    }
-    .cursor-follower {
-      position: fixed;
-      left: 0; top: 0;
-      width: 24px; height: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s var(--ease), height 0.3s var(--ease);
-      mix-blend-mode: difference;
+    .stage{
+      position:relative;
+      width:100vw;
+      height:100vh;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    /* --- Navigation --- */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 30px 40px;
-    }
-    .nav-logo img { height: 32px; filter: invert(1); }
-    .nav-links { display: flex; gap: 30px; list-style: none; }
-    .nav-links a {
-      color: #fff; text-decoration: none; font-size: 0.7rem;
-      letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5;
-    }
-    .nav-links a.active { opacity: 1; }
-
-    /* --- Stage & Track --- */
-    .stage {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      overflow: hidden;
+    .track-viewport{
+      position:relative;
+      width:min(100vw, 1400px);
+      height:var(--card-h);
+      overflow:visible;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    .track-container {
-      position: relative;
-      width: 100%;
-      height: clamp(300px, 55vh, 600px);
-      overflow: visible;
-      /* شروع از وسط صفحه */
-      padding-left: 50vw; 
+    .works-track{
+      position:relative;
+      height:var(--card-h);
+      display:flex;
+      align-items:center;
+      gap:var(--gap);
+      will-change:transform;
+      transform:translateX(0);
+      padding:0 calc(50vw - (var(--card-w) / 2));
     }
 
-    .works-track {
-      display: flex;
-      gap: 15px;
-      height: 100%;
-      will-change: transform;
+    .work-item{
+      position:relative;
+      flex:0 0 var(--card-w);
+      width:var(--card-w);
+      height:var(--card-h);
+      border-radius:10px;
+      overflow:hidden;
+      background:#111;
+      border:1px solid rgba(255,255,255,.08);
+      transform-origin:center center;
+      will-change:transform, opacity, filter;
+      transition:filter .45s var(--ease), border-color .45s var(--ease), box-shadow .45s var(--ease), opacity .45s var(--ease);
+      cursor:none;
     }
 
-    .work-item {
-      position: relative;
-      flex: 0 0 110px; /* کارت‌های باریک */
-      height: 100%;
-      background: #111;
-      border-radius: 3px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.1);
-      transform-origin: center bottom;
-      transition: 
-        filter 0.5s ease, 
-        opacity 0.5s ease,
-        box-shadow 0.5s ease;
-      will-change: transform;
+    .work-item::before{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), transparent 35%, rgba(0,0,0,.35));
+      z-index:2;
+      pointer-events:none;
+      opacity:.55;
+      transition:opacity .45s var(--ease);
     }
 
-    /* استایل کارت فعال (وقتی کلیک می‌شود) */
-    .work-item.active {
-      z-index: 100;
-      box-shadow: 0 50px 100px rgba(0,0,0,0.9);
-      border-color: rgba(255,255,255,0.4);
+    .work-thumb,.work-video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
     }
 
-    .work-thumb {
-      position: absolute;
-      inset: 0;
-      background: var(--thumb);
-      background-size: cover;
-      background-position: center;
-      filter: grayscale(1) brightness(0.6);
-      transition: filter 0.6s var(--ease);
+    .work-thumb{
+      filter:grayscale(1) brightness(.6) saturate(.8);
+      transform:scale(1.03);
+      transition:filter .5s var(--ease), transform .5s var(--ease);
     }
+
+    .work-video{
+      opacity:0;
+      transition:opacity .45s var(--ease);
+    }
+
     .work-item:hover .work-thumb,
-    .work-item.active .work-thumb {
-      filter: grayscale(0) brightness(1);
+    .work-item.is-hovered .work-thumb,
+    .work-item.active .work-thumb{
+      filter:grayscale(0) brightness(1) saturate(1.25);
+      transform:scale(1.08);
     }
 
-    .work-video {
-      position: absolute;
-      inset: 0; width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-    .work-item.video-playing .work-video { opacity: 1; }
-
-    /* --- Content Below --- */
-    .content-area {
-      position: absolute;
-      bottom: 8vh;
-      left: 0; width: 100%;
-      text-align: center;
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.7s var(--ease);
-    }
-    .content-area.show { opacity: 1; transform: translateY(0); }
-    
-    .project-title {
-      font-size: clamp(2rem, 6vw, 5rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-    }
-    .project-desc {
-      max-width: 600px;
-      margin: 0 auto;
-      font-size: 1rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.6;
+    .work-item:hover::before,
+    .work-item.is-hovered::before,
+    .work-item.active::before{
+      opacity:.2;
     }
 
-    .close-btn {
-      position: fixed;
-      right: 40px; bottom: 40px;
-      width: 50px; height: 50px;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 50%;
-      background: rgba(0,0,0,0.5);
-      color: #fff;
-      font-size: 1.2rem;
-      display: none;
-      z-index: 1000;
-      cursor: none;
+    .work-item.active{
+      z-index:50;
+      border-color:rgba(255,255,255,.35);
+      box-shadow:0 40px 90px rgba(0,0,0,.6);
     }
-    .close-btn.show { display: flex; align-items: center; justify-content: center; }
 
+    .work-item.video-playing .work-video{opacity:1}
+    .work-item.video-playing .work-thumb{opacity:0}
+
+    .work-title{
+      position:absolute;
+      left:0;right:0;bottom:10px;
+      z-index:3;
+      padding:0 10px;
+      font-size:11px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:#fff;
+      text-align:center;
+      opacity:.9;
+      text-shadow:0 2px 10px rgba(0,0,0,.5);
+      pointer-events:none;
+    }
+
+    .content-area{
+      position:fixed;
+      left:50%;
+      bottom:7vh;
+      transform:translateX(-50%) translateY(18px);
+      text-align:center;
+      width:min(82vw, 720px);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .5s var(--ease), transform .5s var(--ease);
+    }
+    .content-area.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .project-title{
+      margin:0 0 10px;
+      font-size:clamp(28px, 5vw, 64px);
+      line-height:1;
+      letter-spacing:-.04em;
+      font-weight:800;
+    }
+    .project-desc{
+      margin:0;
+      font-size:clamp(13px, 1.35vw, 17px);
+      line-height:1.7;
+      color:var(--muted);
+    }
+
+    .close-btn{
+      position:fixed;
+      right:24px;
+      top:24px;
+      z-index:100;
+      width:44px;height:44px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.35);
+      color:#fff;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      cursor:none;
+      backdrop-filter:blur(10px);
+    }
+    .close-btn.show{display:flex}
+
+    @media (max-width: 768px){
+      :root{
+        --card-w:88px;
+        --card-h:160px;
+        --gap:10px;
+      }
+      body{cursor:auto}
+      .cursor,.cursor-follower,.close-btn{cursor:auto}
+      .works-track{padding:0 calc(50vw - (var(--card-w) / 2))}
+    }
   </style>
 </head>
 <body>
-
   <div class="cursor" id="cursor"></div>
   <div class="cursor-follower" id="cursorFollower"></div>
 
-  <nav>
-    <div class="nav-logo"> <img src="logo.png" alt="Logo"> </div>
-    <ul class="nav-links">
-      <li><a href="#" class="active">Works</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
-
   <div class="stage">
-    <div class="track-container">
-      <div class="works-track" id="worksTrack">
-        <!-- کارت‌ها توسط JS ساخته می‌شوند -->
-      </div>
-    </div>
-
-    <div class="content-area" id="contentArea">
-      <h1 class="project-title" id="pTitle">Project Name</h1>
-      <p class="project-desc" id="pDesc">Description goes here...</p>
+    <div class="track-viewport">
+      <div class="works-track" id="worksTrack"></div>
     </div>
   </div>
 
-  <button class="close-btn" id="closeBtn">✕</button>
+  <div class="content-area" id="contentArea">
+    <h1 class="project-title" id="projectTitle">Project</h1>
+    <p class="project-desc" id="projectDesc"></p>
+  </div>
+
+  <button class="close-btn" id="closeBtn" aria-label="Close">✕</button>
 
   <script>
-    const projects = Array.from({ length: 13 }).map((_, i) => ({
-      id: i,
-      title: `Project ${i + 1}`,
-      desc: "This project explores cinematic motion and interactive storytelling through a unique horizontal experience.",
-      thumb: `linear-gradient(${45 + i * 20}deg, #222, #444)`,
-      video: "" // آدرس ویدیوها را اینجا قرار دهید
-    }));
+    const projects = [
+      { title: "Project One", desc: "A compact cinematic study with an interactive horizontal rhythm.", thumb: "linear-gradient(160deg, #2f2f2f, #707070)" },
+      { title: "Project Two", desc: "A visual narrative balancing motion, texture, and depth.", thumb: "linear-gradient(160deg, #272f3f, #6c86b6)" },
+      { title: "Project Three", desc: "An editorial layout experiment with hover-driven color reveal.", thumb: "linear-gradient(160deg, #3a2222, #9f5050)" },
+      { title: "Project Four", desc: "A motion-led interface built around small centered cards.", thumb: "linear-gradient(160deg, #2b3b2f, #68a06f)" },
+      { title: "Project Five", desc: "A minimal showcase with layered focus on the active item.", thumb: "linear-gradient(160deg, #29223b, #7f6cc9)" },
+      { title: "Project Six", desc: "A smooth horizontal reel inspired by editorial portfolio systems.", thumb: "linear-gradient(160deg, #3d2f1d, #c38b49)" },
+      { title: "Project Seven", desc: "A tactile browsing experience with soft bump-based scroll response.", thumb: "linear-gradient(160deg, #20242f, #67738f)" },
+      { title: "Project Eight", desc: "A compact gallery focused on depth, hover color, and active focus.", thumb: "linear-gradient(160deg, #2a1f27, #8e5078)" },
+      { title: "Project Nine", desc: "A quiet interface with strong center alignment and layered cards.", thumb: "linear-gradient(160deg, #1f2f33, #5da0aa)" },
+      { title: "Project Ten", desc: "A soft-motion layout that keeps the active work in front.", thumb: "linear-gradient(160deg, #362c1d, #9a7a4a)" }
+    ];
 
     const track = document.getElementById('worksTrack');
     const contentArea = document.getElementById('contentArea');
+    const projectTitle = document.getElementById('projectTitle');
+    const projectDesc = document.getElementById('projectDesc');
     const closeBtn = document.getElementById('closeBtn');
+    const cursor = document.getElementById('cursor');
+    const cursorFollower = document.getElementById('cursorFollower');
 
-    let scrollPos = 0;
-    let targetScrollPos = 0;
-    let isProjectOpen = false;
+    let scrollTarget = 0;
+    let scrollCurrent = 0;
+    let activeIndex = -1;
+    let openIndex = -1;
+    let mx = innerWidth / 2;
+    let my = innerHeight / 2;
+    let fx = mx;
+    let fy = my;
 
-    // ایجاد کارت‌ها
-    projects.forEach((p, i) => {
-      const div = document.createElement('div');
-      div.className = 'work-item';
-      div.dataset.index = i;
-      div.style.setProperty('--thumb', p.thumb);
-      div.innerHTML = `
-        <div class="work-thumb"></div>
+    projects.forEach((project, index) => {
+      const item = document.createElement('div');
+      item.className = 'work-item';
+      item.dataset.index = index;
+      item.innerHTML = `
+        <div class="work-thumb" style="background:${project.thumb}"></div>
         <video class="work-video" muted playsinline loop></video>
+        <div class="work-title">${project.title}</div>
       `;
-      div.addEventListener('click', () => openProject(i));
-      track.appendChild(div);
+      item.addEventListener('mouseenter', () => document.body.classList.add('is-hovering'));
+      item.addEventListener('mouseleave', () => document.body.classList.remove('is-hovering'));
+      item.addEventListener('click', () => openProject(index));
+      track.appendChild(item);
     });
 
-    const items = document.querySelectorAll('.work-item');
+    const items = [...document.querySelectorAll('.work-item')];
 
-    // اسکرول ماوس
-    window.addEventListener('wheel', (e) => {
-      if (isProjectOpen) return;
-      targetScrollPos += e.deltaY * 0.8;
-      // محدود کردن اسکرول
-      const maxScroll = track.scrollWidth - (window.innerWidth / 2);
-      targetScrollPos = Math.max(0, Math.min(maxScroll, targetScrollPos));
-    }, { passive: true });
-
-    function openProject(index) {
-      if (isProjectOpen) return;
-      isProjectOpen = true;
-      
-      const item = items[index];
-      item.classList.add('active');
-      
-      // تاریک کردن بقیه
-      items.forEach((it, i) => {
-        if (i !== index) it.style.opacity = '0.2';
-      });
-
-      // نمایش متن
-      document.getElementById('pTitle').innerText = projects[index].title;
-      document.getElementById('pDesc').innerText = projects[index].desc;
+    function openProject(index){
+      openIndex = index;
+      activeIndex = index;
       contentArea.classList.add('show');
       closeBtn.classList.add('show');
+      projectTitle.textContent = projects[index].title;
+      projectDesc.textContent = projects[index].desc;
+
+      items.forEach((item, i) => {
+        item.classList.toggle('active', i === index);
+        item.classList.toggle('video-playing', i === index);
+        item.style.opacity = i === index ? '1' : '.18';
+        item.style.filter = i === index ? 'none' : 'blur(.8px)';
+      });
     }
 
     closeBtn.addEventListener('click', () => {
-      isProjectOpen = false;
-      items.forEach(it => {
-        it.classList.remove('active');
-        it.style.opacity = '1';
-      });
+      openIndex = -1;
+      activeIndex = -1;
       contentArea.classList.remove('show');
       closeBtn.classList.remove('show');
+      items.forEach(item => {
+        item.classList.remove('active', 'video-playing');
+        item.style.opacity = '1';
+        item.style.filter = 'none';
+      });
     });
 
-    // انیمیشن اصلی
-    function update() {
-      // نرم کردن حرکت اسکرول
-      scrollPos += (targetScrollPos - scrollPos) * 0.08;
-      
-      if (!isProjectOpen) {
-        track.style.transform = `translateX(${-scrollPos}px)`;
-      }
+    window.addEventListener('wheel', (e) => {
+      if (openIndex !== -1) return;
+      scrollTarget += e.deltaY * 0.9;
+      const maxScroll = Math.max(0, track.scrollWidth - innerWidth + 120);
+      scrollTarget = Math.max(0, Math.min(maxScroll, scrollTarget));
+    }, { passive: true });
 
-      items.forEach((item, i) => {
-        const rect = item.getBoundingClientRect();
-        const itemCenter = rect.left + rect.width / 2;
-        const viewportCenter = window.innerWidth / 2;
-        
-        // محاسبه فاصله از مرکز برای افکت دست‌انداز
-        const distanceFromCenter = itemCenter - viewportCenter;
-        const normalizedDist = Math.abs(distanceFromCenter) / (window.innerWidth / 2);
-        
-        if (!isProjectOpen) {
-          // افکت دست‌انداز (Bump): وقتی به مرکز نزدیک می‌شود بالا می‌رود
-          // استفاده از یک تابع زنگوله‌ای (Gaussian-like)
-          const bump = Math.pow(Math.max(0, 1 - normalizedDist), 3);
-          const translateY = bump * -120; // میزان پرش به بالا
-          const rotate = (distanceFromCenter * 0.05) * bump; // کج شدن
-          const scale = 1 + (bump * 0.8); // بزرگ شدن در مرکز
-
-          item.style.transform = `translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})`;
-          
-          // محو شدن کارت‌های دورتر
-          item.style.filter = `grayscale(${1 - bump}) brightness(${0.5 + bump * 0.5})`;
-        } else {
-          // اگر پروژه باز است، فقط کارت فعال بزرگ بماند
-          if (item.classList.contains('active')) {
-            item.style.transform = `scale(3.5) translateY(-20px)`;
-          }
-        }
-      });
-
-      requestAnimationFrame(update);
-    }
-
-    // کدهای مربوط به موس
-    const cursor = document.getElementById('cursor');
-    const follower = document.getElementById('cursorFollower');
-    let mx = 0, my = 0, fx = 0, fy = 0;
-
-    window.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
       cursor.style.left = mx + 'px';
       cursor.style.top = my + 'px';
     });
 
-    function updateCursor() {
-      fx += (mx - fx) * 0.1;
-      fy += (my - fy) * 0.1;
-      follower.style.left = fx + 'px';
-      follower.style.top = fy + 'px';
-      requestAnimationFrame(updateCursor);
+    function animate(){
+      scrollCurrent += (scrollTarget - scrollCurrent) * 0.08;
+      if (openIndex === -1) {
+        track.style.transform = `translateX(${-scrollCurrent}px)`;
+      }
+
+      const viewportCenter = innerWidth * 0.5;
+      const bumpRadius = innerWidth * 0.22;
+
+      items.forEach((item, index) => {
+        if (openIndex !== -1) {
+          if (index === openIndex) {
+            item.style.position = 'fixed';
+            item.style.left = '50%';
+            item.style.top = '50%';
+            item.style.transform = 'translate(-50%, -50%) scale(2.25)';
+            item.style.width = 'min(22vw, 320px)';
+            item.style.height = 'min(32vw, 460px)';
+            item.style.opacity = '1';
+            item.style.filter = 'none';
+            item.style.zIndex = '50';
+          } else {
+            item.style.position = 'relative';
+            item.style.left = '';
+            item.style.top = '';
+            item.style.transform = '';
+            item.style.width = '';
+            item.style.height = '';
+            item.style.zIndex = '1';
+          }
+          return;
+        }
+
+        item.style.position = 'relative';
+        item.style.left = '';
+        item.style.top = '';
+        item.style.width = '';
+        item.style.height = '';
+        item.style.zIndex = '1';
+
+        const rect = item.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const dist = center - viewportCenter;
+        const progress = 1 - Math.min(1, Math.abs(dist) / bumpRadius);
+
+        const isInBump = Math.abs(dist) < bumpRadius * 1.2;
+        const bump = isInBump ? Math.pow(progress, 2.8) : 0;
+
+        const lift = -bump * 28;
+        const scale = 1 + bump * 0.11;
+        const rotate = (dist / bumpRadius) * -2.2 * bump;
+        const xShift = bump * 2 * Math.sign(dist || 1);
+
+        item.style.transform = `translate3d(${xShift}px, ${lift}px, 0) rotate(${rotate}deg) scale(${scale})`;
+        item.style.opacity = 0.9 + bump * 0.1;
+        item.style.filter = `grayscale(${1 - bump}) brightness(${0.82 + bump * 0.25}) saturate(${0.95 + bump * 0.8})`;
+      });
+
+      fx += (mx - fx) * 0.12;
+      fy += (my - fy) * 0.12;
+      cursorFollower.style.left = fx + 'px';
+      cursorFollower.style.top = fy + 'px';
+
+      requestAnimationFrame(animate);
     }
 
-    update();
-    updateCursor();
-
+    animate();
   </script>
 </body>
 </html>
